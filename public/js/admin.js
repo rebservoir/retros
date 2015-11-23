@@ -41,7 +41,7 @@ $("#registrar_pago").click(function(){
     console.log(dato4);
     console.log(dato5);
 
-    var route = "http://localhost:8080/laravel5_1/public/pagos";
+    var route = "/pagos";
     var token = $("#token").val();
 
     $.ajax({
@@ -79,7 +79,7 @@ function Mostrar_pago(btn){
     $("#msj-fail2").addClass( "hide");
 
     
-    var route = "http://localhost:8080/laravel5_1/public/pagos/"+btn.value+"/edit";
+    var route = "/pagos/"+btn.value+"/edit";
 
     $.get(route, function(res){
         console.log(res);
@@ -119,7 +119,7 @@ $("#actualizar_pago").click(function(){
     }
 
     console.log('dato5:' + dato5);
-    var route = "http://localhost:8080/laravel5_1/public/pagos/"+value+"";
+    var route = "/pagos/"+value+"";
     var token = $("#token_pago").val();
 
     $.ajax({
@@ -156,7 +156,7 @@ $("#eliminar_pago").click(function(){
     $( "#msj-fail2").addClass( "hide");
     if (confirm("Eliminar este pago?") == true) {
         var value = $("#hidden_id").val();
-        var route = "http://localhost:8080/laravel5_1/public/pagos/"+value;
+        var route = "/pagos/"+value;
         var token = $("#token_pago").val();
 
         $.ajax({
@@ -187,7 +187,7 @@ $("#eliminar_pago").click(function(){
     //var dato2 = $("#datepicker_eg").val();
     //var dato3 = $("#amount_egresos").val();
 
-    var route = "http://localhost:8080/laravel5_1/public/egresos";
+    var route = "/egresos";
     var token = $("#token_eg").val();
 
     $.ajax({
@@ -223,7 +223,7 @@ function Mostrar_egresos(btn){
     $("#msj-fail4").addClass( "hide");
     $("#msj-success5").addClass( "hide");
     $("#msj-fail6").addClass( "hide");
-    var route = "http://localhost:8080/laravel5_1/public/egresos/"+btn.value+"/edit";
+    var route = "/egresos/"+btn.value+"/edit";
     $.get(route, function(res){
         $("#concept_eg").val(res.concept);
         $("#datepicker_eg_edit").val(res.date);
@@ -235,7 +235,7 @@ function Mostrar_egresos(btn){
 $("#eliminar_egresos").click(function(){
     if (confirm("Eliminar este egreso?") == true) {
         var value = $("#id_egresos").val();
-        var route = "http://localhost:8080/laravel5_1/public/egresos/"+value;
+        var route = "/egresos/"+value;
         var token = $("#token_eg").val();
 
         $.ajax({
@@ -264,7 +264,7 @@ var names = [];
 
 $( document ).ready(function() {
 
- var route = "http://localhost:8080/laravel5_1/public/usuario/show";
+ var route = "/usuario/show";
     $.get(route, function(res){
 
     for (index = 0; index < res.length; index++) {

@@ -8,7 +8,7 @@ function get_id_user_pago(id_user){
 function Mostrar(btn){
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");
-    var route = "http://localhost:8080/laravel5_1/public/usuario/"+btn.value+"/edit";
+    var route = "/usuario/"+btn.value+"/edit";
     $.get(route, function(res){
         $("#name1").val(res.name);
         $("#email1").val(res.email);
@@ -32,7 +32,7 @@ $("#registrar").click(function(){
     var dato6 = $("#role").val();
     var dato7 = $("#password").val();
 
-    var route = "http://localhost:8080/laravel5_1/public/usuario";
+    var route = "/usuario";
     var token = $("#token").val();
 
     $.ajax({
@@ -81,7 +81,7 @@ $("#actualizar").click(function(){
     var dato6 = $("#role1").val();
 
 
-    var route = "http://localhost:8080/laravel5_1/public/usuario/"+value+"";
+    var route = "/usuario/"+value+"";
     var token = $("#token").val();
 
     $.ajax({
@@ -120,7 +120,7 @@ $("#actualizar").click(function(){
 $("#eliminar").click(function(){
 
     var value = $("#id1").val();
-    var route = "http://localhost:8080/laravel5_1/public/usuario/"+value+"";
+    var route = "/usuario/"+value+"";
     var token = $("#token").val();
 
     $.ajax({
@@ -143,7 +143,7 @@ var names = [];
 
 $( document ).ready(function() {
 
- var route = "http://localhost:8080/laravel5_1/public/usuario/show";
+ var route = "/usuario/show";
     $.get(route, function(res){
 
     for (index = 0; index < res.length; index++) {
@@ -193,7 +193,7 @@ $('#the-basics .typeahead').typeahead({
 
 
 function search(){
-    var route = "http://localhost:8080/laravel5_1/public/admin/usuarios/search/" + id_usuario + "" ;
+    var route = "/admin/usuarios/search/" + id_usuario + "" ;
      window.location.assign(route);
 }
 
@@ -203,6 +203,6 @@ $( ".select_user" ).change(function() {
 });
 
 function sort(sort){
-    var route = "http://localhost:8080/laravel5_1/public/admin/usuarios/sort/" + sort + "" ;
+    var route = "/admin/usuarios/sort/" + sort + "" ;
      window.location.assign(route);
 }

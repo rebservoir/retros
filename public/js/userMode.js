@@ -1,7 +1,7 @@
 function mostrar_info(btn){
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");
- 	var route = "http://localhost:8080/laravel5_1/public/edit_info/"+ btn.value +"";
+ 	var route = "/edit_info/"+ btn.value +"";
     $.get(route, function(res){
     	console.log(res);
         $("#name").val(res.name);
@@ -26,7 +26,7 @@ $("#modificar_info").click(function(){
     var dato4 = $("#phone").val();
     var dato5 = $("#cel").val();
 
-    var route = "http://localhost:8080/laravel5_1/public/update_info_user/"+value+"";
+    var route = "/update_info_user/"+value+"";
     var token = $("#token_info").val();
 
     $.ajax({
@@ -76,7 +76,7 @@ $("#modificar_pass").click(function(){
 
     if(pass2 == pass3){
 
-	    var route = "http://localhost:8080/laravel5_1/public/update_info_user/"+value+"";
+	    var route = "/update_info_user/"+value+"";
 	    var token = $("#token_info").val();
 
 	    $.ajax({

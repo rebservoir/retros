@@ -51,7 +51,7 @@ $(document).ready(function(){
 $(document).on('click', '.pagination a',function(e){
     e.preventDefault();
     var page = $(this).attr('href').split('page=')[1];
-    var route = "http://localhost:8080/laravel5_1/public/noticias";
+    var route = "/noticias";
 
     $.ajax({
         url: route,

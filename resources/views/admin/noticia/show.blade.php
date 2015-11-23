@@ -21,7 +21,7 @@
 							@endforeach
 
 							<br><br>
-							<a href="http://localhost:8080/laravel5_1/public/admin/noticias">Regresar a noticias</a>
+							<a href="/admin/noticias">Regresar a noticias</a>
 
 					</div> <!-- END cont_left -->
 
