@@ -24,10 +24,15 @@ Route::get('admin/noticias','FrontController@noticias');
 Route::get('mifraccionamiento','FrontController@mifrac');
 Route::get('admin/contenidos','FrontController@contenidos');
 Route::get('noticia_show/{id?}','NoticiaController@show');
+Route::get('edit_info/{id?}','FrontController@edit_info');
+Route::put('update_info_user/{id?}','FrontController@update_info_user');
+
 Route::get('admin/noticia_show/{id?}','NoticiaController@show');
-Route::get('admin/usuarios','FrontController@usuarios');
+Route::get('admin/usuarios/','FrontController@usuarios');
+Route::get('admin/usuarios/search/{id?}','UsuarioController@search');
+Route::get('admin/usuarios/sort/{sort?}','UsuarioController@sort');
 
-
+Route::resource('sitio','SitioController');
 Route::resource('morosos','MorososController');
 Route::resource('noticia','NoticiaController');
 Route::resource('utiles','UtilesController');

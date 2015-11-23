@@ -51,7 +51,7 @@ class LogController extends Controller
 
     public function logout(){
         Auth::logout();
-        return Redirect::to('/login');
+        return Redirect::to('login');
     }
 
     /**

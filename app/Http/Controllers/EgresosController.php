@@ -4,6 +4,8 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
+use TuFracc\Http\Requests\EgresosCreateRequest;
+use TuFracc\Http\Requests\EgresosUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Egresos;
 
@@ -35,7 +37,7 @@ class EgresosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EgresosCreateRequest $request)
     {
         if($request->ajax()){
             Egresos::create($request->all());

@@ -4,13 +4,17 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
-use TuFracc\Http\Requests\PagoCreateRequest;
-use TuFracc\Http\Requests\PagoUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
-use TuFracc\Pagos;
+use TuFracc\Sitio;
+use Session;
+use Redirect;
 
-class PagosController extends Controller
+class SitioController extends Controller
 {
+
+     public function find(Route $route){
+        $this->sitio = User::find($route->getParameter('sitio'));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,15 +41,9 @@ class PagosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PagoCreateRequest $request)
+    public function store(Request $request)
     {
-        if($request->ajax()){
-            Pagos::create($request->all());
-            return response()->json([
-                    "message" => "creado"
-                ]);
-
-        }
+        //
     }
 
     /**
@@ -67,10 +65,10 @@ class PagosController extends Controller
      */
     public function edit($id)
     {
-        $pago = Pagos::find($id);
+        $sitio = Sitio::find($id);
 
         return response()->json(
-            $pago->toArray()
+            $sitio->toArray()
             );
     }
 
@@ -81,15 +79,14 @@ class PagosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PagoUpdateRequest $request, $id)
-    {
-        $pago = Pagos::find($id);
-        $pago->fill($request->all());
-        $pago->save();
-
-        return response()->json([
-            "mensaje"=>'listo'
-            ]);
+    public function update(Request $request)
+    { 
+        
+        $sitio= Sitio::find(1);
+        $sitio->fill($request->all());
+        $sitio->save();
+        //Session::flash('message','Sitio configurado exitosamente');
+        //return Redirect::to('admin/contenidos');
     }
 
     /**
@@ -100,11 +97,6 @@ class PagosController extends Controller
      */
     public function destroy($id)
     {
-        $pago = Pagos::find($id);
-        $pago->delete();
-
-        return response()->json([
-            "mensaje"=>'eliminado'
-            ]);
+        //
     }
 }

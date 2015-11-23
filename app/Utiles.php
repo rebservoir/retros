@@ -10,5 +10,5 @@ class Utiles extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['concept','phone_num','address','category'];
+    protected $fillable = ['concept','phone_num','address','url','category'];
 }

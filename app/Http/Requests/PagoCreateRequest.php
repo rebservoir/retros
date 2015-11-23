@@ -1,10 +1,9 @@
 <?php
 
 namespace TuFracc\Http\Requests;
-
 use TuFracc\Http\Requests\Request;
 
-class UserUpdateRequest extends Request
+class PagoCreateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +23,10 @@ class UserUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required',
+            'id_user' => 'required',
+            'date' => 'required',
+            'status' => 'required',
+            'amount' => 'required',
         ];
     }
 }

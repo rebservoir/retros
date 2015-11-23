@@ -4,6 +4,7 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
+use TuFracc\Http\Requests\UtilCreateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Utiles;
 
@@ -37,7 +38,7 @@ class UtilesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UtilCreateRequest $request)
     {
         if($request->ajax()){
             Utiles::create($request->all());
