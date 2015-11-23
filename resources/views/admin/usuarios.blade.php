@@ -5,28 +5,28 @@
 	@include('admin.modal.user_edit')
 
 	@section('nav')
-		<a href="http://localhost:8080/laravel5_1/public/admin/home">
+		<a href="/admin/home">
 				<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
 				<div class="nav_ic icon1">
 				</div>
 				<p>Home</p>
 			</div>
 		</a>
-		<a href="http://localhost:8080/laravel5_1/public/admin/administracion">
+		<a href="/admin/administracion">
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon7">
 				</div>
 				<p>Administración</p>
 			</div>
 		</a>
-		<a href="http://localhost:8080/laravel5_1/public/admin/contenidos">
+		<a href="/admin/contenidos">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon8">
 				</div>
 				<p>Contenidos</p>
 			</div>
 		</a>
-		<a href="http://localhost:8080/laravel5_1/public/admin/usuarios">
+		<a href="/admin/usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab nav_sel">
 				<div class="nav_ic icon9">
 				</div>
