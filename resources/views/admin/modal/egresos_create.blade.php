@@ -7,6 +7,12 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Registro de Egresos</h4>
 			</div>
+<div id="msj-success3" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Egreso registrado exitosamente.</p>
+</div>
+<div id="msj-fail3" class="alert alert-danger alert-dismissible hide" role="alert">
+  <div class="msj"></div>
+</div>
 			<div class="modal-body">
 			{!! Form::open(array('id' => 'registrar_egresos', 'files' => true)) !!}
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eg">

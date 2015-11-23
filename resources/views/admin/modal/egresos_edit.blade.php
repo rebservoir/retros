@@ -7,6 +7,18 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Editar Egresos</h4>
 			</div>
+<div id="msj-success4" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Egreso actualizado exitosamente.</p>
+</div>
+<div id="msj-success5" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Egreso eliminado exitosamente.</p>
+</div>
+<div id="msj-fail4" class="alert alert-danger alert-dismissible hide" role="alert">
+  <div class="msj"></div>
+</div>
+<div id="msj-fail5" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Intentar de nuevo.</p>
+</div>
 			<div class="modal-body">
 			{!! Form::open(array('id' => 'registrar_egresos', 'files' => true)) !!}
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eg">

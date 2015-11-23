@@ -7,6 +7,21 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Modificar Noticia</h4>
 			</div>
+<div id="msj-success1" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Noticia actualizada exitosamente.</p>
+</div>
+
+<div id="msj-success2" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Noticia eliminada exitosamente.</p>
+</div>
+
+<div id="msj-fail1" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Llenar campos requeridos.</p>
+</div>
+
+<div id="msj-fail2" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Intentar de nuevo.</p>
+</div>
 			<div class="modal-body">
 				{!! Form::open(array('id' => 'actualizar_noticia', 'files' => true)) !!}
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_noti_1">

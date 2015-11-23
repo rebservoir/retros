@@ -29,7 +29,6 @@
 <div class="tab-content">
 	<div id="tablaEgresos">
 	  <div id="ene" class="tab-pane fade in active">
-
 			<table class="table">
 				<thead>
 					<th>Fecha</th>

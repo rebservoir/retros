@@ -5,6 +5,7 @@
 	@include('admin.modal.util_create')
 	@include('admin.modal.noticia_create')
 	@include('admin.modal.noticia_edit')
+	@include('admin.modal.sitio_edit')
 
 	@section('nav')
 		<a href="home">
@@ -16,21 +17,21 @@
 		</a>
 		<a href="administracion">
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
-				<div class="nav_ic icon2">
+				<div class="nav_ic icon7">
 				</div>
 				<p>Administración</p>
 			</div>
 		</a>
 		<a href="contenidos">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab nav_sel">
-				<div class="nav_ic icon3">
+				<div class="nav_ic icon8">
 				</div>
 				<p>Contenidos</p>
 			</div>
 		</a>
 		<a href="usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
-				<div class="nav_ic icon3">
+				<div class="nav_ic icon9">
 				</div>
 				<p>Usuarios</p>
 			</div>
@@ -42,7 +43,7 @@
 	<div class="cont_left cont_600 col-lg-4">
 						
 						<div class="box_header">
-							{!!Html::image('img/n_3.png')!!}
+							{!!Html::image('img/n_8.png')!!}
 							<h1>Contenidos</h1>
 						</div>
 						
@@ -87,14 +88,13 @@
 							</div>
 						</div>
 
-						<div id="int_div3" class="int_div">
+						<div id="int_div4" class="int_div">
 							<div class="box_header">
 								<p>Contenidos > Configuración del sitio</p>
 							</div>
 						
 							<div class="cont_in_r">
-								<p>slider</p>
-								<p>nombre del sitio</p>
+								@include('admin/sitio')
 							</div>
 						</div>
 

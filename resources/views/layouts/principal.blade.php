@@ -8,6 +8,7 @@
 		{!!Html::style('css/bootstrap.min.css')!!}
 		{!!Html::style('css/style.css')!!}
 		{!!Html::style('css/fonts/stylesheet.css')!!}
+		@yield('css')
 
 	</head>
 
@@ -27,7 +28,7 @@
 						<p>Bienvenido {!!Auth::user()->name!!}</p>
 					</div>
 					<div class="pull-right">
-						<a href="/logout">Cerrar Sesión</a>
+						<a href="/laravel5_1/public/logout">Cerrar Sesión</a>
 					</div>
 				</div>
 			</div>			
@@ -46,11 +47,58 @@
 		      </button>
 		    </div>
 
-		    	<!-- Collect the nav links, forms, and other content for toggling -->
-		    	<div class="collapse navbar-collapse no_pd" id="bs-example-navbar-collapse-1">
-		      		<ul class="nav navbar-nav col-sm-12 col-md-12 col-lg-12 no_pd">
-						@yield('nav')
-				    </ul>
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse no_pd" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav col-sm-12 col-md-12 col-lg-12 no_pd">
+
+						<a href="http://localhost:8080/laravel5_1/public/home">
+							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab nav_sel">
+								<div class="nav_ic icon1">
+								</div>
+								<p class="">Home</p>
+							</div>
+						</a>
+
+						<a href="http://localhost:8080/laravel5_1/public/micuenta">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon2">
+								</div>
+								<p>Mi Cuenta</p>
+							</div>
+						</a>
+
+						<a href="http://localhost:8080/laravel5_1/public/mifraccionamiento">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
+								<div class="nav_ic icon3">
+								</div>
+								<p>Mi Fraccionamiento</p>
+							</div>
+						</a>
+
+						<a href="http://localhost:8080/laravel5_1/public/transparencia">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon4">
+								</div>
+								<p>Transparencia</p>
+							</div>
+						</a>
+
+						<a href="http://localhost:8080/laravel5_1/public/calendario">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon5">
+								</div>
+								<p>Calendario</p>
+							</div>
+						</a>
+									
+						<a href="http://localhost:8080/laravel5_1/public/contacto">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab">
+								<div class="nav_ic icon6">
+								</div>
+								<p>Contacto</p>
+							</div>
+						</a>
+				      </ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>	

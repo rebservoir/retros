@@ -6,7 +6,7 @@ $("#registrar").click(function(){
     var dato3 = $("#phone_num1").val();
     var dato4 = $("#category1").val();
     var dato5 = $("#url1").val();
-    var route = "/utiles";
+    var route = "http://localhost:8080/laravel5_1/public/utiles";
     var token = $("#token1").val();
 
     $.ajax({
@@ -39,7 +39,7 @@ function Mostrar(btn){
     $( "#msj-fail5").addClass( "hide");
     $("#msj-success6").addClass( "hide");
     $( "#msj-fail6").addClass( "hide");
-    var route = "/utiles/"+btn.value+"/edit";
+    var route = "http://localhost:8080/laravel5_1/public/utiles/"+btn.value+"/edit";
     $.get(route, function(res){
         $("#concept").val(res.concept);
         $("#address").val(res.address);
@@ -62,7 +62,7 @@ $("#actualizar").click(function(){
     var dato4 = $("#category").val();
     var dato5 = $("#url").val();
 
-    var route = "/utiles/"+value+"";
+    var route = "http://localhost:8080/laravel5_1/public/utiles/"+value+"";
     var token = $("#token").val();
 
     $.ajax({
@@ -95,7 +95,7 @@ $("#eliminar").click(function(){
     $("#msj-success6").addClass( "hide");
     $( "#msj-fail6").addClass( "hide");
     var value = $("#id").val();
-    var route = "/utiles/"+value+"";
+    var route = "http://localhost:8080/laravel5_1/public/utiles/"+value+"";
     var token = $("#token").val();
 
     $.ajax({
@@ -124,7 +124,7 @@ function Mostrar_noticia(btn){
     $( "#msj-fail1").addClass( "hide");
     $("#msj-success2").addClass( "hide");
     $( "#msj-fail2").addClass( "hide");
-    var route = "/noticia/"+btn.value+"/edit";
+    var route = "http://localhost:8080/laravel5_1/public/noticia/"+btn.value+"/edit";
 
     $.get(route, function(res){
         $("#titulo1").val(res.titulo);
@@ -141,7 +141,7 @@ $("#registrar_noticia").on("submit", function(e){
     e.preventDefault();
     var fd = new FormData(this);
 
-    var route = "/noticia";
+    var route = "http://localhost:8080/laravel5_1/public/noticia";
     var token = $("#token").val();
 
     $.ajax({
@@ -185,7 +185,7 @@ $("#actualizar_noticia").on("submit", function(e){
     console.log(dato3);
     console.log("file_noti:" + file_noti);
 
-    var route = "/noticia/"+value+"";
+    var route = "http://localhost:8080/laravel5_1/public/noticia/"+value+"";
     var token = $("#token_noti_1").val();
 
     if(dato3 == ""){
@@ -231,7 +231,7 @@ $("#eliminar_noticia").click(function(){
     $( "#msj-fail").addClass( "hide");
     if (confirm("Eliminar esta Noticia?") == true) {
         var value = $("#id_noti_1").val();
-        var route = "/noticia/"+value;
+        var route = "http://localhost:8080/laravel5_1/public/noticia/"+value;
         var token = $("#token_noti_1").val();
 
         $.ajax({
@@ -249,4 +249,71 @@ $("#eliminar_noticia").click(function(){
         });
     } else {
     } 
+});
+
+
+var file_sitio;
+
+
+function Mostrar_sitio(btn){
+    $("#msj-success_sitio").addClass( "hide");
+    $( "#msj-fail_sitio").addClass( "hide");
+    $("#msj-success2_sitio").addClass( "hide");
+    $( "#msj-fail2_sitio").addClass( "hide");
+
+    var route = "http://localhost:8080/laravel5_1/public/sitio/"+btn.value+"/edit";
+
+    $.get(route, function(res){
+        $("#name_frac").val(res.name);
+        $("#path_sitio").val(res.picture);
+
+    });
+}
+
+
+
+$("#actualizar_sitio").on("submit", function(e){
+    $("#msj-success_sitio").addClass( "hide");
+    $( "#msj-fail_sitio").addClass( "hide");
+    e.preventDefault();
+    var formData = new FormData(this);
+
+    var value = 1;
+    var dato1 = $("#name_frac").val();
+    var dato2 = $("#picture").val();
+    var file_sitio = $("#path_sitio").val()
+    console.log("dato2: " + dato2);
+
+    var route = "http://localhost:8080/laravel5_1/public/sitio/"+value+"";
+    var token = $("#token_sitio_1").val();
+
+    if(dato2 == ""){
+        dato2 = file_sitio;
+        console.log('se hizo');
+    }
+
+    //formData.append('path', dato3);
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'PUT',
+        dataType: 'json',
+        data:formData,
+        contentType: false,
+        processData: false,
+
+        success:function(){
+            $("#msj-success_sitio").removeClass( "hide");
+            $("#divSitio").load(location.href+" #divSitio>*","");
+            console.log('ok');
+        },
+        error: function () {
+            //var obj = jQuery.parseJSON(jqXHR.responseText);
+            $("#msj-fail_sitio").removeClass( "hide");
+            console.log('error');
+        }
+        
+    });
+
 });

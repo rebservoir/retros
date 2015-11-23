@@ -27,7 +27,7 @@
 						<p>Bienvenido {!!Auth::user()->name!!}</p>
 					</div>
 					<div class="pull-right">
-						<a href="/logout">Cerrar Sesión</a>
+						<a href="/laravel5_1/public/logout">Cerrar Sesión</a>
 					</div>
 				</div>
 
@@ -49,9 +49,9 @@
 
 		    	<!-- Collect the nav links, forms, and other content for toggling -->
 		    	<div class="collapse navbar-collapse no_pd" id="bs-example-navbar-collapse-1">
-		      		<ul class="nav navbar-nav col-sm-12 col-md-12 col-lg-12 no_pd">
+		    		<ul class="nav navbar-nav col-sm-12 col-md-12 col-lg-12 no_pd">
 						@yield('nav')
-				    </ul>
+					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>	
@@ -77,3 +77,4 @@
 	</body>
 
 </html>
+
