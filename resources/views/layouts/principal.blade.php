@@ -28,7 +28,7 @@
 						<p>Bienvenido {!!Auth::user()->name!!}</p>
 					</div>
 					<div class="pull-right">
-						<a href="/laravel5_1/public/logout">Cerrar Sesión</a>
+						<a href="/logout">Cerrar Sesión</a>
 					</div>
 				</div>
 			</div>			
