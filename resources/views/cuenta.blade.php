@@ -7,6 +7,56 @@
 		{!!Html::style('css/jquery-ui.min.css')!!}
 	@stop
 
+@section('nav')
+						<a href="/home">
+							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
+								<div class="nav_ic icon1">
+								</div>
+								<p class="">Home</p>
+							</div>
+						</a>
+
+						<a href="/micuenta">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon2">
+								</div>
+								<p>Mi Cuenta</p>
+							</div>
+						</a>
+
+						<a href="/mifraccionamiento">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
+								<div class="nav_ic icon3">
+								</div>
+								<p>Mi Fraccionamiento</p>
+							</div>
+						</a>
+
+						<a href="/transparencia">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon4">
+								</div>
+								<p>Transparencia</p>
+							</div>
+						</a>
+
+						<a href="/calendario">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon5">
+								</div>
+								<p>Calendario</p>
+							</div>
+						</a>
+									
+						<a href="/contacto">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab nav_sel">
+								<div class="nav_ic icon6">
+								</div>
+								<p>Contacto</p>
+							</div>
+						</a>
+	@stop
+
 	@section('content')
 
 
@@ -23,7 +73,7 @@
 						</ul>
 					</div>
 
-					<div class="cont_right cont_600 col-lg-8">
+					<div class="cont_right col-lg-8">
 
 						<div id="int_div1" class="int_div_sel">
 							<div class="box_header">
@@ -97,6 +147,8 @@
 						
 							<div class="cont_in_r">
 
+											
+
 								<table class="table table-bordered">
 								    <thead>
 								      <tr>
@@ -107,17 +159,20 @@
 								    </thead>
 								    <tbody>
 								      <tr>
-								        <td class="text-center"><h3>$200.00</h3></td>
-								        <td class="text-center"><h3>$1,200.00</h3></td>
-								        <td class="text-center"><h3>$2,200.00</h3></td>
+								        <td class="text-center precio"><h3>$200.00</h3></td>
+								        <td class="text-center precio"><h3>$1,200.00</h3></td>
+								        <td class="text-center precio"><h3>$2,200.00</h3></td>
 								      </tr>
 								      <tr> 
-								     	<td class="text-center"><button type="button" class="btn btn-primary btn-lg btn-block">Pagar</button></td>
-								        <td class="text-center"><button type="button" class="btn btn-primary btn-lg btn-block">Pagar</button></td>
-								        <td class="text-center"><button type="button" class="btn btn-primary btn-lg btn-block">Pagar</button></td>
+								     	<td class="text-center pagar"><button type="button" class="btn-primary btn-block btn_paypal"></button></td>
+								        <td class="text-center pagar"><button type="button" class="btn btn-primary btn-lg btn-block btn_paypal"><img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_10.png" alt="undefined" /></button></td>
+								        <td class="text-center pagar"><button type="button" class="btn btn-primary btn-lg btn-block btn_paypal"><img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_10.png" alt="undefined" /></button></td>
 								      </tr>
 								    </tbody>
 								  </table> 
+
+								  <img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/TDC_btn_4.png" alt="undefined" />
+											<img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/TD_btn_1.png" alt="undefined" />
 
 							</div>
 						</div>
@@ -128,3 +183,25 @@
 	@section('script')
 		{!!Html::script('js/userMode.js')!!}
 	@stop
+
+
+	<style>
+.btn_paypal{
+    width: 172px !important;
+    padding: 0px !important;
+    margin: 0pt auto !important;
+    margin-top: 5px !important;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-image: url("https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_10.png");
+    height: 34px;
+}
+.precio{
+	 height: 150px;
+}
+.pagar{
+	background-color: #C7C7C7;
+    height: 110px;
+    padding-top: 30px !important;
+}
+	</style>

@@ -1,5 +1,55 @@
 @extends('layouts.principal')
 
+@section('nav')
+						<a href="/home">
+							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
+								<div class="nav_ic icon1">
+								</div>
+								<p class="">Home</p>
+							</div>
+						</a>
+
+						<a href="/micuenta">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon2">
+								</div>
+								<p>Mi Cuenta</p>
+							</div>
+						</a>
+
+						<a href="/mifraccionamiento">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
+								<div class="nav_ic icon3">
+								</div>
+								<p>Mi Fraccionamiento</p>
+							</div>
+						</a>
+
+						<a href="/transparencia">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab nav_sel">
+								<div class="nav_ic icon4">
+								</div>
+								<p>Transparencia</p>
+							</div>
+						</a>
+
+						<a href="/calendario">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+								<div class="nav_ic icon5">
+								</div>
+								<p>Calendario</p>
+							</div>
+						</a>
+									
+						<a href="/contacto">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab">
+								<div class="nav_ic icon6">
+								</div>
+								<p>Contacto</p>
+							</div>
+						</a>
+	@stop
+
 @section('content')
 
 			<div id="main_cont">
@@ -21,29 +71,42 @@
 	
 					      <br>
 						  <ul class="nav nav-tabs">
-						    <li class="active"><a href="">Enero</a></li>
-						    <li><a href="">Febrero</a></li>
-						    <li><a href="">Marzo</a></li>
-						    <li><a href="">Abril</a></li>
-						    <li><a href="">Mayo</a></li>
-						    <li><a href="">Junio</a></li>
-						    <li><a href="">Julio</a></li>
-						    <li><a href="">Agosto</a></li>
-						    <li><a href="">Septiembre</a></li>
-						    <li><a href="">Octubre</a></li>
-						    <li><a href="">Noviembre</a></li>
-						    <li><a href="">Diciembre</a></li>
+						    <li><a href="#Enero">Enero</a></li>
+						    <li><a href="#Febrero">Febrero</a></li>
+						    <li><a href="#Marzo">Marzo</a></li>
+						    <li><a href="#Abril">Abril</a></li>
+						    <li><a href="#Mayo">Mayo</a></li>
+						    <li><a href="#Junio">Junio</a></li>
+						    <li><a href="#Julio">Julio</a></li>
+						    <li><a href="#Agosto">Agosto</a></li>
+						    <li><a href="#Septiembre">Septiembre</a></li>
+						    <li><a href="#Octubre">Octubre</a></li>
+						    <li class="active"><a href="#Noviembre">Noviembre</a></li>
+						    <li><a href="#Diciembre">Diciembre</a></li>
 					  	  </ul>
 
-					  	  	<br><br>
+					  	  	<br><br><br>	
+
+{{--*/ 
+$month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+ /*--}}
+
+					  	  	 {{--*/ for ($x = 1; $x<=12; $x++){ 
+								
+								if($x==11){
+									echo "<div id='" . $month[$x-1] . "' class='tab-pane fade in active'>";
+								}else{
+									echo "<div id='" . $month[$x-1] . "' class='tab-pane fade'>";
+								}
+								
+
+					  	  	 /*--}}
 							
-
-							<br>	
-
-						  	  <div class="tab-content">
+							
+						  	  <div class="tab-content tabla">
 										<table class="table table-condensed">
 										    <tbody>
-												{{--*/ $mes=1; $total_egresos=0; $total_ingresos=0; /*--}}
+												{{--*/ $mes=$x; $total_egresos=0; $total_ingresos=0; /*--}}
 												@foreach($saldos as $saldo)
 													{{--*/ $date = explode("-", $saldo->date) /*--}}
 													@if($date[1]==$mes)
@@ -59,7 +122,7 @@
 															<td><p>{{'$ '.$m2}}</p></td>
 														</tr>
 														<tr>
-															{{--*/ $m3 = number_format(($m1-$m2), 2) /*--}}
+															{{--*/ $m3 = number_format(($saldo->ingresos - $saldo->saldo), 2) /*--}}
 															<td>Total</td>
 															<td><p>{{'$ '.$m3}}</p></td>
 														</tr>
@@ -117,6 +180,8 @@
 										    </tbody>
 										</table>
 						  	  		</div>
+						 		</div>
+						  	  		{{--*/ } /*--}}
 					  
 				</div>
 			</div> <!-- END main_cont -->
@@ -130,7 +195,21 @@
 
 
 
+<style>
+	
+.tabla{
+	width: 80%;
+    margin: 0pt auto;
+}
 
+.fade {
+    display: none !important;
+}
+.fade.in {
+    display: block !important;
+}
+
+</style>
 
 
 

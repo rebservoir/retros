@@ -1,126 +1,105 @@
 
+
+
+{{--*/ 
+$year = array(2013,2014,2015,2016);
+$month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+ /*--}}
+
+
+
   <ul class="nav nav-tabs">
     <li><a href="#2013">2013</a></li>
     <li><a href="#2014">2014</a></li>
     <li class="active"><a href="#2015">2015</a></li>
     <li><a href="#2016">2016</a></li>
   </ul>
- 
+       <br>
   <div class="tab-content">
+
     <div id="2015" class="tab-pane fade in active">
-      <br>
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td class="success">Enero</td>
-              <td class="success">Febrero</td>
-              <td class="success">Marzo</td>
-              <td class="success">Abril</td>
-              <td class="success">Mayo</td>
-              <td class="success">Junio</td>
-            </tr>
 
-            <tr>
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==1) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
+      <ul class="nav nav-tabs">
+              {{--*/ 
+                for ($k = 0; $k < 12; $k++) {
+                echo "<li><a href='#" .$month[$k]."'>".$month[$k]."</a></li>";
+                  }
+              /*--}}
+      </ul>
 
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==2) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
+          {{--*/ for ($q = 0; $q < 12; $q++) {
 
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==3) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
+              if($q==10)
+                  echo "<div id='" . $month[$q] . "' class='tab-pane fade in active'>";
+                else
+                  echo "<div id='" . $month[$q] . "' class='tab-pane fade'>"; 
 
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==4) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
+                /*--}}
 
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==5) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
+                <br>
+               
+              
+               <br>
 
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==6) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-            </tr>
+ @foreach($pagos as $pago)
+  @if($pago->id_user == Auth::user()->id)
+    {{--*/ $date = explode("-", $pago->date) /*--}}
+    @if($date[1] == ($q+1))
+        <table class='table table-condensed'>
+                <tbody>
+                  <tr>
+                    <td><strong>Fecha:</strong></td>
+                    <td>{{$pago->date}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cliente:</strong></td>
+                    <td>{{Auth::user()->name}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Dirección:</strong></td>
+                    <td>{{Auth::user()->address}}</td>
+                  </tr>
+                </tbody>
+               </table>
 
-            <tr>
-              <td class="success">Julio</td>
-              <td class="success">Agosto</td>
-              <td class="danger">Septiembre</td>
-              <td class="danger">Octubre</td>
-              <td class="">Noviembre</td>
-              <td class="">Diciembre</td>
-            </tr>
-
-            <tr>
-             @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==7) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==8) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==9) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==10) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==11) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-
-              @foreach($pagos as $pago)
-                {{--*/ $date = explode("-", $pago->date) /*--}}
-                @if( ($pago->id_user == 7) && ($date[1]==12) ) 
-                  <td>{{$pago->amount}}</td>
-                @endif
-              @endforeach
-            </tr>
-            
-            
-            
-          </tbody>
-        </table>
+               <table class='table table-condensed'>
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Precio Unitario</th>
+                    <th>Descuento</th>
+                    <th>Importe</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Aportación</p></td>
+                    <td>$500.00</td>
+                    <td>0%</td>
+                    <td>{{'$ '. number_format($pago->amount, 2) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+             
+    @endif
+  @endif
+@endforeach
+               
+              </div>
+           {{--*/  }  /*--}}
     </div>
   </div>
+
+  <style>
+.fade {
+    display: none !important;
+}
+.fade.in {
+    display: block !important;
+}
+</style>
+
+
+
+
 
