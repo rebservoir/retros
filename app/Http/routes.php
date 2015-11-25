@@ -32,6 +32,7 @@ Route::get('admin/usuarios/','FrontController@usuarios');
 Route::get('admin/usuarios/search/{id?}','UsuarioController@search');
 Route::get('admin/usuarios/sort/{sort?}','UsuarioController@sort');
 
+Route::resource('mail','MailController');
 Route::resource('sitio','SitioController');
 Route::resource('morosos','MorososController');
 Route::resource('noticia','NoticiaController');

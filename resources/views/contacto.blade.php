@@ -62,44 +62,23 @@
 							<h1>Contacto</h1>
 						</div>
 						
-						
 
-						<div id="form" >
-								<div class="contact_input row">
-									<div class="col-xs-1 col-sm-3 col-md-3 col-lg-3">
-										<p>Nombre:</p>
+						<div class="contact-form">
+								{!!Form::open(['route'=>'mail.store','method'=>'POST'])!!}
+								    <div class="col-md-6">
+										{!!Form::label('Nombre:')!!}
+										{!!Form::text('name',null,['class'=>'typeahead form-control','placeholder'=>'Nombre'])!!}
 									</div>
-									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 pull-right">
-										{{Auth::user()->name}}
-										<input type="hidden" name="name" value="{{Auth::user()->name}}">
-									</div>		
-								</div>
-							
-								<div class="contact_input row">
-									<div class="col-xs-1 col-sm-3 col-md-3 col-lg-3">
-										<p>Email:</p>
+									<div class="col-md-6">
+										{!!Form::label('Email:')!!}
+										{!!Form::text('email',null,['class'=>'typeahead form-control','placeholder'=>'Email'])!!}
 									</div>
-									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 pull-right">
-										{{Auth::user()->email}}
-										<input type="hidden" name="email" value="{{Auth::user()->email}}">
-									</div>	
-								</div>
-								
-								<div class="contact_input row">
-									<div class="col-xs-1 col-sm-3 col-md-3 col-lg-3">
-										<p>Mensaje:</p>
+									<div class="col-md-6">
+										{!!Form::label('Mensaje:')!!}
+										{!!Form::textarea('msg',null,['placeholder'=>'Mensaje'])!!}
 									</div>
-									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 pull-right">
-										<textarea id="msg" class="col-xs-12 col-lg-6" name="msg" maxlength="1000" cols="25" rows="5" resizable="false" required> </textarea>
-									</div>			
-								</div>	
-	
-								<div class="">
-									<input type="submit" value="ENVIAR" id="submit_btn" class="col-xs-12 col-lg-3 col-lg-offset-3">
-								</div>	
-
-								<div id="form_msg"></div>
-
+									{!!Form::submit('SEND')!!}
+								{!!Form::close()!!}
 						</div> 
 					</div>
 				</div>
