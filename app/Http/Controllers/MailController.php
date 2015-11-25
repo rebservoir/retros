@@ -36,7 +36,7 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-        Mail::send('emails.contact',$request->all(), function($msj)){
+        Mail::send('emails.contact',$request->all(), function($msj){
             $msj->subject('Contacto');
             $msj->to('rebservoir@gmail.com');
         });
