@@ -4,6 +4,7 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
+use TuFracc\Mail;
 use TuFracc\Http\Controllers\Controller;
 
 class MailController extends Controller
