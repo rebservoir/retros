@@ -175,8 +175,7 @@ class FrontController extends Controller
     {
         $pagos_show = Pagos::where(function ($query) {
                 $query->where('id_user', $this->auth->user()->id)
-                ->where('status', 0)
-                 ->sortBy('date');
+                ->where('status', 0);
                   })->get();
 
         return response()->json(

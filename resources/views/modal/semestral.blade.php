@@ -21,6 +21,8 @@
 				$day = date('j');
 				$j = $mes;
 				$k = $year_c;
+				$pago_hasta = ''; 
+          		$pago_hasta_mes = '';
 			/*--}}
 
 

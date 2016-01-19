@@ -83,8 +83,15 @@ $d_vence = 21;
       {{--*/ } /*--}}
     </tr>
     <tr>
+      {{--*/ 
+        if($pago_hasta_mes == ''){
+      /*--}}
+      <td><p>Ultimo pago</p></td>
+      <td><p>No disponible</p></td>
+      {{--*/ }else{ /*--}}
       <td><p>Ultimo pago - {{ $pago_hasta_mes[2] . "-" . $month[$pago_hasta_mes[1]-1] . "-" . $pago_hasta_mes[0]  }}</p></td>
       <td><p>{{'$ '. number_format($pago_monto, 2) }}</p></td>
+      {{--*/ } /*--}}
     </tr>
     <tr>
       <td><p>Fecha de corte</p></td>
