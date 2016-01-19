@@ -1,101 +1,231 @@
-
-
-
 {{--*/ 
 $year = array(2013,2014,2015,2016);
 $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
- /*--}}
+$year_c = date('Y');
+$mes = date('n');
+$day = date('j');
+
+$d_corte = 15;
+$m_corte = 0;
+$y_corte = 0;
+$d_vence = 21;
+
+  if($day>15){
+    if($mes == 12){
+      $m_corte=0;
+      $y_corte = $year_c+1;
+    }else{
+      $m_corte=$mes;
+      $y_corte = $year_c;
+    }
+  }else{
+      $m_corte=$mes-1;
+      $y_corte = $year_c;
+  }
+
+  $saldo=0;
+  $pago_hasta_mes = '';
+  $pago_hasta = '';
+  $pago_monto = 0;
+
+/*--}}
 
 
-
-  <ul class="nav nav-tabs">
-    <li><a href="#2013">2013</a></li>
-    <li><a href="#2014">2014</a></li>
-    <li class="active"><a href="#2015">2015</a></li>
-    <li><a href="#2016">2016</a></li>
-  </ul>
-       <br>
-  <div class="tab-content">
-
-    <div id="2015" class="tab-pane fade in active">
-
-      <ul class="nav nav-tabs">
-              {{--*/ 
-                for ($k = 0; $k < 12; $k++) {
-                echo "<li><a href='#" .$month[$k]."'>".$month[$k]."</a></li>";
-                  }
-              /*--}}
-      </ul>
-
-          {{--*/ for ($q = 0; $q < 12; $q++) {
-
-              if($q==10)
-                  echo "<div id='" . $month[$q] . "' class='tab-pane fade in active'>";
-                else
-                  echo "<div id='" . $month[$q] . "' class='tab-pane fade'>"; 
-
-                /*--}}
-
-                <br>
-               
-              
-               <br>
-
- @foreach($pagos as $pago)
+@foreach($pagos as $pago)
   @if($pago->id_user == Auth::user()->id)
-    {{--*/ $date = explode("-", $pago->date) /*--}}
-    @if($date[1] == ($q+1))
-        <table class='table table-condensed'>
-                <tbody>
-                  <tr>
-                    <td><strong>Fecha:</strong></td>
-                    <td>{{$pago->date}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Cliente:</strong></td>
-                    <td>{{Auth::user()->name}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Dirección:</strong></td>
-                    <td>{{Auth::user()->address}}</td>
-                  </tr>
-                </tbody>
-               </table>
-
-               <table class='table table-condensed'>
-                <thead>
-                  <tr>
-                    <th>Concepto</th>
-                    <th>Precio Unitario</th>
-                    <th>Descuento</th>
-                    <th>Importe</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><p>Aportación</p></td>
-                    <td>$500.00</td>
-                    <td>0%</td>
-                    <td>{{'$ '. number_format($pago->amount, 2) }}</td>
-                  </tr>
-                </tbody>
-              </table>
-             
+    @if($pago->status == 0)
+      {{--*/ 
+          $saldo += $pago->amount;
+      /*--}}
     @endif
   @endif
 @endforeach
-               
-              </div>
-           {{--*/  }  /*--}}
-    </div>
-  </div>
 
-  <style>
+
+@foreach($pagos as $pago)
+  @if($pago->id_user == Auth::user()->id)
+    @if($pago->status == 1)
+      {{--*/ 
+          $pago_hasta = $pago->date; 
+          $pago_monto = $pago->amount; 
+          $pago_hasta_mes = explode("-", $pago_hasta); 
+      /*--}}
+    @endif
+  @endif
+@endforeach
+
+
+
+<h3>Factura al Corte</h3>
+
+<table class="table table-bordered table-striped table-condensed ">
+  <tbody>
+    <tr>
+      <td><p>Cliente:</p></td>
+      <td><p>{!!Auth::user()->name!!}</p></td>
+    </tr>
+    <tr>
+      <td><p>Status de Pago:</p></td>
+        @if (Auth::user()->status == 0)
+          <td class="success"><p>Al Corriente</p></td>
+        @else
+          <td class="danger"><p>Adeudo</p></td>
+        @endif
+    </tr>
+    <tr>
+      <td><p>Pagado hasta</p></td>
+      {{--*/ 
+        if($pago_hasta_mes == ''){
+      /*--}}
+      <td><p>No disponible</p></td>
+      {{--*/ }else{ /*--}}
+      <td><p>{!!$month[$pago_hasta_mes[1]-1]!!} {!!$pago_hasta_mes[0]!!}</p></td>
+      {{--*/ } /*--}}
+    </tr>
+    <tr>
+      <td><p>Ultimo pago - {{ $pago_hasta_mes[2] . "-" . $month[$pago_hasta_mes[1]-1] . "-" . $pago_hasta_mes[0]  }}</p></td>
+      <td><p>{{'$ '. number_format($pago_monto, 2) }}</p></td>
+    </tr>
+    <tr>
+      <td><p>Fecha de corte</p></td>
+
+      <td><p>{{ $d_corte."-".$month[$m_corte]."-".$y_corte }}</p></td>
+    </tr>
+    <tr>
+      <td><p>Fecha Limite de Pago</p></td>
+      <td><p>{{ $d_vence."-".$month[$m_corte]."-".$y_corte }}</p></td>
+    </tr>
+    <tr>
+      <td><p>Saldo Vencido</p></td>
+      <td><p>{{'$ '. number_format($saldo, 2) }}</p></td>
+    </tr>
+  </tbody>
+</table>
+
+  <br>
+    <h3>Tabla de pagos</h3>
+  <br>
+
+  <ul class="nav nav-tabs">
+    {{--*/ 
+      for ($j = 2014; $j < 2017; $j++) {
+        if( $j == $year_c)
+          echo "<li class='active'><a href='#" . $j  . "'>" . $j . "</a></li>";
+        else
+          echo "<li><a href='#" . $j  . "'>" . $j . "</a></li>";
+        }
+    /*--}}   
+  </ul>
+  
+  <br>
+
+<div class="tab-content">
+
+  {{--*/ 
+    for ($j = 2014; $j < 2017; $j++) {
+      if($j==$year_c)
+        echo "<div id='" . $j . "' class='tab-pane fade in active'>";
+      else
+        echo "<div id='" . $j . "' class='tab-pane fade'>"; 
+  /*--}} 
+
+  <ul class="nav nav-tabs">
+    {{--*/ 
+      for ($k = 0; $k < 12; $k++) {
+        if(($k+1)==$mes)
+          echo "<li class='active'><a href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
+        else
+          echo "<li><a href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
+        }
+    /*--}}
+  </ul>
+
+  {{--*/ 
+    for ($q = 0; $q < 12; $q++) {
+      if(($q+1)==$mes)
+        echo "<div id='" . $month[$q] . $j . "' class='tab-pane fade in active'>";
+      else
+        echo "<div id='" . $month[$q] . $j . "' class='tab-pane fade'>"; 
+  /*--}} 
+
+    <br><br>
+
+@foreach($pagos as $pago)
+  @if($pago->id_user == Auth::user()->id)
+    {{--*/ $date = explode("-", $pago->date) /*--}}
+    @if(($date[1] == ($q+1)) && ($date[0] == $j))
+        <table class='table table-condensed'>
+          <tbody>
+            <tr>
+              <td><strong>Status:</strong></td>
+                @if($pago->status == 1)
+                  <td><p>Saldado</p></td>
+                @else
+                  <td><p>Adeudo</p></td>
+                @endif
+            </tr>
+            <tr>
+              <td><strong>Fecha:</strong></td>
+              {{--*/ $cxd = $date[1] /*--}}
+              <td>{{ $date[2] . "-" . $month[$cxd-1] . "-" . $date[0]}}</td>
+            </tr>
+            <tr>
+              <td><strong>Cliente:</strong></td>
+              <td>{{Auth::user()->name}}</td>
+            </tr>
+            <tr>
+              <td><strong>Dirección:</strong></td>
+              <td>{{Auth::user()->address}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class='table table-condensed'>
+          <thead>
+            <tr>
+              <th>Concepto</th>
+              <th>Precio Unitario</th>
+              <th>Descuento</th>
+              <th>Importe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><p>Aportación</p></td>
+              <td>$500.00</td>
+              <td>0%</td>
+              <td>{{'$ '. number_format($pago->amount, 2) }}</td>
+            </tr>
+          </tbody>
+        </table>            
+    @endif
+  @endif
+@endforeach 
+
+  
+    </div> 
+
+  {{--*/ 
+    }
+  /*--}}
+
+  {{--*/ 
+        echo "</div>"; 
+    }
+  /*--}}   
+
+</div> <!-- END tab-content -->
+    
+
+<style>
 .fade {
     display: none !important;
 }
 .fade.in {
     display: block !important;
+}
+.adeudo{
+  background-color: rgba(255, 0, 0, 0.16) !important;
 }
 </style>
 

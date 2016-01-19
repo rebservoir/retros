@@ -5,8 +5,7 @@
 			<h1>{{$noticia->titulo}} - {!!substr($noticia->created_at, 0, 10)!!}</h1>
 			<p>{!!(substr($noticia->texto, 0, 60)) . ' ...'!!}
 
-			<a href="noticia_show/{{$noticia->id}}">Leer mas...</a>
-			{!!link_to('#', $title='Editar', $attributes = ['id'=>'editar_noticia', 'class'=>'btn btn-primary'], $secure=null)!!}						
+			<a href="noticia_show/{{$noticia->id}}">Leer mas...</a>						
 		</div>
 
 		

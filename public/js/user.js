@@ -4,10 +4,13 @@ function get_id_user_pago(id_user){
     console.log('la id_user es:' + id_usuario);
 }
 
-
 function Mostrar(btn){
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");
+    $("#msj-success1").addClass( "hide");
+    $( "#msj-fail1").addClass( "hide");
+    $("#msj-success2").addClass( "hide");
+    $( "#msj-fail2").addClass( "hide");
     var route = "/usuario/"+btn.value+"/edit";
     $.get(route, function(res){
         $("#name1").val(res.name);
@@ -52,6 +55,7 @@ $("#registrar").click(function(){
         success:function(){
             $("#msj-success").removeClass( "hide");
             $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+            $('#user_create').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -63,6 +67,7 @@ $("#registrar").click(function(){
               var res = res.replace(/email/gi, 'Email');
               var res = res.replace(/password/gi, 'Password');
             $(".msj").html(res);
+            $('#user_create').modal('toggle');
         }              
     });
 });
@@ -101,6 +106,7 @@ $("#actualizar").click(function(){
         success:function(){
             $("#msj-success1").removeClass( "hide");
             $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+            $('#user_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -111,6 +117,7 @@ $("#actualizar").click(function(){
               var res = res.replace(/address/gi, 'Dirección');
               var res = res.replace(/email/gi, 'Email');
             $(".msj").html(res);
+            $('#user_edit').modal('toggle');
         }
 
     });
@@ -131,11 +138,10 @@ $("#eliminar").click(function(){
         success:function(){
             $("#msj-success2").removeClass( "hide");
             $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+            $('#user_edit').modal('toggle');
         }
     });
 });
-
-
 
 
 var index=0;

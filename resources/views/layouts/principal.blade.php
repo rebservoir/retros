@@ -76,6 +76,7 @@
 		{!!Html::script('js/jquery-1.11.3.min.js')!!}
 		{!!Html::script('js/bootstrap.min.js')!!}
 		{!!Html::script('js/main.js')!!}
+		{!!Html::script('js/sch.js')!!}
 		@yield('script')
 	</body>
 

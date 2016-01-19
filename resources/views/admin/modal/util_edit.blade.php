@@ -7,21 +7,7 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Actualizar Telefonos/Sitios Utiles</h4>
 			</div>
-<div id="msj-success5" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Sitio actualizado exitosamente.</p>
-</div>
 
-<div id="msj-success6" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Sitio eliminado exitosamente.</p>
-</div>
-
-<div id="msj-fail5" class="alert alert-danger alert-dismissible hide" role="alert">
-  <p>Llenar campos requeridos.</p>
-</div>
-
-<div id="msj-fail6" class="alert alert-danger alert-dismissible hide" role="alert">
-  <p>Intentar de nuevo.</p>
-</div>
 			<div class="modal-body">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 				<input type="hidden" id="id">

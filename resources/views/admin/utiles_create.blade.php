@@ -1,15 +1,28 @@
+<h3>Creacion de Teléfonos y Sitios Útiles</h3>
+<br>
 
-		<h3>Creacion de Teléfonos y Sitios Útiles</h3>
-		<br>
-
-<div id="msj-success" class="alert alert-success alert-dismissible" role="alert" style="display:none">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<p>Telefono/Sitio Util registrado exitosamente.</p>
+<div id="msj-success4" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Sitio registrado exitosamente.</p>
+</div>
+<div id="msj-fail4" class="alert alert-danger alert-dismissible hide" role="alert">
+  <div class="msj"></div>
+</div>
+<div id="msj-success5" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Sitio actualizado exitosamente.</p>
+</div>
+<div id="msj-success6" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Sitio eliminado exitosamente.</p>
+</div>
+<div id="msj-fail5" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Llenar campos requeridos.</p>
+</div>
+<div id="msj-fail6" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Intentar de nuevo.</p>
 </div>
 
 @include('alerts.success')
 
-<button class='btn btn-primary' data-toggle="modal" data-target="#util_create">Registrar Nuevo Telefono/Sitio</button>
+<button class='btn btn-primary' onclick=""  data-toggle="modal" data-target="#util_create">Registrar Nuevo Telefono/Sitio</button>
 <br><br>
 <div id="tablaUtiles">
 	<table class="table">

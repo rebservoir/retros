@@ -7,13 +7,7 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Modificar Sitio</h4>
 			</div>
-<div id="msj-success_sitio" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Sitio actualizada exitosamente.</p>
-</div>
 
-<div id="msj-fail_sitio" class="alert alert-danger alert-dismissible hide" role="alert">
-  <p>Intentar de nuevo.</p>
-</div>
 
 			<div class="modal-body">
 				{!! Form::open(array('id' => 'actualizar_sitio', 'files' => true)) !!}

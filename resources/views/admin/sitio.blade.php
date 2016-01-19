@@ -1,5 +1,4 @@
-
-	<h3>Configuración del Sitio</h3>
+<h3>Configuración del Sitio</h3>
 
 <div id="divSitio">
 	@foreach($sitio as $sitio)
@@ -11,6 +10,6 @@
 			<p>Imagen principal de home:</p>
 				<img src="../file/{{$sitio->picture}}" class="col-lg-3">
 			<br><br>
-@endforeach
+	@endforeach
 
 </div>

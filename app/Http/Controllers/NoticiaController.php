@@ -76,7 +76,7 @@ class NoticiaController extends Controller
         if($this->auth->user()->role == 1){
             return view('admin.noticia.show',['noti_show'=>$noti_show]);    
         }else{
-            return Redirect::to('home');
+            return view('noticia.show',['noti_show'=>$noti_show]);   
         }
     }
 

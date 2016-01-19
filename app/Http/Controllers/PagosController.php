@@ -8,9 +8,22 @@ use TuFracc\Http\Requests\PagoCreateRequest;
 use TuFracc\Http\Requests\PagoUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Pagos;
+use Illuminate\Contracts\Auth\Guard;
+use Session;
+use Redirect;
+use Illuminate\Routing\Route;
 
 class PagosController extends Controller
 {
+
+
+    protected $auth;
+
+    public function __construct(Guard $auth){
+        $this->middleware('auth', ['only' => ['show']]);
+    
+        $this->auth = $auth;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +57,6 @@ class PagosController extends Controller
             return response()->json([
                     "message" => "creado"
                 ]);
-
         }
     }
 
@@ -54,10 +66,19 @@ class PagosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $pagos_show = Pagos::where(function ($query) {
+                $query->where('id_user', $id)
+                ->where('status', 0)
+                ->sortBy('date');
+                  })->get();
+
+        return response()->json(
+            $pagos_show->toArray()
+            );
     }
+
 
     /**
      * Show the form for editing the specified resource.

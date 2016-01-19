@@ -7,13 +7,7 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Registro Manual de Pago</h4>
 			</div>
-<div id="msj-success" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Pago registrado exitosamente.</p>
-</div>
 
-<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
 			<div class="modal-body">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 

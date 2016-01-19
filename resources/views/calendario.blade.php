@@ -10,7 +10,7 @@
 						</a>
 
 						<a href="/micuenta">
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab ">
 								<div class="nav_ic icon2">
 								</div>
 								<p>Mi Cuenta</p>

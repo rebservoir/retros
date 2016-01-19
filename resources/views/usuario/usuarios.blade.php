@@ -52,18 +52,16 @@
 
 <style>
 
-#thead_user th{
-	cursor: pointer;
-}
-.th_op:hover{
-	background-color: #C5DEF5;
-}
-.th_sel{
-	background-color: #C5DEF5;
-}
-
-
-
+	#thead_user th{
+		cursor: pointer;
+	}
+	.th_op:hover{
+		background-color: #C5DEF5;
+	}
+	.th_sel{
+		background-color: #C5DEF5;
+	}
+	
 </style>
 
 <script>

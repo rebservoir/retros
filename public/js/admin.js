@@ -23,13 +23,27 @@ $(function() {
   });
 
 
+function close_modals(){
+    $("#msj-success").addClass( "hide");
+    $("#msj-success1").addClass( "hide");
+    $("#msj-success2").addClass( "hide");
+    $("#msj-success3").addClass( "hide");
+    $("#msj-success4").addClass( "hide");
+    $("#msj-success5").addClass( "hide");
+    $( "#msj-fail").addClass( "hide");
+    $( "#msj-fail1").addClass( "hide");
+    $( "#msj-fail2").addClass( "hide");
+    $( "#msj-fail3").addClass( "hide");
+    $( "#msj-fail4").addClass( "hide");
+    $( "#msj-fail5").addClass( "hide");
+}
+
 $("#registrar_pago").click(function(){
 
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");
 
     var dato1 = id_usuario;
-    console.log('agarro la ' + dato1);
     var dato2 = $("#datepicker").val();
     var dato3 = $("#amount").val();
     var dato4 = $("#status").val();
@@ -54,6 +68,7 @@ $("#registrar_pago").click(function(){
         success:function(){
             $("#msj-success").removeClass( "hide");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
+            $('#pago_create').modal('toggle');
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -133,6 +148,7 @@ $("#actualizar_pago").click(function(){
         success:function(){
             $("#msj-success1").removeClass( "hide");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
+            $('#pago_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -167,6 +183,7 @@ $("#eliminar_pago").click(function(){
             success:function(){
             $("#msj-success2").removeClass( "hide");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
+            $('#pago_edit').modal('toggle');
             },
             error: function (jqXHR, exception) {
                 $("#msj-fail2").removeClass( "hide");
@@ -202,6 +219,7 @@ $("#eliminar_pago").click(function(){
         success:function(){
             $("#msj-success3").removeClass("hide");
             $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
+            $('#egresos_create').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -246,6 +264,7 @@ $("#eliminar_egresos").click(function(){
             success:function(){
             $("#msj-success5").removeClass( "hide");
             $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
+             $('#egresos_edit').modal('toggle');
             },
             error: function (jqXHR, exception) {
                 $( "#msj-fail5").removeClass( "hide");

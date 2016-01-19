@@ -3,7 +3,6 @@ function mostrar_info(btn){
     $( "#msj-fail").addClass( "hide");
  	var route = "/edit_info/"+ btn.value +"";
     $.get(route, function(res){
-    	console.log(res);
         $("#name").val(res.name);
         $("#email").val(res.email);
         $("#address").val(res.address);
@@ -45,6 +44,7 @@ $("#modificar_info").click(function(){
         success:function(){
             $("#msj-success").removeClass( "hide");
             $("#info_user").load(location.href+" #info_user>*","");
+            $('#user_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -76,7 +76,7 @@ $("#modificar_pass").click(function(){
 
     if(pass2 == pass3){
 
-	    var route = "/update_info_user/"+value+"";
+	    var route = "http://localhost:8080/laravel5_1/public/update_info_user/"+value+"";
 	    var token = $("#token_info").val();
 
 	    $.ajax({

@@ -2,12 +2,15 @@
 
 	@include('modal.user_edit')
 	@include('modal.pass_edit')
+	@include('modal.mensual')
+	@include('modal.semestral')
+	@include('modal.anual')
 
 	@section('css')
 		{!!Html::style('css/jquery-ui.min.css')!!}
 	@stop
 
-@section('nav')
+	@section('nav')
 						<a href="/home">
 							<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
 								<div class="nav_ic icon1">
@@ -17,7 +20,7 @@
 						</a>
 
 						<a href="/micuenta">
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab nav_sel">
 								<div class="nav_ic icon2">
 								</div>
 								<p>Mi Cuenta</p>
@@ -49,7 +52,7 @@
 						</a>
 									
 						<a href="/contacto">
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab nav_sel">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab">
 								<div class="nav_ic icon6">
 								</div>
 								<p>Contacto</p>
@@ -58,7 +61,6 @@
 	@stop
 
 	@section('content')
-
 
 					<div class="cont_left cont_600 col-lg-4">
 						<div class="box_header">
@@ -79,45 +81,25 @@
 							<div class="box_header">
 								<p>Mi Fraccionamiento > Información General</p>
 							</div>
-						
-							<div class="cont_in_r">
-								
-								<div id="info_user" class="table-responsive">          
-								  <table class="table">
-								    <tbody>
 
-								      <tr>
-								        <td><p>Nombre:</p></td>
-								        <td><p>{!!Auth::user()->name!!}</p></td>
-								      </tr>
-
-								      <tr>
-								        <td><p>Email:</p></td>
-								        <td><p>{!!Auth::user()->email!!}</p></td>
-								      </tr>
-
-								      <tr>
-								        <td><p>Dirección:</p></td>
-								        <td><p>{!!Auth::user()->address!!}</p></td>
-								      </tr>
-
-								      <tr>
-								      	<td><p>Telefono:</p></td>
-								      	<td><p>{!!Auth::user()->phone!!}</p></td>
-								      </tr>
-
-								      <tr>
-								      	<td><p>Celular:</p></td>
-								      	<td><p>{!!Auth::user()->celphone!!}</p></td>
-								      </tr>
-
-								    </tbody>
-								  </table>
+								<div id="msj-success" class="alert alert-success alert-dismissible hide" role="alert">
+								  <p>Información actualizada exitosamente.</p>
 								</div>
 
-								<button value='{!!Auth::user()->id!!}' OnClick='mostrar_info(this);' class='btn btn-primary' data-toggle="modal" data-target="#user_edit">Modificar Información</button>
-								<br><br>
-								<button value='{!!Auth::user()->id!!}'  class='btn btn-primary' data-toggle="modal" data-target="#pass_edit">Modificar Contraseña</button>
+								<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
+								  <div class="msj"></div>
+								</div>
+
+								<div id="msj-success2" class="alert alert-success alert-dismissible hide" role="alert">
+								  <p>Contraseña modificada exitosamente.</p>
+								</div>
+
+								<div id="msj-fail2" class="alert alert-danger alert-dismissible hide" role="alert">
+								  <div class="msj"></div>
+								</div>
+						
+							<div class="cont_in_r">
+								@include('cuenta/info')
 							</div>
 						</div>
 
@@ -127,16 +109,7 @@
 							</div>
 						
 							<div class="cont_in_r">
-
-								<p>Status de Pago:</p>
-								@if (Auth::user()->status == 0)
-									<p>Pagado</p>
-								@else
-									<p>Adeudo</p>
-								@endif
-
 								@include('cuenta/estado')
-
 							</div>
 						</div>
 
@@ -145,35 +118,8 @@
 								<p>Mi Fraccionamiento > Módulo de Pago</p>
 							</div>
 						
-							<div class="cont_in_r">
-
-											
-
-								<table class="table table-bordered">
-								    <thead>
-								      <tr>
-								        <th class="text-center success"><h3>Mensual</h3></th>
-								        <th class="text-center info "><h3>Semestral</h3></th>
-								        <th class="text-center success"><h3>Anual</h3></th>
-								      </tr>
-								    </thead>
-								    <tbody>
-								      <tr>
-								        <td class="text-center precio"><h3>$200.00</h3></td>
-								        <td class="text-center precio"><h3>$1,200.00</h3></td>
-								        <td class="text-center precio"><h3>$2,200.00</h3></td>
-								      </tr>
-								      <tr> 
-								     	<td class="text-center pagar"><button type="button" class="btn-primary btn-block btn_paypal"></button></td>
-								        <td class="text-center pagar"><button type="button" class="btn btn-primary btn-lg btn-block btn_paypal"><img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_10.png" alt="undefined" /></button></td>
-								        <td class="text-center pagar"><button type="button" class="btn btn-primary btn-lg btn-block btn_paypal"><img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_10.png" alt="undefined" /></button></td>
-								      </tr>
-								    </tbody>
-								  </table> 
-
-								  <img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/TDC_btn_4.png" alt="undefined" />
-											<img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/TD_btn_1.png" alt="undefined" />
-
+							<div class="cont_in_r" >
+								@include('cuenta/pago')
 							</div>
 						</div>
 					</div> <!-- END cont_right -->
@@ -182,26 +128,14 @@
 
 	@section('script')
 		{!!Html::script('js/userMode.js')!!}
+		{!!Html::script('js/cuenta.js')!!}
 	@stop
 
 
-	<style>
-.btn_paypal{
-    width: 172px !important;
-    padding: 0px !important;
-    margin: 0pt auto !important;
-    margin-top: 5px !important;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background-image: url("https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_10.png");
-    height: 34px;
+<style>
+.mid_cont{
+	margin: 0pt auto;
+    width: 330px;
 }
-.precio{
-	 height: 150px;
-}
-.pagar{
-	background-color: #C7C7C7;
-    height: 110px;
-    padding-top: 30px !important;
-}
+
 	</style>

@@ -19,18 +19,36 @@ $("#registrar").click(function(){
         success:function(){
              $("#msj-success4").removeClass( "hide");
              $("#tablaUtiles").load(location.href+" #tablaUtiles>*","");
+             $('#util_create').modal('toggle');
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail4").removeClass( "hide");
-            console.log(obj);
             var msj = obj.concept + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
             var res = res.replace(/concept/gi, 'Concepto');
             $(".msj").html(res);
+            $('#util_create').modal('toggle');
         } 
     });
 });
+
+function close_modals(){
+    $("#msj-success").addClass( "hide");
+    $("#msj-success1").addClass( "hide");
+    $("#msj-success2").addClass( "hide");
+    $("#msj-success3").addClass( "hide");
+    $("#msj-success4").addClass( "hide");
+    $("#msj-success5").addClass( "hide");
+    $("#msj-success6").addClass( "hide");
+    $( "#msj-fail").addClass( "hide");
+    $( "#msj-fail1").addClass( "hide");
+    $( "#msj-fail2").addClass( "hide");
+    $( "#msj-fail3").addClass( "hide");
+    $( "#msj-fail4").addClass( "hide");
+    $( "#msj-fail5").addClass( "hide");
+    $( "#msj-fail6").addClass( "hide");
+}
 
 function Mostrar(btn){
     $("#msj-success4").addClass( "hide");
@@ -75,15 +93,16 @@ $("#actualizar").click(function(){
         success:function(){
             $("#msj-success5").removeClass( "hide");
             $("#tablaUtiles").load(location.href+" #tablaUtiles>*","");
+            $('#util_edit').modal('toggle');
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail5").removeClass( "hide");
-            console.log(obj);
             var msj = obj.concept + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
             var res = res.replace(/concept/gi, 'Concepto');
             $(".msj").html(res);
+            $('#util_edit').modal('toggle');
         } 
 
     });
@@ -106,9 +125,11 @@ $("#eliminar").click(function(){
         success:function(){
             $("#msj-success6").removeClass( "hide");
             $("#tablaUtiles").load(location.href+" #tablaUtiles>*","");
+            $('#util_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             $( "#msj-fail6").removeClass( "hide");
+            $('#util_edit').modal('toggle');
         } 
 
     });
@@ -156,17 +177,18 @@ $("#registrar_noticia").on("submit", function(e){
         success:function(){
             $("#msj-success").removeClass( "hide");
             $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
+            $('#noticia_create').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail").removeClass( "hide");
-            console.log(obj);
             var msj = obj.titulo + '<br>' + obj.texto + '<br>' + obj.path + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
             var res = res.replace(/titulo/gi, 'Titulo');
             var res = res.replace(/texto/gi, 'Contenido');
             var res = res.replace(/path/gi, 'Imagen');
             $(".msj").html(res);
+            $('#noticia_create').modal('toggle');
         }
     });
 
@@ -208,7 +230,7 @@ $("#actualizar_noticia").on("submit", function(e){
         success:function(){
             $("#msj-success1").removeClass( "hide");
             $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
-            console.log('hell yeah!');
+            $('#noticia_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -240,11 +262,12 @@ $("#eliminar_noticia").click(function(){
             type: 'DELETE',
             dataType: 'json',
             success:function(){
-            $("#msj-success2").removeClass( "hide");
-            $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
+                $("#msj-success2").removeClass( "hide");
+                $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
+                $('#noticia_edit').modal('toggle');
             },
             error: function (jqXHR, exception) {
-            $( "#msj-fail2").removeClass( "hide");
+                $( "#msj-fail2").removeClass( "hide");
             }
         });
     } else {
@@ -266,11 +289,8 @@ function Mostrar_sitio(btn){
     $.get(route, function(res){
         $("#name_frac").val(res.name);
         $("#path_sitio").val(res.picture);
-
     });
 }
-
-
 
 $("#actualizar_sitio").on("submit", function(e){
     $("#msj-success_sitio").addClass( "hide");
@@ -306,12 +326,12 @@ $("#actualizar_sitio").on("submit", function(e){
         success:function(){
             $("#msj-success_sitio").removeClass( "hide");
             $("#divSitio").load(location.href+" #divSitio>*","");
-            console.log('ok');
+            $('#util_edit').modal('toggle');
         },
         error: function () {
             //var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail_sitio").removeClass( "hide");
-            console.log('error');
+            $('#util_edit').modal('toggle');
         }
         
     });

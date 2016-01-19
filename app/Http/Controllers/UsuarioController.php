@@ -133,7 +133,6 @@ class UsuarioController extends Controller
      */
     public function update($id, UserUpdateRequest $request)
     {
-        
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();
@@ -141,8 +140,6 @@ class UsuarioController extends Controller
         return response()->json([
             "message"=>'listo'
         ]);
-
-        
     }
 
     /**

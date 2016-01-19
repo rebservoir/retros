@@ -9,13 +9,7 @@
 				<h4 class="modal-title" id="myModalLabel">Modificar Contraseña</h4>
 			</div>
 
-<div id="msj-success2" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Contraseña modificada exitosamente.</p>
-</div>
 
-<div id="msj-fail2" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
 			<div class="modal-body">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_pass">
 				<input type="hidden" id="id1">

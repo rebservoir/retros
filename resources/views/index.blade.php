@@ -101,7 +101,7 @@
 										{!!Html::image('file/'.$noticia->path)!!}
 										<div class="col-xs-12 col-sm-8 col-md-9  col-lg-9">
 											<h1>{{$noticia->titulo}} - {!!substr($noticia->created_at, 0, 10)!!}</h1>
-											<p>{!!(substr($noticia->texto, 0, 60)) . ' ...'!!}<a href="http://localhost:8080/laravel5_1/public/noticia_show/{{$noticia->id}}">Leer mas...</a></p>
+											<p>{!!(substr($noticia->texto, 0, 60)) . ' ...'!!}<a href="/noticia_show/{{$noticia->id}}">Leer mas...</a></p>
 										</div>
 									</div>
   								@endforeach

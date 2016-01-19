@@ -1,6 +1,33 @@
+<!-- ALERTAS PAGOS -->
+
+<div id="msj-success" class="alert alert-success alert-dismissible hide" role="alert">
+  	<p>Pago registrado exitosamente.</p>
+</div>
+
+<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
+  	<div class="msj"></div>
+</div>
+
+<div id="msj-success1" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Pago actualizado exitosamente.</p>
+</div>
+
+<div id="msj-success2" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Pago eliminado exitosamente.</p>
+</div>
+
+<div id="msj-fail1" class="alert alert-danger alert-dismissible hide" role="alert">
+  <div class="msj"></div>
+</div>
+
+<div id="msj-fail2" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Intentar de nuevo.</p>
+</div>
+
+<!-- ALERTAS PAGOS END -->
 
 <h3>Pagos</h3>
-<button class='btn btn-primary' data-toggle="modal" data-target="#pago_create">Registrar Pago Manual</button>
+<button class='btn btn-primary' onclick="close_modals();" data-toggle="modal" data-target="#pago_create">Registrar Pago Manual</button>
 
 <br><br>
 <div id="tablaPagos">

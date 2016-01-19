@@ -1,7 +1,31 @@
 <h3>Egresos</h3>
-<button class='btn btn-primary' data-toggle="modal" data-target="#egresos_create">Registrar Egresos</button>
+
+<!-- Egresos ALERTS -->
+<div id="msj-success4" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Egreso actualizado exitosamente.</p>
+</div>
+<div id="msj-success5" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Egreso eliminado exitosamente.</p>
+</div>
+<div id="msj-fail4" class="alert alert-danger alert-dismissible hide" role="alert">
+  <div class="msj"></div>
+</div>
+<div id="msj-fail5" class="alert alert-danger alert-dismissible hide" role="alert">
+  <p>Intentar de nuevo.</p>
+</div>
+<div id="msj-success3" class="alert alert-success alert-dismissible hide" role="alert">
+  <p>Egreso registrado exitosamente.</p>
+</div>
+<div id="msj-fail3" class="alert alert-danger alert-dismissible hide" role="alert">
+  <div class="msj"></div>
+</div>
+
+<!-- Egresos ALERTS END -->
 
 <br><br>
+<button class='btn btn-primary' onclick="close_modals();"  data-toggle="modal" data-target="#egresos_create">Registrar Egresos</button>
+<br><br>
+
 <ul class="nav nav-tabs">
     <li><a href="#2013">2013</a></li>
     <li><a href="#2014">2014</a></li>

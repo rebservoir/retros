@@ -25,7 +25,9 @@ Route::get('mifraccionamiento','FrontController@mifrac');
 Route::get('admin/contenidos','FrontController@contenidos');
 Route::get('noticia_show/{id?}','NoticiaController@show');
 Route::get('edit_info/{id?}','FrontController@edit_info');
+Route::get('pagos_show','FrontController@pagos_show');
 Route::put('update_info_user/{id?}','FrontController@update_info_user');
+
 
 Route::get('admin/noticia_show/{id?}','NoticiaController@show');
 Route::get('admin/usuarios/','FrontController@usuarios');

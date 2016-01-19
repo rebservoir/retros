@@ -2,6 +2,7 @@
 
 namespace TuFracc\Console;
 
+use DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \TuFracc\Console\Commands\Inspire::class,
+        \TuFracc\Console\Commands\Test::class,
     ];
 
     /**
@@ -26,5 +28,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
                  ->hourly();
+
+        $schedule->exec('node http://mysite.dev:8080/js/sch.js')->everyMinute();   
+        
+        $schedule->command('tst:prueba')->everyMinute(); 
+
     }
 }

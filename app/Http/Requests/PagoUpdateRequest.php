@@ -23,10 +23,10 @@ class PagoUpdateRequest extends Request
     public function rules()
     {
         return [
-            'id_user' => 'required',
-            'date' => 'required',
+            //'id_user' => 'required',
+            //'date' => 'required',
             'status' => 'required',
-            'amount' => 'required',
+            //'amount' => 'required',
         ];
     }
 }

@@ -14,6 +14,7 @@ use TuFracc\Utiles;
 use TuFracc\Pagos;
 use TuFracc\Egresos;
 use TuFracc\Saldos;
+use TuFracc\Cuotas;
 use TuFracc\Sitio;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
@@ -57,7 +58,7 @@ class FrontController extends Controller
     public function noticias(Request $request)
     {
         $noticias = Noticia::orderBy('created_at', 'desc')->paginate(5);
-        $noticias->setPath('/laravel5_1/public/noticias');
+        $noticias->setPath('/noticias');
 
         if($this->auth->user()->role != 1){
             if($request->ajax()){
@@ -71,8 +72,9 @@ class FrontController extends Controller
 
     public function cuenta()
     {
-        $pagos = Pagos::all();
-        return view('cuenta', ['pagos' => $pagos]);
+        $pagos = Pagos::all()->sortBy('date');;
+        $cuotas = Cuotas::all();
+        return view('cuenta', ['pagos' => $pagos, 'cuotas' => $cuotas]);
     }
 
     public function mifrac()
@@ -83,8 +85,6 @@ class FrontController extends Controller
 
     public function transparencia()
     {
-      
-
         $egresos = Egresos::all();
         $saldos = Saldos::all();
         return view('transparencia', [ 'egresos' => $egresos, 'saldos' => $saldos ]);
@@ -106,7 +106,7 @@ class FrontController extends Controller
         if($this->auth->user()->role == 1){
 
                 $users = User::paginate(20);
-                $users->setPath('/laravel5_1/public/admin/home');
+                $users->setPath('/admin/home');
                 $morosos = Morosos::where('id', 0)->get();
                 $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
                 return view('admin/index', ['noticias' => $noticias, 'users' => $users, 'morosos' => $morosos ]);
@@ -120,7 +120,7 @@ class FrontController extends Controller
     {
         if($this->auth->user()->role == 1){
             $users = User::paginate(20);
-            $users->setPath('/laravel5_1/public/admin/administracion');
+            $users->setPath('/admin/administracion');
             $pagos = Pagos::all();
             $egresos = Egresos::all();
             return view('/admin/admin_modulo', ['users' => $users, 'pagos' => $pagos, 'egresos' => $egresos]);
@@ -170,6 +170,20 @@ class FrontController extends Controller
             $user->toArray()
             );
     }
+
+    public function pagos_show()
+    {
+        $pagos_show = Pagos::where(function ($query) {
+                $query->where('id_user', $this->auth->user()->id)
+                ->where('status', 0)
+                 ->sortBy('date');
+                  })->get();
+
+        return response()->json(
+            $pagos_show->toArray()
+            );
+    }
+
 
 
     public function update_info_user($id, UserUpdateRequest $request)

@@ -82,7 +82,7 @@
 										{!!Html::image('file/'.$noticia->path)!!}
 										<div class="col-xs-12 col-sm-8 col-md-9  col-lg-9">
 											<h1>{{$noticia->titulo}} - {!!substr($noticia->created_at, 0, 10)!!}</h1>
-											<p>{!!(substr($noticia->texto, 0, 60)) . ' ...'!!}<a href="#">Leer mas...</a></p>
+											<p>{!!(substr($noticia->texto, 0, 60)) . ' ...'!!}<a href="/admin/noticia_show/{{$noticia->id}}">Leer mas...</a></p>
 										</div>
 									</div>
   								@endforeach
