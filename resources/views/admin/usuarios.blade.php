@@ -67,7 +67,6 @@
   <p>Intentar de nuevo.</p>
 </div>
 
-		
 		<br>	
 			<button value='' OnClick='' class='btn btn-primary' data-toggle="modal" data-target="#user_create">Registrar un Nuevo Usuario</button>
 		<br><br>

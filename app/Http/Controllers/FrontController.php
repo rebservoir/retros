@@ -44,7 +44,8 @@ class FrontController extends Controller
             $morosos = Morosos::where('id', 0)->get();;
             $users = User::paginate(20);
             $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
-             return view('index', ['users' => $users, 'noticias' => $noticias, 'morosos' => $morosos ]);
+            $sitios = Sitio::where('id', 1)->get();
+             return view('index', ['users' => $users, 'noticias' => $noticias, 'morosos' => $morosos, 'sitios' => $sitios ]);
         }else{
             return redirect()->to('/admin/home');
         }
@@ -107,9 +108,10 @@ class FrontController extends Controller
 
                 $users = User::paginate(20);
                 $users->setPath('/admin/home');
+                $sitios = Sitio::where('id', 1)->get();
                 $morosos = Morosos::where('id', 0)->get();
                 $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
-                return view('admin/index', ['noticias' => $noticias, 'users' => $users, 'morosos' => $morosos ]);
+                return view('admin/index', ['noticias' => $noticias, 'users' => $users, 'morosos' => $morosos, 'sitios' => $sitios ]);
 
         }else{
                  return Redirect::to('home');
@@ -123,7 +125,9 @@ class FrontController extends Controller
             $users->setPath('/admin/administracion');
             $pagos = Pagos::all();
             $egresos = Egresos::all();
-            return view('/admin/admin_modulo', ['users' => $users, 'pagos' => $pagos, 'egresos' => $egresos]);
+            $saldos = Saldos::all();
+            $cuotas = Cuotas::orderBy('concepto', 'ASC')->get();
+            return view('/admin/admin_modulo', ['users' => $users, 'pagos' => $pagos, 'egresos' => $egresos, 'cuotas' => $cuotas, 'saldos' => $saldos ]);
         }else{
                  return Redirect::to('home');
         }
@@ -136,7 +140,8 @@ class FrontController extends Controller
             $utiles = Utiles::all();
             $morosos = Morosos::all()->where('id', 0);
             $sitio = Sitio::all()->where('id', 1);
-            return view('/admin/contenidos', [ 'morosos' => $morosos, 'utiles' => $utiles, 'noticias' => $noticias, 'sitio' => $sitio ]);
+            return view('/admin/contenidos', [ 'morosos' => $morosos, 'utiles' => $utiles, 
+                'noticias' => $noticias, 'sitio' => $sitio ]);
         }else{
             return Redirect::to('home');
         }
@@ -146,7 +151,9 @@ class FrontController extends Controller
     {
         if($this->auth->user()->role == 1){
                 $users = User::all();
-            return view('/admin/usuarios', [ 'users' => $users]);
+                $tipos = Cuotas::orderBy('concepto', 'ASC')->lists('concepto','id');
+
+            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos ]);
         }else{
             return Redirect::to('home');
         }

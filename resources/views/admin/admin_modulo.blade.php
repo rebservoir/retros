@@ -4,6 +4,8 @@
 	@include('admin.modal.pago_edit')
 	@include('admin.modal.egresos_create')
 	@include('admin.modal.egresos_edit')
+	@include('admin.modal.cuota_create')
+	@include('admin.modal.cuota_edit')
 
 	@section('css')
 		{!!Html::style('css/jquery-ui.min.css')!!}
@@ -86,6 +88,7 @@
 							</div>
 						
 							<div class="cont_in_r">
+								@include('admin.transparencia')
 							</div>
 						</div>
 
@@ -95,7 +98,7 @@
 							</div>
 						
 							<div class="cont_in_r">
-	
+								@include('admin.cuotas')
 							</div>
 						</div>
 

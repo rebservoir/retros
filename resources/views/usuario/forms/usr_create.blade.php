@@ -24,6 +24,10 @@
 			{!!Form::text('celphone',null,['id'=>'cel','class'=>'form-control','placeholder'=>'Ingresar direccion'])!!}
 		</div>
 		<div class="form-group">
+			{!!Form::label('Tipo:')!!}
+			{!!Form::select('type', $tipos ,null,['id'=>'type', 'placeholder'=>'Seleccionar opción', 'required' ])!!}
+		</div>
+		<div class="form-group">
 			{!!Form::label('Rol:')!!}
 			{!!Form::select('role', ['Residente', 'Administrador'],null,['id'=>'role'])!!}
 		</div>

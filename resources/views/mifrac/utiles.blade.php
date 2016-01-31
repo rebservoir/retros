@@ -1,7 +1,16 @@
 <div class="table-responsive">          
 	<table class="table">
 	    <thead><tr><th>Teléfonos de Emergencia</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
+
 			@foreach($utiles as $util)
 				@if($util->category == 0)
 					<tr>
@@ -17,6 +26,14 @@
 
   	<table class="table">
 	    <thead><tr><th>Fraccionamiento y Casetas</th></tr></thead>
+			<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 1)
@@ -33,6 +50,14 @@
 
   	<table class="table">
 	    <thead><tr><th>Tintorerias</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 2)
@@ -49,6 +74,14 @@
 
   	<table class="table">
 	    <thead><tr><th>Taxi</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 3)
@@ -65,6 +98,14 @@
 
 	<table class="table">
 	    <thead><tr><th>Farmacias</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 4)
@@ -81,6 +122,14 @@
 
   	<table class="table">
 	    <thead><tr><th>Gruas</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 5)
@@ -97,6 +146,14 @@
 
 	<table class="table">
 	    <thead><tr><th>Ferreterias</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 6)
@@ -113,6 +170,14 @@
 
 	<table class="table">
 	    <thead><tr><th>Otros</th></tr></thead>
+	    	<thead> 
+	    		<tr class="info">
+					<th>Concepto</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
 	    <tbody>
 			@foreach($utiles as $util)
 				@if($util->category == 7)

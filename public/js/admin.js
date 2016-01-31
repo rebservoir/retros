@@ -5,7 +5,7 @@ var id_usuario_actual;
 
 function get_id_user_pago(id_user){
     id_usuario = id_user;
-    console.log('la id_user es:' + id_usuario);
+    //console.log('la id_user es:' + id_usuario);
 }
 
 $(function() {
@@ -49,11 +49,11 @@ $("#registrar_pago").click(function(){
     var dato4 = $("#status").val();
     var dato5 = $('#search-input').val();
    
-    console.log(dato1);
-    console.log(dato2);
-    console.log(dato3);
-    console.log(dato4);
-    console.log(dato5);
+    //console.log(dato1);
+    //console.log(dato2);
+    //console.log(dato3);
+    //console.log(dato4);
+    //console.log(dato5);
 
     var route = "/pagos";
     var token = $("#token").val();
@@ -73,7 +73,7 @@ $("#registrar_pago").click(function(){
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail").removeClass( "hide");
-            console.log(obj);
+            //console.log(obj);
             var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
             var res = res.replace(/id_user/gi, 'Usuario');
@@ -97,7 +97,7 @@ function Mostrar_pago(btn){
     var route = "/pagos/"+btn.value+"/edit";
 
     $.get(route, function(res){
-        console.log(res);
+        //console.log(res);
         $("#hidden_id").val(res.id);
         $("#hidden_id_user").val(res.id_user);
         $("#datepicker_pago").val(res.date);
@@ -120,12 +120,12 @@ $("#actualizar_pago").click(function(){
     var dato5 = $("#search-input2").val();
     var value = $("#hidden_id").val();
 
-    console.log(dato1);
-    console.log(dato2);
-    console.log(dato3);
-    console.log(dato4);
-    console.log(dato5);
-    console.log(value);
+    //console.log(dato1);
+    //console.log(dato2);
+   // console.log(dato3);
+    //console.log(dato4);
+    //console.log(dato5);
+    //console.log(value);
 
     if(id_usuario!=''){
         if(dato1!=id_usuario){
@@ -133,7 +133,7 @@ $("#actualizar_pago").click(function(){
         }
     }
 
-    console.log('dato5:' + dato5);
+    //console.log('dato5:' + dato5);
     var route = "/pagos/"+value+"";
     var token = $("#token_pago").val();
 
@@ -153,7 +153,7 @@ $("#actualizar_pago").click(function(){
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail1").removeClass( "hide");
-            console.log(obj);
+            //console.log(obj);
             var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
             var res = res.replace(/id_user/gi, 'Usuario');
@@ -250,11 +250,52 @@ function Mostrar_egresos(btn){
     });
 }
 
+
+$("#actualizar_egresos").on("submit", function(e){
+    //$("#msj-success3").addClass( "hide");
+    //$("#msj-fail3").addClass( "hide");
+
+    console.log('ddd');
+
+    e.preventDefault();
+    var fd = new FormData(this);
+
+    var route = "/egresos";
+    var token = $("#token_eg1").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'PUT',
+        dataType: 'json',
+        data: fd,
+        contentType: false,
+        processData: false,
+
+        success:function(){
+            //$("#msj-success3").removeClass("hide");
+            $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
+            $('#egresos_edit').modal('toggle');
+        },
+        error: function (jqXHR, exception) {
+            var obj = jQuery.parseJSON(jqXHR.responseText);
+            $("#msj-fail3").removeClass("hide");
+            $('#egresos_edit').modal('toggle');
+            var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
+            var res = msj.replace(/undefined<br>/gi, '');
+            var res = res.replace(/id_user/gi, 'Usuario');
+            var res = res.replace(/date/gi, 'Fecha');
+            var res = res.replace(/amount/gi, 'Cantidad');
+            $(".msj").html(res);
+        }    
+    });
+});
+
 $("#eliminar_egresos").click(function(){
     if (confirm("Eliminar este egreso?") == true) {
         var value = $("#id_egresos").val();
         var route = "/egresos/"+value;
-        var token = $("#token_eg").val();
+        var token = $("#token_eg1").val();
 
         $.ajax({
             url: route,
@@ -288,7 +329,7 @@ $( document ).ready(function() {
 
     for (index = 0; index < res.length; index++) {
         names[index] = res[index].name + '/' +res[index].id;
-        console.log(names[index]);
+        //console.log(names[index]);
     }
 
     });
@@ -328,4 +369,138 @@ $('#the-basics .typeahead').typeahead({
 {
   name: 'states',
   source: substringMatcher(names)
+});
+
+
+
+function mostrar_cuota(btn){
+
+    $("#msj-success7").addClass( "hide");
+    $("#msj-fail7").addClass( "hide");
+    $("#msj-success8").addClass( "hide");
+    $("#msj-fail8").addClass( "hide");
+    $("#msj-success9").addClass( "hide");
+    $("#msj-fail9").addClass( "hide");
+
+
+    var route = "/cuotas/"+btn.value+"/edit";
+
+    $.get(route, function(res){
+        $("#concept_cuota1").val(res.concepto);
+        $("#monto_cuota1").val(res.amount);
+        $("#id_cuota1").val(res.id);
+    });
+}
+
+$("#registrar_cuota").click(function(){
+
+    $("#msj-success7").addClass( "hide");
+    $("#msj-fail7").addClass( "hide");
+    $("#msj-success8").addClass( "hide");
+    $("#msj-fail8").addClass( "hide");
+    $("#msj-success9").addClass( "hide");
+    $("#msj-fail9").addClass( "hide");
+
+    var dato1 = $("#concept_cuota").val();
+    var dato2 = $("#monto_cuota").val();
+    var route = "/cuotas";
+    var token = $("#token_cuota").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'POST',
+        dataType: 'json',
+        data:{concepto: dato1, amount: dato2},
+
+        success:function(){
+            $("#msj-success7").removeClass( "hide");
+            $("#divCuotas").load(location.href+" #divCuotas>*","");
+            $('#cuota_create').modal('toggle');
+        },
+         error: function (jqXHR, exception) {
+            var obj = jQuery.parseJSON(jqXHR.responseText);
+            $("#msj-fail7").removeClass( "hide");
+            var msj = obj.concept + '<br>';
+            var res = msj.replace(/undefined<br>/gi, '');
+            var res = res.replace(/concept/gi, 'Concepto');
+            $(".msj").html(res);
+            $('#cuota_create').modal('toggle');
+        } 
+    });
+});
+
+
+$("#actualizar_cuota").click(function(){
+
+    $("#msj-success7").addClass( "hide");
+    $("#msj-fail7").addClass( "hide");
+    $("#msj-success8").addClass( "hide");
+    $("#msj-fail8").addClass( "hide");
+    $("#msj-success9").addClass( "hide");
+    $("#msj-fail9").addClass( "hide");
+
+    var value = $("#id_cuota1").val();
+    var dato1 = $("#concept_cuota1").val();
+    var dato2 = $("#monto_cuota1").val();
+
+    var route = "/cuotas/"+value+"";
+    var token = $("#token_cuota1").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'PUT',
+        dataType: 'json',
+        data:{concepto: dato1, amount: dato2},
+
+        success:function(){
+            $("#msj-success8").removeClass( "hide");
+            $("#divCuotas").load(location.href+" #divCuotas>*","");
+            $('#cuota_edit').modal('toggle');
+        },
+         error: function (jqXHR, exception) {
+            var obj = jQuery.parseJSON(jqXHR.responseText);
+            $("#msj-fail8").removeClass( "hide");
+            var msj = obj.concept + '<br>';
+            var res = msj.replace(/undefined<br>/gi, '');
+            var res = res.replace(/concept/gi, 'Concepto');
+            //$(".msj").html(res);
+            $('#cuotas_edit').modal('toggle');
+        } 
+
+    });
+});
+
+$("#eliminar_cuota").click(function(){
+
+    $("#msj-success7").addClass( "hide");
+    $("#msj-fail7").addClass( "hide");
+    $("#msj-success8").addClass( "hide");
+    $("#msj-fail8").addClass( "hide");
+    $("#msj-success9").addClass( "hide");
+    $("#msj-fail9").addClass( "hide");
+
+    if (confirm("Eliminar esta Cuota?") == true) {
+
+        var value = $("#id_cuota1").val();
+        var route = "/cuotas/"+value;
+        var token = $("#token_cuota1").val();
+
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN': token},
+            type: 'DELETE',
+            dataType: 'json',
+            success:function(){
+                $("#msj-success9").removeClass( "hide");
+                $("#divCuotas").load(location.href+" #divCuotas>*","");
+                $('#cuota_edit').modal('toggle');
+            },
+            error: function (jqXHR, exception) {
+                $( "#msj-fail9").removeClass( "hide");
+            }
+        });
+    } else {
+    } 
 });

@@ -44,6 +44,7 @@ Route::resource('log','LogController');
 Route::resource('pagos','PagosController');
 Route::resource('egresos','EgresosController');
 Route::resource('saldos','SaldosController');
+Route::resource('cuotas','CuotasController');
 
 Route::get('logout','LogController@logout');
 

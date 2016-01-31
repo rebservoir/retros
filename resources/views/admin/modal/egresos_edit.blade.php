@@ -10,7 +10,7 @@
 
 			<div class="modal-body">
 			{!! Form::open(array('id' => 'registrar_egresos', 'files' => true)) !!}
-				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eg">
+				<input type="hidden" name="_token_edit" value="{{ csrf_token() }}" id="token_eg1">
 				<input type="hidden" id="id_egresos">
 				<div class="form-group">
 					{!!Form::label('Concepto:')!!}
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar_egresos', 'class'=>'btn btn-primary'], $secure=null)!!}
+					{!!Form::submit('Actualizar',['id'=>'actualizar_egresos', 'class'=>'btn btn-primary'])!!}
 					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_egresos', 'class'=>'btn btn-danger'], $secure=null)!!}
 				</div>
 			{!! Form::close() !!}

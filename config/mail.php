@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'rebservoir@gmail.com', 'name' => 'Prueba TuFracc'],
+    'from' => ['address' => 'tufracc@gmail.com', 'name' => 'Tu Fraccionamiento'],
 
     /*
     |--------------------------------------------------------------------------

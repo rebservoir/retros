@@ -80,9 +80,16 @@ class EgresosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EgresosCreateRequest $request, $id)
     {
-        //
+        if($request->ajax()){
+        $egresos = Egresos::find($id);
+        $egresos->fill($request->all());
+        $egresos->save();
+            return response()->json([
+                    "message" => "creado"
+                ]);
+        }   
     }
 
     /**

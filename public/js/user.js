@@ -20,6 +20,7 @@ function Mostrar(btn){
         $("#cel1").val(res.celphone);
         $("#role1").val(res.role);
         $("#id1").val(res.id);
+        $("#type1").val(res.type);
     });
 }
 
@@ -34,6 +35,7 @@ $("#registrar").click(function(){
     var dato5 = $("#cel").val();
     var dato6 = $("#role").val();
     var dato7 = $("#password").val();
+    var dato8 = $("#type").val();
 
     var route = "/usuario";
     var token = $("#token").val();
@@ -50,7 +52,8 @@ $("#registrar").click(function(){
             phone:      dato4,
             celphone:   dato5,
             role:       dato6,
-            password:   dato7
+            password:   dato7,
+            type:       dato8
         },
         success:function(){
             $("#msj-success").removeClass( "hide");
@@ -84,6 +87,7 @@ $("#actualizar").click(function(){
     var dato4 = $("#phone1").val();
     var dato5 = $("#cel1").val();
     var dato6 = $("#role1").val();
+    var dato7 = $("#type1").val();
 
 
     var route = "/usuario/"+value+"";
@@ -100,7 +104,8 @@ $("#actualizar").click(function(){
             address:    dato3, 
             phone:      dato4,
             celphone:   dato5,
-            role:       dato6
+            role:       dato6,
+            type:       dato7
         },
 
         success:function(){

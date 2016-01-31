@@ -12,10 +12,11 @@ class Noticia extends Model
     protected $fillable = ['titulo', 'texto', 'path'];
 
     public function setPathAttribute($path){
-    	$this->attributes['path'] = Carbon::now()->second.$path->getClientOriginalName();
+    	$this->attributes['path'] = 'tufracc_' . time() . '.' . $path->getClientOriginalName();
     	$name = Carbon::now()->second.$path->getClientOriginalName();
     	\Storage::disk('local')->put($name, \File::get($path));
     }
+
 /*
     public static function Noticias(){
     	return DB::table('noticias')

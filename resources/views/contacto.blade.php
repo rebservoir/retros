@@ -65,19 +65,19 @@
 
 						<div class="contact-form">
 								{!!Form::open(['route'=>'mail.store','method'=>'POST'])!!}
-								    <div class="col-md-6">
+								    <div class="">
 										{!!Form::label('Nombre:')!!}
 										{!!Form::text('name',null,['class'=>'typeahead form-control','placeholder'=>'Nombre'])!!}
 									</div>
-									<div class="col-md-6">
+									<div class="">
 										{!!Form::label('Email:')!!}
 										{!!Form::text('email',null,['class'=>'typeahead form-control','placeholder'=>'Email'])!!}
 									</div>
-									<div class="col-md-6">
+									<div class="">
 										{!!Form::label('Mensaje:')!!}
-										{!!Form::textarea('msg',null,['placeholder'=>'Mensaje'])!!}
+										{!!Form::textarea('msg',null,['class'=>'typeahead form-control','placeholder'=>'Mensaje'])!!}
 									</div>
-									{!!Form::submit('SEND')!!}
+									{!!Form::submit('Enviar', ['class'=>'btn btn-primary'])!!}
 								{!!Form::close()!!}
 						</div> 
 					</div>
@@ -86,3 +86,10 @@
 @stop
 
 
+<style type="text/css">
+.contact-form{
+
+	width: 395px;
+	margin-left: 65px;
+}
+</style>

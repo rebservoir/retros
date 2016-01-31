@@ -52,13 +52,18 @@
 
 @section('content')
 
-<div id="slider" class="">
-					<div id="slider_box">
-					</div>
-					<div id="slider_name">
-						<p>Lomas Punta del Este Residencial</p>
-					</div>
-				</div> <!--END Slider -->
+	<div id="slider" class="">
+		@foreach($sitios as $sitio)
+			<img src="../file/{{$sitio->picture}}" class="col-lg-3">
+			
+				<div id="slider_box">		
+				</div>
+
+				<div id="slider_name">
+					<p>{{$sitio->name}}</p>
+				</div>
+		@endforeach
+	</div> <!--END Slider -->
 
 				<div id="main_cont">
 					<div class="">

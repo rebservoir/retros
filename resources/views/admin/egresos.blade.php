@@ -26,35 +26,61 @@
 <button class='btn btn-primary' onclick="close_modals();"  data-toggle="modal" data-target="#egresos_create">Registrar Egresos</button>
 <br><br>
 
-<ul class="nav nav-tabs">
-    <li><a href="#2013">2013</a></li>
-    <li><a href="#2014">2014</a></li>
-    <li class="active"><a href="#2015">2015</a></li>
-    <li><a href="#2016">2016</a></li>
-</ul>
+{{--*/ 
+$month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+$year_c = date('Y');
+$mes = date('n');
+$day = date('j');
 
-  <div class="tab-content">
-    <br><br>
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#ene">Enero</a></li>
-		<li><a href="#feb">Febrero</a></li>
-		<li><a href="#mar">Marzo</a></li>
-		<li><a href="#abr">Abril</a></li>
-		<li><a href="#may">Mayo</a></li>
-		<li><a href="#jun">Junio</a></li>
-		<li><a href="#jul">Julio</a></li>
-		<li><a href="#ago">Agosto</a></li>
-		<li><a href="#sep">Septiembre</a></li>
-		<li><a href="#oct">Octubre</a></li>
-		<li><a href="#nov">Noviembre</a></li>
-		<li><a href="#dic">Diciembre</a></li>
-	</ul>
+/*--}}
+
+  <ul class="nav nav-tabs">
+    {{--*/ 
+      for ($j = 2015; $j < 2018; $j++) {
+        if( $j == $year_c)
+          echo "<li class='active'><a href='#e" . $j  . "'>" . $j . "</a></li>";
+        else
+          echo "<li><a href='#e" . $j  . "'>" . $j . "</a></li>";
+        }
+    /*--}}   
+  </ul>
+
+	<br><br>
 
 <div class="tab-content">
-	<div id="tablaEgresos">
-	  <div id="ene" class="tab-pane fade in active">
-			<table class="table">
-				<thead>
+
+  {{--*/ 
+    for ($j = 2015; $j < 2018; $j++) {
+      if($j==$year_c)
+        echo "<div id='e" . $j . "' class='tab-pane fade in active'>";
+      else
+        echo "<div id='e" . $j . "' class='tab-pane fade'>"; 
+  /*--}} 
+
+  <ul class="nav nav-tabs">
+    {{--*/ 
+      for ($k = 0; $k < 12; $k++) {
+        if(($k+1)==$mes)
+          echo "<li class='active'><a href='#e" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
+        else
+          echo "<li><a href='#e" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
+        }
+    /*--}}
+  </ul>
+
+  {{--*/ 
+    for ($q = 0; $q < 12; $q++) {
+      if(($q+1)==$mes)
+        echo "<div id='e" . $month[$q] . $j . "' class='tab-pane fade in active'>";
+      else
+        echo "<div id='e" . $month[$q] . $j . "' class='tab-pane fade'>"; 
+  /*--}} 
+
+    <br><br>
+
+<div id="tablaEgresos">
+	<table class="table">
+		<thead>
 					<th>Fecha</th>
 					<th>Concepto</th>
 					<th>Cantidad</th>
@@ -65,7 +91,7 @@
 				<tbody>
 					@foreach($egresos as $egreso)
 						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==1)
+						@if(($date[1] == ($q+1)) && ($date[0] == $j))
 							<tr>
 								{{--*/ $date = explode("-", $egreso->date) /*--}}
 								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
@@ -77,320 +103,24 @@
 							</tr>
 						@endif
 					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="feb" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
+		</tbody>
+	</table>
+</div>
 
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==2)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="mar" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
+  
+    </div> 
 
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==3)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="abr" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
+  {{--*/ 
+    }
+  /*--}}
 
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==4)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="may" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
+  {{--*/ 
+        echo "</div>"; 
+    }
+  /*--}}   
 
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==5)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="jun" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==6)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="jul" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==7)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="ago" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==8)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="sep" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==9)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="oct" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==10)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="nov" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==11)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-	  </div>
-	  <div id="dic" class="tab-pane fade">
-			<table class="table">
-				<thead>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cantidad</th>
-					<th>Archivo</th>
-					<th>Editar</th>
-				</thead>
-
-				<tbody>
-					@foreach($egresos as $egreso)
-						{{--*/ $date = explode("-", $egreso->date) /*--}}
-						@if($date[1]==12)
-							<tr>
-								{{--*/ $date = explode("-", $egreso->date) /*--}}
-								{{--*/ $money = number_format($egreso->amount, 2) /*--}}
-								<td><p>{{$egreso->date}}</p></td>
-								<td><p>{{$egreso->concept}}</p></td>
-								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
-								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-		</div>
-	  </div>
-	</div> <!-- END tablaEgresos -->
 </div> <!-- END tab-content -->
+
 
 
 

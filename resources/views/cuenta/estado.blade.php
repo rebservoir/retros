@@ -67,9 +67,9 @@ $d_vence = 21;
     <tr>
       <td><p>Status de Pago:</p></td>
         @if (Auth::user()->status == 0)
-          <td class="success"><p>Al Corriente</p></td>
+          <td class="success_b"><p>Al Corriente</p></td>
         @else
-          <td class="danger"><p>Adeudo</p></td>
+          <td class="danger_b"><p>Adeudo</p></td>
         @endif
     </tr>
     <tr>

@@ -10,5 +10,5 @@ class Cuotas extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['year','month','corte','vencimiento','cuota'];
+    protected $fillable = ['concepto','amount'];
 }

@@ -5,6 +5,9 @@ namespace TuFracc\Http\Controllers;
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
 use TuFracc\Mail;
+use Mail;
+use Session;
+use Redirect;
 use TuFracc\Http\Controllers\Controller;
 
 class MailController extends Controller
@@ -39,7 +42,7 @@ class MailController extends Controller
     {
         Mail::send('emails.contact',$request->all(), function($msj){
             $msj->subject('Contacto');
-            $msj->to('rebservoir@gmail.com');
+            $msj->to('tufracc@gmail.com');
         });
         Session::flash('message','Mensaje enviado correctamente');
         return Redirect::to('/contacto');

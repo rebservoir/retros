@@ -30,6 +30,59 @@
 <button class='btn btn-primary' onclick="close_modals();" data-toggle="modal" data-target="#pago_create">Registrar Pago Manual</button>
 
 <br><br>
+
+{{--*/ 
+$month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+$year_c = date('Y');
+$mes = date('n');
+$day = date('j');
+
+/*--}}
+
+  <ul class="nav nav-tabs">
+    {{--*/ 
+      for ($j = 2015; $j < 2018; $j++) {
+        if( $j == $year_c)
+          echo "<li class='active'><a href='#" . $j  . "'>" . $j . "</a></li>";
+        else
+          echo "<li><a href='#" . $j  . "'>" . $j . "</a></li>";
+        }
+    /*--}}   
+  </ul>
+
+	<br><br>
+
+<div class="tab-content">
+
+  {{--*/ 
+    for ($j = 2015; $j < 2018; $j++) {
+      if($j==$year_c)
+        echo "<div id='" . $j . "' class='tab-pane fade in active'>";
+      else
+        echo "<div id='" . $j . "' class='tab-pane fade'>"; 
+  /*--}} 
+
+  <ul class="nav nav-tabs">
+    {{--*/ 
+      for ($k = 0; $k < 12; $k++) {
+        if(($k+1)==$mes)
+          echo "<li class='active'><a href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
+        else
+          echo "<li><a href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
+        }
+    /*--}}
+  </ul>
+
+  {{--*/ 
+    for ($q = 0; $q < 12; $q++) {
+      if(($q+1)==$mes)
+        echo "<div id='" . $month[$q] . $j . "' class='tab-pane fade in active'>";
+      else
+        echo "<div id='" . $month[$q] . $j . "' class='tab-pane fade'>"; 
+  /*--}} 
+
+    <br><br>
+
 <div id="tablaPagos">
 	<table class="table">
 		<thead>
@@ -40,20 +93,34 @@
 		</thead>
 		<tbody id="datos">
 			@foreach($pagos as $pago)
-				<tr>
-					@foreach($users as $user)
-						@if( $user->id == $pago->id_user)
-							<td><p>{{$user->name}}</p></td>
-						@endif
-					@endforeach
-					{{--*/ $money = number_format($pago->amount, 2, '.', '') /*--}}
-					<td><p>{{'$ '.$money}}</p></td>
-					<td><p>{{$pago->date}}</p></td>
-					<td><button value='{{$pago->id}}' OnClick='Mostrar_pago(this)' class='btn btn-primary' data-toggle="modal" data-target="#pago_edit">Editar</button></td>
-				</tr>
-			@endforeach
+			    {{--*/ $date = explode("-", $pago->date) /*--}}
+			    @if(($date[1] == ($q+1)) && ($date[0] == $j))
+					<tr>
+						@foreach($users as $user)
+							@if( $user->id == $pago->id_user)
+								<td><p>{{$user->name}}</p></td>
+							@endif
+						@endforeach
+						{{--*/ $money = number_format($pago->amount, 2, '.', '') /*--}}
+						<td><p>{{'$ '.$money}}</p></td>
+						<td><p>{{$pago->date}}</p></td>
+						<td><button value='{{$pago->id}}' OnClick='Mostrar_pago(this)' class='btn btn-primary' data-toggle="modal" data-target="#pago_edit">Editar</button></td>
+					</tr>
+			    @endif
+			@endforeach 
 		</tbody>
 	</table>
 </div>
+  
+    </div> 
 
+  {{--*/ 
+    }
+  /*--}}
 
+  {{--*/ 
+        echo "</div>"; 
+    }
+  /*--}}   
+
+</div> <!-- END tab-content -->

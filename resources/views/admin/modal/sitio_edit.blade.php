@@ -7,8 +7,7 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Modificar Sitio</h4>
 			</div>
-
-
+			
 			<div class="modal-body">
 				{!! Form::open(array('id' => 'actualizar_sitio', 'files' => true)) !!}
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_sitio_1">

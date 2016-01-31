@@ -4,7 +4,7 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
-use TuFracc\Http\Requests\UtilCreateRequest;
+use TuFracc\Http\Requests\CuotasCreateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Cuotas;
 
@@ -37,8 +37,14 @@ class CuotasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UtilCreateRequest $request)
+    public function store(CuotasCreateRequest $request)
     {
+        if($request->ajax()){
+            Cuotas::create($request->all());
+            return response()->json([
+                    "message" => "creado"
+                ]);
+        }
     }
 
     /**
@@ -60,7 +66,11 @@ class CuotasController extends Controller
      */
     public function edit($id)
     {
+        $cuotas = Cuotas::find($id);
 
+        return response()->json(
+            $cuotas->toArray()
+            );
     }
 
     /**
@@ -72,7 +82,13 @@ class CuotasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $cuotas = Cuotas::find($id);
+        $cuotas->fill($request->all());
+        $cuotas->save();
 
+        return response()->json([
+            "mensaje"=>'listo'
+            ]);
     }
 
     /**
@@ -83,6 +99,11 @@ class CuotasController extends Controller
      */
     public function destroy($id)
     {
-    
+        $cuotas = Cuotas::find($id);
+        $cuotas->delete();
+
+            return response()->json([
+                "mensaje"=>'eliminado'
+                ]);
     }
 }
