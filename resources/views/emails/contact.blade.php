@@ -7,6 +7,6 @@
 <body>
 	<p><strong>Nombre:</strong>{!!$name!!}</p>
 	<p><strong>Correo:</strong>{!!$email!!}</p>
-	<p><strong>Mensaje:</strong>{!!$mensaje!!}</p>
+	<p><strong>Mensaje:</strong>{!!$msg!!}</p>
 </body>
 </html>

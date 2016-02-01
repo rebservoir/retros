@@ -61,24 +61,33 @@
 							<img src="img/n_6.png">
 							<h1>Contacto</h1>
 						</div>
+
+							<div id="msj-success" class="alert alert-success alert-dismissible hide" role="alert">
+	  							<p>Su mensaje ha sido enviado,Gracias. </p>
+							</div>
+
+							<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
+							  	<p>Lo sentimos, el mensaje no ha sido enviado. Volver a intentar.</p>
+							</div>	
 						
 
 						<div class="contact-form">
-								{!!Form::open(['route'=>'mail.store','method'=>'POST'])!!}
+							<input type="hidden" name="token_contact" value="{{ csrf_token() }}" id="token_contact">
+							<input type="hidden" name="name" value="{{ Auth::user()->name }}" id="name">
+							<input type="hidden" name="email" value="{{ Auth::user()->email }}" id="email">
 								    <div class="">
 										{!!Form::label('Nombre:')!!}
-										{!!Form::text('name',null,['class'=>'typeahead form-control','placeholder'=>'Nombre'])!!}
+										<p>{!!Auth::user()->name!!}</p>
 									</div>
 									<div class="">
 										{!!Form::label('Email:')!!}
-										{!!Form::text('email',null,['class'=>'typeahead form-control','placeholder'=>'Email'])!!}
+										<p>{!!Auth::user()->email!!}</p>
 									</div>
 									<div class="">
 										{!!Form::label('Mensaje:')!!}
-										{!!Form::textarea('msg',null,['class'=>'typeahead form-control','placeholder'=>'Mensaje'])!!}
+										{!!Form::textarea('msg',null,['id'=>'msg','class'=>'typeahead form-control','placeholder'=>'Mensaje'])!!}
 									</div>
-									{!!Form::submit('Enviar', ['class'=>'btn btn-primary'])!!}
-								{!!Form::close()!!}
+									{!!link_to('#', $title='Enviar', $attributes = ['id'=>'enviar_contacto', 'class'=>'btn btn-primary'], $secure=null)!!}
 						</div> 
 					</div>
 				</div>

@@ -4,7 +4,6 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
-use TuFracc\Mail;
 use Mail;
 use Session;
 use Redirect;
@@ -40,12 +39,22 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         Mail::send('emails.contact',$request->all(), function($msj){
             $msj->subject('Contacto');
             $msj->to('tufracc@gmail.com');
         });
         Session::flash('message','Mensaje enviado correctamente');
         return Redirect::to('/contacto');
+        */
+        Mail::send('emails.contact',$request->all(), function($msj){
+            $msj->subject('Contacto');
+            $msj->to('tufracc@gmail.com');
+        });
+
+        return response()->json([
+            "message"=>'listo'
+        ]);
     }
 
     /**
