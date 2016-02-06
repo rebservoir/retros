@@ -1,7 +1,6 @@
 <?php
-namespace TuFracc\Http\Controllers;
 
-require "../vendor/autoload.php";
+namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
