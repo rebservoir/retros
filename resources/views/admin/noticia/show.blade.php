@@ -50,8 +50,8 @@
 								</div>
 							@endforeach
 
-
 									<br><br>
+									
 									<a href="/admin/noticias" class="noticia_show_a">Regresar a noticias</a>
 					</div> <!-- END cont_left -->
 				</div>

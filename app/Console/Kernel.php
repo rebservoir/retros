@@ -27,9 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('inspire')
-                 ->hourly();
-
-        $schedule->exec('node http://mysite.dev:8080/js/sch.js')->everyMinute();   
+                 ->hourly(); 
         
         $schedule->command('tst:prueba')->everyMinute(); 
 

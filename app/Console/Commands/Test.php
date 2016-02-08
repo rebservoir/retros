@@ -42,13 +42,18 @@ class Test extends Command
     {
         
         //DB::table('pagos')->insert(['id_user' => 666 , 'status' => 0, 'amount' => 550 , 'user_name' => 'xxx xxx']);
-
+        /*
         $users = DB::table('users')->where('role', 0 )->where('deleted_at', null)->get();
         
             foreach ($users as $user) {
                 DB::table('pagos')->insert(['id_user' => $user->id ,'date' => date("Y-d-m"), 'status' => 0, 'amount' => 500 , 'user_name' => $user->name ]);
             }
+        */
 
+        Mail::send('emails.pago',$request->all(), function($msj){
+            $msj->subject('Pago');
+            $msj->to('tufracc@gmail.com');
+        });
 
 
     }
