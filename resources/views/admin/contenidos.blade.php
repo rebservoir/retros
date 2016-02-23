@@ -29,6 +29,20 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
+		<a href="/admin/transparencia">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon4">
+				</div>
+				<p>Transparencia</p>
+			</div>
+		</a>
+		<a href="/admin/calendario">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon5">
+				</div>
+				<p>Calendario</p>
+			</div>
+		</a>
 		<a href="usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon9">
@@ -50,8 +64,9 @@
 						<ul id="ul_interna">
 							<li id="int_l1" class="left_sel">	<p>Noticias</p></li>
 							<li id="int_l2">					<p>Morosos</p></li>
-							<li id="int_l3">					<p>Teléfonos y Sitios Útiles</p></li>
-							<li id="int_l4">					<p>Configuración del sitio</p></li>
+							<li id="int_l3">					<p>Transparencia</p></li>
+							<li id="int_l4">					<p>Teléfonos y Sitios Útiles</p></li>
+							<li id="int_l5">					<p>Configuración del sitio</p></li>
 						</ul>
 						
 					</div>
@@ -80,6 +95,16 @@
 
 						<div id="int_div3" class="int_div">
 							<div class="box_header">
+								<p>Contenidos > Transparencia</p>
+							</div>
+						
+							<div class="cont_in_r">
+								@include('admin/trans')
+							</div>
+						</div>
+
+						<div id="int_div4" class="int_div">
+							<div class="box_header">
 								<p>Contenidos > Teléfonos y Sitios Útiles</p>
 							</div>
 						
@@ -88,7 +113,7 @@
 							</div>
 						</div>
 
-						<div id="int_div4" class="int_div">
+						<div id="int_div5" class="int_div">
 							<div class="box_header">
 								<p>Contenidos > Configuración del sitio</p>
 							</div>

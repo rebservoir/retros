@@ -22,6 +22,13 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
+		<a href="transparencia">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
+				<div class="nav_ic icon8">
+				</div>
+				<p>Transparencia</p>
+			</div>
+		</a>
 		<a href="usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon9">

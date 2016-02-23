@@ -341,7 +341,6 @@ $("#actualizar_sitio").on("submit", function(e){
         }
         
     });
-
 });
 
 

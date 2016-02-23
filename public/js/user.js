@@ -205,7 +205,7 @@ $('#the-basics .typeahead').typeahead({
 
 function search(){
     var route = "/admin/usuarios/search/" + id_usuario + "" ;
-     window.location.assign(route);
+    window.location.assign(route);
 }
 
 $( ".select_user" ).change(function() {

@@ -2,16 +2,16 @@
 			<thead id="thead_user">
 				<th id="th1" class="th_op">Nombre
 					<select id="nombre_select" name="nombre_select" class="select_user">
-					<option value="null">--</option>
-					<option value="name">A-Z</option>
-					<option value="desc">Z-A</option>
+						<option value="null">--</option>
+						<option value="name">A-Z</option>
+						<option value="desc">Z-A</option>
 					</select></th>
 				</th>
 				<th id="th2" class="th_op">Email
 					<select id="status_select" name="status" class="select_user">
-					<option value="null">--</option>
-					<option value="email">A-Z</option>
-					<option value="email_desc">Z-A</option>
+						<option value="null">--</option>
+						<option value="email">A-Z</option>
+						<option value="email_desc">Z-A</option>
 					</select></th>
 				</th>
 				<th id="th3" class="th_op">Dirección</th>
@@ -19,10 +19,10 @@
 				<th >Celular</th>
 				<th id="th4" class="th_op">Status<br>
 					<select id="status_select" name="status" class="select_user">
-					<option value="null">--</option>
-					<option value="all">Todos</option>
-					<option value="adeudo">Adeudo</option>
-					<option value="corriente">Corriente</option>
+						<option value="null">--</option>
+						<option value="all">Todos</option>
+						<option value="adeudo">Adeudo</option>
+						<option value="corriente">Corriente</option>
 					</select></th>
 				<th>Editar</th>
 			</thead>

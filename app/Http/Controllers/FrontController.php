@@ -16,6 +16,8 @@ use TuFracc\Egresos;
 use TuFracc\Saldos;
 use TuFracc\Cuotas;
 use TuFracc\Sitio;
+use TuFracc\Calendario;
+use DB;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
 use Session;
@@ -41,11 +43,11 @@ class FrontController extends Controller
     public function index()
     {
         if($this->auth->user()->role != 1){
-            $morosos = Morosos::where('id', 0)->get();;
+            $morosos = Morosos::all();
             $users = User::paginate(20);
             $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
             $sitios = Sitio::where('id', 1)->get();
-             return view('index', ['users' => $users, 'noticias' => $noticias, 'morosos' => $morosos, 'sitios' => $sitios ]);
+            return view('index', ['users' => $users, 'noticias' => $noticias, 'morosos' => $morosos, 'sitios' => $sitios ]);
         }else{
             return redirect()->to('/admin/home');
         }
@@ -58,48 +60,80 @@ class FrontController extends Controller
 
     public function noticias(Request $request)
     {
+        $morosos = Morosos::all();
         $noticias = Noticia::orderBy('created_at', 'desc')->paginate(5);
         $noticias->setPath('/noticias');
 
         if($this->auth->user()->role != 1){
             if($request->ajax()){
-            return view('noticia.noticias', ['noticias' => $noticias]);
+            return view('noticia.noticias', ['noticias' => $noticias, 'morosos' => $morosos]);
             }
-            return view('noticias', ['noticias' => $noticias]);
+            return view('noticias', ['noticias' => $noticias, 'morosos' => $morosos]);
         }else{
-            return view('admin.noticias', ['noticias' => $noticias]);
+            return view('admin.noticias', ['noticias' => $noticias, 'morosos' => $morosos]);
         }
     }
 
     public function cuenta()
     {
-        $pagos = Pagos::all()->sortBy('date');;
+        $morosos = Morosos::all();
+        $pagos = Pagos::where(function ($query) {
+                $query->where('id_user', $this->auth->user()->id)
+                ->orderBy('date');
+                  })->get();
+        //$pagos = Pagos::all()->sortBy('date');
         $cuotas = Cuotas::all();
-        return view('cuenta', ['pagos' => $pagos, 'cuotas' => $cuotas]);
+        return view('cuenta', ['pagos' => $pagos, 'cuotas' => $cuotas, 'morosos' => $morosos]);
     }
 
     public function mifrac()
     {
         $utiles = Utiles::all();
-        return view('mifrac/mifrac', ['utiles' => $utiles]);
+        $morosos = Morosos::all();
+        return view('mifrac/mifrac', ['utiles' => $utiles, 'morosos' => $morosos ]);
     }
 
-    public function transparencia()
-    {
+    public function transparencia($mes_sel=null, $year_sel=null)
+    {   
+        if(!$mes_sel)
+            $mes_sel = date('n');
+        if(!$year_sel)
+            $year_sel= date('Y');
+
+        $pagos = Pagos::all(); 
         $egresos = Egresos::all();
         $saldos = Saldos::all();
-        return view('transparencia', [ 'egresos' => $egresos, 'saldos' => $saldos ]);
+
+        if($this->auth->user()->role == 1){
+            return view('admin/transparencia', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);
+        }else{
+            return view('transparencia', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);     
+        }  
     }
 
     
-    public function calendario()
-    {
-        return view('calendario');
+    public function calendario($mes_sel=null, $year_sel=null)
+    {   
+        if(!$mes_sel)
+            $mes_sel = date('n');
+        if(!$year_sel)
+            $year_sel= date('Y');
+
+        $morosos = Morosos::all();
+        $calendario = Calendario::all();
+
+        if($this->auth->user()->role == 1){
+            return view('admin/calendario', [ 'mes_sel' => $mes_sel, 'year_sel' => $year_sel, 'morosos' => $morosos, 'calendario' => $calendario ]);
+        }else{
+            return view('calendario', [ 'mes_sel' => $mes_sel, 'year_sel' => $year_sel, 'morosos' => $morosos, 'calendario' => $calendario ]);     
+        }  
     }
+
 
     public function contacto()
     {
-        return view('contacto');
+        $morosos = Morosos::all();
+        return view('contacto', ['morosos' => $morosos ]);
     }
 
     public function admin()
@@ -109,10 +143,9 @@ class FrontController extends Controller
                 $users = User::paginate(20);
                 $users->setPath('/admin/home');
                 $sitios = Sitio::where('id', 1)->get();
-                $morosos = Morosos::where('id', 0)->get();
+                $morosos = Morosos::all();
                 $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
                 return view('admin/index', ['noticias' => $noticias, 'users' => $users, 'morosos' => $morosos, 'sitios' => $sitios ]);
-
         }else{
                  return Redirect::to('home');
         }
@@ -138,7 +171,7 @@ class FrontController extends Controller
         if($this->auth->user()->role == 1){
             $noticias = Noticia::all();
             $utiles = Utiles::all();
-            $morosos = Morosos::all()->where('id', 0);
+            $morosos = Morosos::all();
             $sitio = Sitio::all()->where('id', 1);
             return view('/admin/contenidos', [ 'morosos' => $morosos, 'utiles' => $utiles, 
                 'noticias' => $noticias, 'sitio' => $sitio ]);
@@ -151,7 +184,7 @@ class FrontController extends Controller
     {
         if($this->auth->user()->role == 1){
                 $users = User::all();
-                $tipos = Cuotas::orderBy('concepto', 'ASC')->lists('concepto','id');
+                $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
 
             return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos ]);
         }else{
@@ -189,8 +222,6 @@ class FrontController extends Controller
             $pagos_show->toArray()
             );
     }
-
-
 
     public function update_info_user($id, UserUpdateRequest $request)
     {

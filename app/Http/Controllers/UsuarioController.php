@@ -8,6 +8,7 @@ use TuFracc\Http\Requests\UserCreateRequest;
 use TuFracc\Http\Requests\UserUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\User;
+use TuFracc\Cuotas;
 use Session;
 use Redirect;
 use Illuminate\Routing\Route;
@@ -81,12 +82,24 @@ class UsuarioController extends Controller
 
     public function search($id)
     {
+        $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
+
         $users = User::where('id', $id)->get();
-            return view('/admin/usuarios', [ 'users' => $users]);
+            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos]);
+    }
+
+    public function add($id)
+    {
+        $users = User::where('id', $id)->get();
+            return response()->json(
+                    $users->toArray()
+                );
     }
 
     public function sort($sort)
     {
+        $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
+
         if($sort == 'name'){
             $users = User::all()->sortBy('name');
             $sel1 = 'name';
@@ -103,9 +116,23 @@ class UsuarioController extends Controller
         }else if($sort == 'corriente'){
             $users = User::where('status', 0 )->get();
         }
-            return view('/admin/usuarios', [ 'users' => $users]);
+            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos ]);
     }
 
+
+    public function sort_usr($sort)
+    {
+        if($sort == 1){ //all
+            $users = User::where('role','!=',1)->orderBy('name', 'ASC')->get();
+        }else if($sort == 2){ //adeudo
+            $users = User::where('status', 1 )->get();
+        }else if($sort == 3){ //corriente
+            $users = User::where('status', 0 )->get();
+        }
+            return response()->json(
+                $users->toArray()
+            );
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -121,8 +148,6 @@ class UsuarioController extends Controller
             $user->toArray()
             );
     }
-
-
 
     /**
      * Update the specified resource in storage.

@@ -6,15 +6,15 @@ body{
 
 header{
 }
-div#head{
-    border-bottom: solid 6px #EF4B00;
+div#head {
+    border-bottom: solid 6px #67CA69;
     background-color: #fff;
 }
 div#logo{
     margin: 20px 0px 10px 0px;
 }
 div#logo img{
-    width: 300px;
+    width: 250px;
 }
 div#mensaje{
     float: right;
@@ -30,12 +30,13 @@ div#mensaje a{
 .bg_blue{
     background-color: #002E9C !important;    
 }
-#navigation{
+#navigation {
     text-align: center;
     font-family: 'adelle_sansregular', Arial, sans-serif;
     background-color: #002E9C;
     padding: 8px 0px 0px 0px;
     height: 65px;
+    border-color: transparent !important;
 }
 #navigation div p{
     margin: 0px 0px 5px;
@@ -123,7 +124,7 @@ div#slider_box {
 div#slider_name {
     font-size: 20px;
     color: #fff;
-    background-color: #EE5025;
+    background-color: #28962A;
     width: auto;
     padding: 10px 8% 0px 8%;
     height: 50px;
@@ -392,17 +393,17 @@ div#login_box label{
     margin-bottom: 12px;
 }
 #submit_btn{
-    background-color: #EF4F24 !important;
+    background-color: #4AAD4C !important;
     font-size: 18px !important;
     color: #fff !important;
     height: 50px !important;
     cursor: pointer;
-        border: 1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
     border-radius: 5px;
     width: 100%;
 }
 #submit_btn:hover{
-    background-color: #FF653C !important;
+    background-color: #66CB68 !important;
 }
 
 #blue{

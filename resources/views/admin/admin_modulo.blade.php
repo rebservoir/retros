@@ -33,6 +33,20 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
+		<a href="/admin/transparencia">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon4">
+				</div>
+				<p>Transparencia</p>
+			</div>
+		</a>
+		<a href="/admin/calendario">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon5">
+				</div>
+				<p>Calendario</p>
+			</div>
+		</a>
 		<a href="usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon9">
@@ -53,10 +67,9 @@
 						<ul id="ul_interna">
 							<li id="int_l1" class="left_sel">	<p>Pagos</p></li>
 							<li id="int_l2">					<p>Egresos</p></li>
-							<li id="int_l3">					<p>Transparencia</p></li>
-							<li id="int_l4">					<p>Registro de Cuotas</p></li>
-							<li id="int_l5">					<p>Tareas</p></li>
-							<li id="int_l6">					<p>Envió de Correos</p></li>
+							<li id="int_l3">					<p>Registro de Cuotas</p></li>
+							<li id="int_l4">					<p>Tareas</p></li>
+							<li id="int_l5">					<p>Envió de Correos</p></li>
 						</ul>
 					</div>
 
@@ -84,16 +97,6 @@
 
 						<div id="int_div3" class="int_div">
 							<div class="box_header">
-								<p>Administración > Transparencia</p>
-							</div>
-						
-							<div class="cont_in_r">
-								@include('admin.transparencia')
-							</div>
-						</div>
-
-						<div id="int_div4" class="int_div">
-							<div class="box_header">
 								<p>Administración > Registro de Cuotas</p>
 							</div>
 						
@@ -102,7 +105,7 @@
 							</div>
 						</div>
 
-						<div id="int_div5" class="int_div">
+						<div id="int_div4" class="int_div">
 							<div class="box_header">
 								<p>Administración > Tareas</p>
 							</div>
@@ -112,12 +115,13 @@
 							</div>
 						</div>
 
-						<div id="int_div6" class="int_div">
+						<div id="int_div5" class="int_div">
 							<div class="box_header">
 								<p>Administración > Envió de Correos</p>
 							</div>
 						
 							<div class="cont_in_r">
+								@include('admin.correos')
 							</div>
 						</div>
 

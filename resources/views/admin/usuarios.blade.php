@@ -26,6 +26,20 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
+		<a href="/admin/transparencia">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon4">
+				</div>
+				<p>Transparencia</p>
+			</div>
+		</a>
+		<a href="/admin/calendario">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon5">
+				</div>
+				<p>Calendario</p>
+			</div>
+		</a>
 		<a href="/admin/usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab nav_sel">
 				<div class="nav_ic icon9">
@@ -72,14 +86,14 @@
 		<br><br>
 		<div id="the-basics" class="form-group">
 			<input type="text" id="search-input" class="typeahead form-control" placeholder="Buscar..." >
-			<button value='' OnClick='search();' class='btn btn-primary'>Buscar</button>
+			<button value='' OnClick='search();' class='btn btn-primary'>Buscar</button>		
 		</div>
 		
 
 		<div id="search_result">
 		</div>
 
-		<br><br>
+		<br>
 
 		<div id="tablaUsuarios">
 			@include('usuario.usuarios')

@@ -1,6 +1,5 @@
 <h3>Cuotas</h3>
 
-
 <div id="msj-success7" class="alert alert-success alert-dismissible hide" role="alert">
   <p>Nueva Cuota Creada exitosamente.</p>
 </div>

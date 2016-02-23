@@ -15,26 +15,33 @@ Route::get('home','FrontController@index');
 Route::get('noticias/{id?}','FrontController@noticias');
 Route::get('contacto','FrontController@contacto');
 Route::get('micuenta','FrontController@cuenta');
-Route::get('transparencia','FrontController@transparencia');
-Route::get('calendario','FrontController@calendario');
 
-Route::get('admin/home','FrontController@admin');
-Route::get('admin/administracion','FrontController@admin_modulo');
-Route::get('admin/noticias','FrontController@noticias');
+Route::get('transparencia/{mes_sel?}/{year_sel?}', 'FrontController@transparencia');
+Route::get('calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
 Route::get('mifraccionamiento','FrontController@mifrac');
-Route::get('admin/contenidos','FrontController@contenidos');
 Route::get('noticia_show/{id?}','NoticiaController@show');
 Route::get('edit_info/{id?}','FrontController@edit_info');
 Route::get('pagos_show','FrontController@pagos_show');
 Route::put('update_info_user/{id?}','FrontController@update_info_user');
 
-
+Route::get('admin/home','FrontController@admin');
+Route::get('admin/administracion','FrontController@admin_modulo');
+Route::get('admin/calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
+Route::get('admin/transparencia/{mes_sel?}/{year_sel?}', 'FrontController@transparencia');
+Route::get('admin/noticias','FrontController@noticias');
+Route::get('admin/contenidos','FrontController@contenidos');
 Route::get('admin/noticia_show/{id?}','NoticiaController@show');
 Route::get('admin/usuarios/','FrontController@usuarios');
 Route::get('admin/usuarios/search/{id?}','UsuarioController@search');
 Route::get('admin/usuarios/sort/{sort?}','UsuarioController@sort');
+Route::get('admin/usuarios/sort_usr/{sort?}','UsuarioController@sort_usr');
+Route::get('admin/usuarios/add/{id?}','UsuarioController@add');
 
-Route::resource('mail','MailController');
+
+Route::get('sendEmail/{id?}','MailController@sendEmail');
+Route::get('sendEmailMsg/{id?}','MailController@sendEmailMsg');
+
+Route::resource('mail','MailController@contact');
 Route::resource('sitio','SitioController');
 Route::resource('morosos','MorososController');
 Route::resource('noticia','NoticiaController');
@@ -45,9 +52,10 @@ Route::resource('pagos','PagosController');
 Route::resource('egresos','EgresosController');
 Route::resource('saldos','SaldosController');
 Route::resource('cuotas','CuotasController');
+Route::resource('calendario','CalendarioController');
+
 
 Route::get('logout','LogController@logout');
-
 Route::get('controlador','PruebaController@index');
 Route::get('name/{nombre}','PruebaController@nombre');
 Route::resource('objeto','ObjetoController');  //php artisan make:controller ObjetoController

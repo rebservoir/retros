@@ -75,10 +75,10 @@ class MorososController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     { 
         
-        $morosos= Morosos::find(0);
+        $morosos= Morosos::find($id);
         $morosos->fill($request->all());
         $morosos->save();
         

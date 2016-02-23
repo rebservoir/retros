@@ -22,6 +22,20 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
+		<a href="/admin/transparencia">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon4">
+				</div>
+				<p>Transparencia</p>
+			</div>
+		</a>
+		<a href="/admin/calendario">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon5">
+				</div>
+				<p>Calendario</p>
+			</div>
+		</a>
 		<a href="usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon9">
@@ -58,16 +72,17 @@
 							<div class="col-xs-12 pull-right">
 								<ul>
 									@foreach($morosos as $moroso)
-										@if($moroso->is_active == 1)
-											@foreach($users as $user)
-												@if ($user->status == 1)
-													<li>{{$user->name}}</li>
-												@endif
-											@endforeach
-										
+										@if($moroso->id == 0)
+											@if($moroso->is_active == 1)
+												@foreach($users as $user)
+													@if ($user->status == 1)
+														<li>{{$user->name}}</li>
+													@endif
+												@endforeach									
 											@else
 												<li>No disponible</li>
 											@endif
+										@endif
 									@endforeach
 
 									{!!$users->render()!!}

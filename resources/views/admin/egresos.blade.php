@@ -22,7 +22,6 @@
 
 <!-- Egresos ALERTS END -->
 
-<br><br>
 <button class='btn btn-primary' onclick="close_modals();"  data-toggle="modal" data-target="#egresos_create">Registrar Egresos</button>
 <br><br>
 

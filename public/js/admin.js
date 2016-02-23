@@ -504,3 +504,224 @@ $("#eliminar_cuota").click(function(){
     } else {
     } 
 });
+
+var tipo=1;
+//se selecciona el tipo de mensaje y se agrega el codigo correspondiente.
+$( "#tipo_select" ).change(function() {
+
+    var tipo1 =  '<div><h4>Asunto:</h4><input type="text" id="txt_subj" style="width: 300px;"></div><div><h4>Redactar mensaje:</h4><textarea id="txt_msg" rows="5" cols="50"></textarea></div>';
+    var tipo2 =  "<div><h4>Mensaje de Corte</h4></div>";
+    var tipo3 =  "<div><h4>Mensaje de Adeudo</h4></div>";
+
+    if( this.value == 1){
+         $("#tipos").html(tipo1);
+         tipo = 1;
+    }else if( this.value == 2){
+        $("#tipos").html(tipo2);
+        tipo = 2;
+    }else{
+        $("#tipos").html(tipo3);
+        tipo = 3;
+    }
+});
+
+//se selecciona el destinatario y se llama la funcion getusers. 
+$( "#to_select" ).change(function(){
+
+    var sort;
+    var code=0;
+
+        if( this.value == 1){
+            getUsers(1);
+            $( "#add_user").addClass( "hidden");
+        }else if( this.value == 2){
+            getUsers(2);
+            $( "#add_user").addClass( "hidden");
+        }else if( this.value == 3){
+            getUsers(3);
+            $( "#add_user").addClass( "hidden");
+        }else if( this.value ==4 ){
+            $( "#add_user").removeClass( "hidden");
+            $('#user_table').html("<table id='myTable' class='table'<thead><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th></thead><tbody></tbody></table>");
+        }
+});
+
+    var usrs = [];
+
+//funcion para llamar a los users y popular la tabla en base al select. 
+function getUsers(sort){
+    var route = "/admin/usuarios/sort_usr/" + sort + "" ;
+
+    $.get(route, function(res){
+
+        var code="<table class='table'<thead><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th></thead><tbody>";
+
+        for (index = 0; index < res.length; index++){
+            code+="<tr><td><input type='checkbox' name='chk' value='" + res[index].id + "' checked></td><td>";
+            code+= res[index].name + "</td><td>" + res[index].email + "</td><td>";
+
+            if(res[index].status == 0){ 
+                code+="<span class='label label-success'>Ok</span>";
+            }else if(res[index].status == 1){
+                code+="<span class='label label-danger'>Adeudo</span>";
+            }
+            code+="</td></tr>";
+        }
+            code+="</tbody></table>";
+
+        $('#user_table').html(code);
+    });
+
+}
+
+//se llama al user por medio de su id y se agrega a la tabla. 
+function add(){
+    var route = "/admin/usuarios/add/" + id_usuario + "" ;
+    var code='';
+
+    $.get(route, function(res){
+
+        code+="<tr><td><input type='checkbox' name='chk' value='" + res[0].id + "' checked></td><td>";
+        code+= res[0].name + "</td><td>" + res[0].email + "</td><td>";
+
+            if(res[0].status == 0){ 
+                code+="<span class='label label-success'>Ok</span>";
+            }else if(res[0].status == 1){
+                code+="<span class='label label-danger'>Adeudo</span>";
+            }
+            code+="</td></tr>";
+
+            $('#myTable > tbody:last-child').append(code);
+    });
+}
+
+//se llama la funcion para llenar la tabla con todos los users. 
+$(document).ready(function() { 
+    getUsers(1);
+});
+
+//aqui se checan los checkboxes y si estan marcados el id del user se agrega al array.
+//el array esta listo para mandarse y enviar mails.  
+$("#btn_send").click(function(){
+
+    $("#msj-success-email").addClass( "hide");
+    $("#msj-fail-email").addClass( "hide");
+
+    var usrs = [];
+    var index=0;
+    var $boxes = $('input[name=chk]:checked');
+    var i=0;
+        $boxes.each(function(){
+            usrs[i] = this.value;
+            i++;
+        });
+
+    if( tipo == 1){
+        console.log('mensaje');
+            var msg = $("#txt_msg").val();
+            var subj = $("#txt_subj").val();
+
+                    jQuery.each( usrs, function() { 
+                        var route = "/sendEmailMsg/" + usrs[index];
+                        var token = $("#token_send").val();
+                            $.ajax({
+                                url: route,
+                                headers: {'X-CSRF-TOKEN': token},
+                                type: 'GET',
+                                dataType: 'json',
+                                data:{
+                                    msg:msg,
+                                    subj:subj
+                                },
+                                success:function(){
+                                    console.log('ok');
+                                    $("#msj-success-email").removeClass( "hide");
+                                },
+                                error: function (jqXHR, exception) {
+                                    console.log('nope');
+                                    $("#msj-fail-email").removeClass( "hide");
+                                }
+                            });
+                                console.log(usrs[index]);
+                                index++;
+                        });
+    }else if( tipo == 2){
+        console.log('Corte');
+            jQuery.each( usrs, function() { 
+                    var route = "/sendEmail/" + usrs[index];
+                    var token = $("#token_send").val();
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': token},
+                        type: 'GET',
+                        dataType: 'json',
+                        success:function(){
+                            console.log('ok');
+                            $("#msj-success-email").removeClass( "hide")
+                        },
+                        error: function (jqXHR, exception) {
+                            console.log('nope');
+                            $("#msj-fail-email").removeClass( "hide");
+                        }
+                    });
+                        console.log(usrs[index]);
+                        index++;
+                }); 
+    }else{
+        console.log('adeudo');
+    }
+ /*          
+    var msg = $("#txt_msg").val();
+    var subj = $("#txt_subj").val();
+
+            jQuery.each( usrs, function() { 
+                var route = "/sendEmailMsg/" + usrs[index];
+                var token = $("#token_send").val();
+                    $.ajax({
+                        url: route,
+                        headers: {'X-CSRF-TOKEN': token},
+                        type: 'GET',
+                        dataType: 'json',
+                        data:{
+                            msg:msg,
+                            subj:subj
+                        },
+                        success:function(){
+                            console.log('ok');
+                            $("#msj-success-email").removeClass( "hide");
+                        },
+                        error: function (jqXHR, exception) {
+                            console.log('nope');
+                            $("#msj-fail-email").removeClass( "hide");
+                        }
+                    });
+                        console.log(usrs[index]);
+                        index++;
+                });
+    //}
+
+    /*
+        console.log('corte');
+        jQuery.each( usrs, function() { 
+                var route = "/sendEmail/" + usrs[index];
+                var token = $("#token_send").val();
+                $.ajax({
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': token},
+                    type: 'GET',
+                    dataType: 'json',
+                    success:function(){
+                        console.log('ok');
+                    },
+                    error: function (jqXHR, exception) {
+                        console.log('nope');
+                    }
+                });
+                    console.log(usrs[index]);
+                    index++;
+            }); 
+    */
+
+    
+
+});

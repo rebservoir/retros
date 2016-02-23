@@ -52,7 +52,7 @@ class Test extends Command
         
             foreach ($users as $user){
                 //$cuotas = DB::table('cuotas')->where('tipo', $user->type )->get;
-                DB::table('pagos')->insert(['id_user' => $user->id ,'date' => date("Y-d-m"), 'status' => 0, 'amount' => 500, 'user_name' => $user->name ]);
+                DB::table('pagos')->insert(['id_user' => $user->id ,'date' => date("Y-m-d"), 'status' => 0, 'amount' => 500, 'user_name' => $user->name ]);
             }
         
     }

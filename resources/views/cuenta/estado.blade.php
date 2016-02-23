@@ -66,11 +66,14 @@ $d_vence = 21;
     </tr>
     <tr>
       <td><p>Status de Pago:</p></td>
-        @if (Auth::user()->status == 0)
-          <td class="success_b"><p>Al Corriente</p></td>
-        @else
-          <td class="danger_b"><p>Adeudo</p></td>
-        @endif
+        <td><h3 style="margin-top: 10px">
+          @if (Auth::user()->status == 0)
+            <span class="label label-danger">Adeudo</span>
+          @else
+            <span class="label label-success">Al corriente</span>
+          @endif
+          </h3>
+      </td>
     </tr>
     <tr>
       <td><p>Pagado hasta</p></td>
@@ -113,6 +116,7 @@ $d_vence = 21;
     <h3>Tabla de pagos</h3>
   <br>
 
+
   <ul class="nav nav-tabs">
     {{--*/ 
       for ($j = 2014; $j < 2017; $j++) {
@@ -139,12 +143,33 @@ $d_vence = 21;
   <ul class="nav nav-tabs">
     {{--*/ 
       for ($k = 0; $k < 12; $k++) {
-        if(($k+1)==$mes)
-          echo "<li class='active'><a href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
-        else
-          echo "<li><a href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
-        }
     /*--}}
+
+      @foreach($pagos as $pago)
+        {{--*/ $date = explode("-", $pago->date) /*--}}
+          @if(($date[1] == ($k+1)) && ($date[0] == $j))
+            @if($pago->status == 0)
+                {{--*/ 
+                    if(($k+1)==$mes)
+                      echo "<li class='active'><a class='adeudo' href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
+                    else
+                      echo "<li><a class='adeudo' href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
+                    
+                /*--}}
+            @elseif($pago->status == 1)
+                {{--*/ 
+                    if(($k+1)==$mes)
+                      echo "<li class='active'><a class='saldado' href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
+                    else
+                      echo "<li><a class='saldado' href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
+                    
+                /*--}}
+            @endif
+          @endif
+      @endforeach
+  {{--*/ 
+                  }
+              /*--}}
   </ul>
 
   {{--*/ 
@@ -158,18 +183,19 @@ $d_vence = 21;
     <br><br>
 
 @foreach($pagos as $pago)
-  @if($pago->id_user == Auth::user()->id)
     {{--*/ $date = explode("-", $pago->date) /*--}}
     @if(($date[1] == ($q+1)) && ($date[0] == $j))
         <table class='table table-condensed'>
           <tbody>
             <tr>
               <td><strong>Status:</strong></td>
-                @if($pago->status == 1)
-                  <td><p>Saldado</p></td>
-                @else
-                  <td><p>Adeudo</p></td>
-                @endif
+                <td><h3 style="margin-top:10px;">
+                  @if($pago->status == 1)
+                    <span class="label label-success">Saldado</span>
+                  @else
+                    <span class="label label-danger">Adeudo</span>
+                  @endif
+                </h3></td>
             </tr>
             <tr>
               <td><strong>Fecha:</strong></td>
@@ -206,7 +232,6 @@ $d_vence = 21;
           </tbody>
         </table>            
     @endif
-  @endif
 @endforeach 
 
   
@@ -231,8 +256,14 @@ $d_vence = 21;
 .fade.in {
     display: block !important;
 }
+
+.saldado{
+  background-color: #5cb85c;
+  color: #fff; 
+}
 .adeudo{
-  background-color: rgba(255, 0, 0, 0.16) !important;
+  background-color: #d9534f;
+  color: #fff; 
 }
 </style>
 

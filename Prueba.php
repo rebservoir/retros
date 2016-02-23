@@ -51,6 +51,8 @@ class Prueba extends Command
                 $y = $x+1;
                 DB::update('update objetos set count = ? where id = 1', [ $y ]);
             }
+
+             DB::table('objetos')->insert(['count' => 0]);
         
     }
 }

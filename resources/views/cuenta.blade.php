@@ -35,13 +35,19 @@
 							</div>
 						</a>
 
-						<a href="/transparencia">
-							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
-								<div class="nav_ic icon4">
-								</div>
-								<p>Transparencia</p>
-							</div>
-						</a>
+						@foreach($morosos as $moroso)
+							@if($moroso->id == 1)
+								@if($moroso->is_active == 1)
+									<a href="/transparencia">
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+											<div class="nav_ic icon4">
+											</div>
+											<p>Transparencia</p>
+										</div>
+									</a>
+								@endif
+							@endif
+						@endforeach
 
 						<a href="/calendario">
 							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">

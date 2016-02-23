@@ -15,8 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \TuFracc\Console\Commands\Inspire::class,
-        \TuFracc\Console\Commands\Test::class,
+       // \TuFracc\Console\Commands\Test::class,
         \TuFracc\Console\Commands\limite::class,
+        \TuFracc\Console\Commands\prueba::class,
+        \TuFracc\Console\Commands\LogDemo::class,
     ];
 
     /**
@@ -32,6 +34,8 @@ class Kernel extends ConsoleKernel
         
         //$schedule->command('tst:prueba')->everyMinute(); 
         $schedule->command('lmt:limite')->everyMinute(); 
+
+        $schedule->command('log:demo')->everyMinute(); 
 
     }
 }
