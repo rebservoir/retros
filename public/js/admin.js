@@ -49,12 +49,6 @@ $("#registrar_pago").click(function(){
     var dato4 = $("#status").val();
     var dato5 = $('#search-input').val();
    
-    //console.log(dato1);
-    //console.log(dato2);
-    //console.log(dato3);
-    //console.log(dato4);
-    //console.log(dato5);
-
     var route = "/pagos";
     var token = $("#token").val();
 
@@ -105,13 +99,14 @@ function Mostrar_pago(btn){
         $("#status_pago").val(res.status);
         $("#search-input2").val(res.user_name);
     });
+
 }
 
 $("#actualizar_pago").click(function(){
     $("#msj-success1").addClass( "hide");
-    $( "#msj-fail1").addClass( "hide");
-    $("#msj-success2").addClass( "hide");
-    $( "#msj-fail2").addClass( "hide");
+    $("#msj-fail1").addClass("hide");
+    $("#msj-success2").addClass("hide");
+    $("#msj-fail2").addClass("hide");
     
     var dato1 = $("#hidden_id_user").val();
     var dato2 = $("#datepicker_pago").val();
@@ -120,20 +115,12 @@ $("#actualizar_pago").click(function(){
     var dato5 = $("#search-input2").val();
     var value = $("#hidden_id").val();
 
-    //console.log(dato1);
-    //console.log(dato2);
-   // console.log(dato3);
-    //console.log(dato4);
-    //console.log(dato5);
-    //console.log(value);
-
     if(id_usuario!=''){
         if(dato1!=id_usuario){
             dato1 = id_usuario;
         }
     }
 
-    //console.log('dato5:' + dato5);
     var route = "/pagos/"+value+"";
     var token = $("#token_pago").val();
 
@@ -143,8 +130,6 @@ $("#actualizar_pago").click(function(){
         type: 'PUT',
         dataType: 'json',
         data:{id_user: dato1, date: dato2, amount: dato3, status: dato4, user_name: dato5},
-
-
         success:function(){
             $("#msj-success1").removeClass( "hide");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
@@ -248,19 +233,17 @@ function Mostrar_egresos(btn){
         $("#amount_eg").val(res.amount);
         $("#id_egresos").val(res.id);
     });
+    var value = $("#id_egresos").val();
+    console.log("id:" + $("#id_egresos").val());
 }
 
 
 $("#actualizar_egresos").on("submit", function(e){
-    //$("#msj-success3").addClass( "hide");
-    //$("#msj-fail3").addClass( "hide");
-
-    console.log('ddd');
-
     e.preventDefault();
     var fd = new FormData(this);
 
-    var route = "/egresos";
+    var value = $("#id_egresos").val();
+    var route = "/egresos/" + value;
     var token = $("#token_eg1").val();
 
     $.ajax({

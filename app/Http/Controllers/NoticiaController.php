@@ -105,15 +105,17 @@ class NoticiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        $noticia = Noticia::find($id);
-        $noticia->fill($request->all());
-        $noticia->save();
+        if($request->ajax()){
+            $noticia = Noticia::find($id);
+            $noticia->fill($request->all());
+            $noticia->save();
 
-        return response()->json([
-            "mensaje"=>'update done'
-            ]);
+            return response()->json([
+                "mensaje"=>'update done'
+                ]);
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -123,8 +125,10 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
+
         $noticia = Noticia::find($id);
         $noticia->delete();
+        \Storage::delete($noticia->path);
 
         return response()->json([
             "mensaje"=>'eliminado'

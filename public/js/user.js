@@ -153,15 +153,11 @@ var index=0;
 var names = [];
 
 $( document ).ready(function() {
-
  var route = "/usuario/show";
     $.get(route, function(res){
-
-    for (index = 0; index < res.length; index++) {
-        names[index] = res[index].name + '/' +res[index].id;
-        console.log(names[index]);
-    }
-
+        for (index = 0; index < res.length; index++) {
+            names[index] = res[index].name + '/' +res[index].id;
+        }
     });
 });
 
@@ -187,9 +183,7 @@ var substringMatcher = function(strs) {
     });
 
     cb(matches);
-
   };
-
 };
 
 $('#the-basics .typeahead').typeahead({
@@ -202,14 +196,12 @@ $('#the-basics .typeahead').typeahead({
   source: substringMatcher(names)
 });
 
-
 function search(){
     var route = "/admin/usuarios/search/" + id_usuario + "" ;
     window.location.assign(route);
 }
 
 $( ".select_user" ).change(function() {
-    console.log('k: ' + this.value);
     sort(this.value);
 });
 

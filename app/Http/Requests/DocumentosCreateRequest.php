@@ -1,10 +1,9 @@
 <?php
 
 namespace TuFracc\Http\Requests;
-
 use TuFracc\Http\Requests\Request;
 
-class NoticiaUpdateRequest extends Request
+class DocumentosCreateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +24,7 @@ class NoticiaUpdateRequest extends Request
     {
         return [
             'titulo' => 'required',
-            'texto' => 'required',
-            //'email' => 'required',
+            'path' => 'required',
         ];
     }
 }

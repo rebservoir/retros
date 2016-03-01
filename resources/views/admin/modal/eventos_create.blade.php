@@ -13,7 +13,7 @@
 
 				<div id="the-basics" class="form-group">
 					{!!Form::label('Titulo:')!!}
-					{!!Form::text('title',null,['id'=>'title','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
+					{!!Form::text('title',null,['id'=>'ev_title','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
 				</div>
 
 				<div class="form-group">
@@ -22,7 +22,7 @@
 				</div>
 
 				<div class="form-group">
-					{!!Form::label('Fecha:')!!}
+					{!!Form::label('Fecha de Termino:')!!}
 					{!! Form::text('end', '', ['id' => 'datepicker_end'])!!}
 				</div>
 			</div>
@@ -32,7 +32,6 @@
 		</div>
 	</div>
 </div>
-
 
 
 <style type="text/css">

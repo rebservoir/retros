@@ -61,6 +61,11 @@
 	.th_sel{
 		background-color: #C5DEF5;
 	}
+
+	div#paginate{
+		float: right;
+		margin-right: 50px;
+	}
 	
 </style>
 

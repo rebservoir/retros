@@ -6,6 +6,7 @@
 	@include('admin.modal.noticia_create')
 	@include('admin.modal.noticia_edit')
 	@include('admin.modal.sitio_edit')
+	@include('admin.modal.documento_create')
 
 	@section('nav')
 		<a href="home">
@@ -67,6 +68,7 @@
 							<li id="int_l3">					<p>Transparencia</p></li>
 							<li id="int_l4">					<p>Teléfonos y Sitios Útiles</p></li>
 							<li id="int_l5">					<p>Configuración del sitio</p></li>
+							<li id="int_l6">					<p>Documentos</p></li>
 						</ul>
 						
 					</div>
@@ -120,6 +122,16 @@
 						
 							<div class="cont_in_r">
 								@include('admin/sitio')
+							</div>
+						</div>
+
+						<div id="int_div6" class="int_div">
+							<div class="box_header">
+								<p>Contenidos > Documentos</p>
+							</div>
+						
+							<div class="cont_in_r">
+								@include('admin/documentos')
 							</div>
 						</div>
 

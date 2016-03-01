@@ -4,17 +4,17 @@ namespace TuFracc;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sitio extends Model
+class Documentos extends Model
 {
-    protected $table = 'sitio';
+    protected $table = "documentos";
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'picture'];
+    protected $fillable = ['titulo','path'];
 
     public function setPathAttribute($path){
-    	$this->attributes['path'] = 'site_' . time() . '.' . $path->getClientOriginalName();
-    	$name = 'site_' . time() . '.' . $path->getClientOriginalName();
+		$this->attributes['path'] = 'doc_' . time() . '.' . $path->getClientOriginalName();
+    	$name = 'doc_' . time() . '.' . $path->getClientOriginalName();
     	//$name = Carbon::now()->second.$path->getClientOriginalName();
     	\Storage::disk('local')->put($name, \File::get($path));
     }

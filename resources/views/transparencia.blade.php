@@ -236,8 +236,8 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 			<tbody id="tbody_egresos">
 				<tr>
 					<th>Fecha</th>
-					<th>Monto</th>
 					<th>Descripción</th>
+					<th>Monto</th>
 					<th>Archivo</th>
 				</tr>
 
@@ -255,7 +255,7 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 						@if($egreso->path=="")
 							<td><p>No disponible</p></td>
 						@else
-							<td><a href='file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
+							<td><a href='/file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
 						@endif
 							</tr>
 					@endif

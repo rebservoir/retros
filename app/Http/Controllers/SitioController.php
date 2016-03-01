@@ -8,13 +8,11 @@ use TuFracc\Http\Controllers\Controller;
 use TuFracc\Sitio;
 use Session;
 use Redirect;
+use Illuminate\Routing\Route;
 
 class SitioController extends Controller
 {
 
-     public function find(Route $route){
-        $this->sitio = User::find($route->getParameter('sitio'));
-    }
     /**
      * Display a listing of the resource.
      *
@@ -81,12 +79,36 @@ class SitioController extends Controller
      */
     public function update(Request $request)
     { 
+
+
+      if( $request->hasFile('picture') ){
+           $file = $request->file('picture');
+
+        $this->attributes['path'] = 'site_' . time() . '.' . $path->getClientOriginalName();
+        $name = 'site_' . time() . '.' . $path->getClientOriginalName();
+        \Storage::disk('local')->put($name, \File::get($path));
+
+
+           $destination_path = 'uploads/';
+           $filename = str_random(6).'_'.$file->getClientOriginalName();
+           $file->move($destination_path, $filename);
+           $image->file = $destination_path . $filename;
+      }
         
-        $sitio= Sitio::find(1);
-        $sitio->fill($request->all());
-        $sitio->save();
-        //Session::flash('message','Sitio configurado exitosamente');
-        //return Redirect::to('admin/contenidos');
+      // replace old data with new data from the submitted form //
+      $image->caption = $request->input('caption');
+      $image->description = $request->input('description');
+      $image->save();
+
+
+        if($request->ajax()){
+            $sitio= Sitio::find(1);
+            $sitio->fill($request->all());
+            $sitio->save();
+                        return response()->json([
+                    "message" => "actualizado"
+                ]);   
+        }
     }
 
     /**

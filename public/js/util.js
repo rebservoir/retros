@@ -206,12 +206,10 @@ $("#actualizar_noticia").on("submit", function(e){
     e.preventDefault();
     var formData = new FormData(this);
 
-    var value = $("#id_noti_1").val();
+
     var dato1 = $("#titulo1").val();
     var dato2 = $("#contenido1").val();
     var dato3 = $("#path1").val();
-    console.log(dato3);
-    console.log("file_noti:" + file_noti);
 
     var route = "/noticia/"+value+"";
     var token = $("#token_noti_1").val();
@@ -219,10 +217,6 @@ $("#actualizar_noticia").on("submit", function(e){
     if(dato3 == ""){
         dato3 = file_noti;
     }
-
-    console.log(dato3);
-
-    //formData.append('path', dato3);
 
     $.ajax({
         url: route,
@@ -239,6 +233,7 @@ $("#actualizar_noticia").on("submit", function(e){
             $('#noticia_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
+            console.log('nel');
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail1").removeClass( "hide");
             console.log(obj);
@@ -298,27 +293,28 @@ function Mostrar_sitio(btn){
     });
 }
 
-$("#actualizar_sitio").on("submit", function(e){
-    $("#msj-success_sitio").addClass( "hide");
-    $( "#msj-fail_sitio").addClass( "hide");
-    e.preventDefault();
-    var formData = new FormData(this);
 
-    var value = 1;
+$("#actualizar_sitio").on("submit", function(e){
+
+    $("#msj-success_sitio").addClass( "hide");
+    $("#msj-fail_sitio").addClass( "hide");
+
+    e.preventDefault();
+
     var dato1 = $("#name_frac").val();
     var dato2 = $("#picture").val();
-    var file_sitio = $("#path_sitio").val()
-    console.log("dato2: " + dato2);
 
-    var route = "/sitio/"+value+"";
+    var formData = new FormData();
+    formData.append("name", dato1);
+    //formData.append("picture", dato2);
+    //formData.append('picture', file);
+
+    var route = "/sitio/1";
     var token = $("#token_sitio_1").val();
 
-    if(dato2 == ""){
-        dato2 = file_sitio;
-        console.log('se hizo');
-    }
-
-    //formData.append('path', dato3);
+    //var fileInput = document.getElementById('picture');
+    //var file = fileInput.files[0];
+    //formData.append('picture', file);
 
     $.ajax({
         url: route,
@@ -326,21 +322,86 @@ $("#actualizar_sitio").on("submit", function(e){
         type: 'PUT',
         dataType: 'json',
         data:formData,
+        cache: false,
         contentType: false,
         processData: false,
-
+        //data:{ name: dato1, picture: dato2 },
         success:function(){
             $("#msj-success_sitio").removeClass( "hide");
             $("#divSitio").load(location.href+" #divSitio>*","");
             $('#sitio_edit').modal('toggle');
         },
-        error: function () {
+        error: function(){
             //var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail_sitio").removeClass( "hide");
             $('#sitio_edit').modal('toggle');
         }
-        
     });
 });
 
 
+
+ $("#registrar_doc").on("submit", function(e){
+    $("#msj-success-doc").addClass( "hide");
+    $("#msj-fail-doc").addClass( "hide");
+    $("#msj-success-doc1").addClass( "hide");
+    $("#msj-fail-doc1").addClass( "hide");
+
+    e.preventDefault();
+    var fd = new FormData(this);
+
+    var route = "/documentos";
+    var token = $("#token_doc").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'POST',
+        dataType: 'json',
+        data: fd,
+        contentType: false,
+        processData: false,
+
+        success:function(){
+            $("#msj-success-doc").removeClass("hide");
+            $("#divDocs").load(location.href+" #divDocs>*","");
+            $('#documento_create').modal('toggle');
+        },
+        error: function (jqXHR, exception) {
+            $("#msj-fail-doc").removeClass("hide");
+            $('#documento_create').modal('toggle');
+        }    
+    });
+});
+
+
+function delete_doc(btn){
+    $("#msj-success-doc").addClass( "hide");
+    $("#msj-fail-doc").addClass( "hide");
+    $("#msj-success-doc1").addClass( "hide");
+    $("#msj-fail-doc1").addClass( "hide");
+
+    if (confirm("Eliminar este documento?") == true) {
+
+        var value = btn.value;
+        var route = "/documentos/"+value;
+        var token = $("#token_doc1").val();
+
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN': token},
+            type: 'DELETE',
+            dataType: 'json',
+            success:function(){
+            
+            $("#divDocs").load(location.href+" #divDocs>*","");
+            },
+            error: function (jqXHR, exception) {
+                $( "#msj-fail-doc1").removeClass( "hide");
+            } 
+
+        });
+    } else {
+    } 
+
+}

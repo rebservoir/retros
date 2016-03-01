@@ -24,7 +24,7 @@
 				<div class="modal-footer">
 						{!!Form::submit('Modificar datos',['class'=>'btn btn-primary'])!!}
 				</div>
-			{!! Form::close() !!}
+				{!! Form::close() !!}
 		</div>
 	</div>
 </div>

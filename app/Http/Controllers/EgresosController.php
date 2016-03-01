@@ -8,6 +8,10 @@ use TuFracc\Http\Requests\EgresosCreateRequest;
 use TuFracc\Http\Requests\EgresosUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Egresos;
+use Illuminate\Contracts\Auth\Guard;
+use Session;
+use Redirect;
+use Illuminate\Routing\Route;
 
 class EgresosController extends Controller
 {
@@ -80,15 +84,15 @@ class EgresosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EgresosCreateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if($request->ajax()){
-        $egresos = Egresos::find($id);
-        $egresos->fill($request->all());
-        $egresos->save();
-            return response()->json([
-                    "message" => "creado"
-                ]);
+            $egresos = Egresos::find($id);
+            $egresos->fill($request->all());
+            $egresos->save();
+                return response()->json([
+                        "message" => "creado"
+                    ]);
         }   
     }
 
@@ -102,6 +106,7 @@ class EgresosController extends Controller
     {
         $egresos = Egresos::find($id);
         $egresos->delete();
+        \Storage::delete($egresos->path);
 
         return response()->json([
             "mensaje"=>'eliminado'

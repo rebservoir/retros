@@ -12,16 +12,10 @@ class Noticia extends Model
     protected $fillable = ['titulo', 'texto', 'path'];
 
     public function setPathAttribute($path){
-    	$this->attributes['path'] = 'tufracc_' . time() . '.' . $path->getClientOriginalName();
-    	$name = Carbon::now()->second.$path->getClientOriginalName();
-    	\Storage::disk('local')->put($name, \File::get($path));
+    	if(!empty($path)){
+    		$this->attributes['path'] = 'noticia_' . time() . $path->getClientOriginalName();
+        	$name = 'noticia_' . time() . $path->getClientOriginalName();
+    		\Storage::disk('local')->put($name, \File::get($path));
+    	}
     }
-
-/*
-    public static function Noticias(){
-    	return DB::table('noticias')
-    		//->join('genres','genres.id')
-    }
-*/
 }
-

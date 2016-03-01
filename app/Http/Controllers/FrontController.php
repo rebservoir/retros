@@ -17,6 +17,7 @@ use TuFracc\Saldos;
 use TuFracc\Cuotas;
 use TuFracc\Sitio;
 use TuFracc\Calendario;
+use TuFracc\Documentos;
 use DB;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
@@ -43,7 +44,7 @@ class FrontController extends Controller
     public function index()
     {
         if($this->auth->user()->role != 1){
-            $morosos = Morosos::all();
+            $morosos = Morosos::paginate(20);
             $users = User::paginate(20);
             $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
             $sitios = Sitio::where('id', 1)->get();
@@ -90,7 +91,8 @@ class FrontController extends Controller
     {
         $utiles = Utiles::all();
         $morosos = Morosos::all();
-        return view('mifrac/mifrac', ['utiles' => $utiles, 'morosos' => $morosos ]);
+        $documentos = Documentos::all();
+        return view('mifrac/mifrac', ['utiles' => $utiles, 'morosos' => $morosos, 'documentos' => $documentos]);
     }
 
     public function transparencia($mes_sel=null, $year_sel=null)
@@ -170,11 +172,12 @@ class FrontController extends Controller
     {
         if($this->auth->user()->role == 1){
             $noticias = Noticia::all();
+            $documentos = Documentos::all();
             $utiles = Utiles::all();
             $morosos = Morosos::all();
             $sitio = Sitio::all()->where('id', 1);
             return view('/admin/contenidos', [ 'morosos' => $morosos, 'utiles' => $utiles, 
-                'noticias' => $noticias, 'sitio' => $sitio ]);
+                'noticias' => $noticias, 'sitio' => $sitio, 'documentos' => $documentos ]);
         }else{
             return Redirect::to('home');
         }
@@ -184,8 +187,8 @@ class FrontController extends Controller
     {
         if($this->auth->user()->role == 1){
                 $users = User::all();
+                //$users = User::paginate(20);
                 $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
-
             return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos ]);
         }else{
             return Redirect::to('home');

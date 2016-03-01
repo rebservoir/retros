@@ -55,16 +55,14 @@ $(function() {
 });
 
 
+function mostrar_evento(btn){
+    
+    $("#msj-fail").addClass( "hide");
 
-function Mostrar_evento(btn){
-
-    console.log('Mostrar_evento');
-
-    var route = "/calendario/"+btn.value+"/edit";
+    var route = "/eventos/"+ btn.value;
 
     $.get(route, function(res){
-        console.log(res);
-        $("#ev_title").val(res.title);
+        $('#ev_title1').val(res.title);
         $("#datepicker_start1").val(res.start);
         $("#datepicker_end1").val(res.end);
         $("#evento_id").val(res.id);
@@ -72,16 +70,14 @@ function Mostrar_evento(btn){
 }
 
 
-$("#registrar_evento").on("submit", function(e){
-    //$("#msj-success").addClass( "hide");
-    //$( "#msj-fail").addClass( "hide");
-    e.preventDefault();
+$("#registrar_evento").click(function(){
 
-    var dato1 = $("#title").val();
+    $("#msj-fail").addClass( "hide");
+
+    var dato1 = $("#ev_title").val();
     var dato2 = $("#datepicker_start").val();
     var dato3 = $("#datepicker_end").val();
-
-    var route = "/calendario";
+    var route = "/eventos";
     var token = $("#token_evento").val();
 
     $.ajax({
@@ -90,25 +86,69 @@ $("#registrar_evento").on("submit", function(e){
         type: 'POST',
         dataType: 'json',
         data:{title: dato1, start: dato2, end: dato3},
-        contentType: false,
-        processData: false,
-
         success:function(){
-            //$("#msj-success").removeClass( "hide");
-            $("#tablaEventos").load(location.href+" #tablaeventos>*","");
-            $('#eventos_create').modal('toggle');
+            window.location.reload();
         },
         error: function (jqXHR, exception) {
-            //var obj = jQuery.parseJSON(jqXHR.responseText);
-            //$("#msj-fail").removeClass( "hide");
-            //var msj = obj.titulo + '<br>' + obj.texto + '<br>' + obj.path + '<br>';
-            //var res = msj.replace(/undefined<br>/gi, '');
-            //var res = res.replace(/titulo/gi, 'Titulo');
-            //var res = res.replace(/texto/gi, 'Contenido');
-            //var res = res.replace(/path/gi, 'Imagen');
-            //$(".msj").html(res);
             $('#eventos_create').modal('toggle');
+            $("#msj-fail").removeClass( "hide");
         }
     });
+});
 
+
+$("#actualizar_evento").click(function(){
+
+    var value = $("#evento_id").val();
+    var dato1 = $("#ev_title1").val();
+    var dato2 = $("#datepicker_start1").val();
+    var dato3 = $("#datepicker_end1").val();
+
+    var route = "/eventos/" + value;
+    var token = $("#token_evento").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'PUT',
+        dataType: 'json',
+        data:{title: dato1, start: dato2, end: dato3},
+        success:function(){
+            //$("#msj-success1").removeClass( "hide");
+            $("#tablaEventos").load(location.href+" #tablaEventos>*","");
+            $('#eventos_edit').modal('toggle');
+            window.location.reload();
+        },
+        error: function (jqXHR, exception) {
+            var obj = jQuery.parseJSON(jqXHR.responseText);
+            $("#msj-fail").removeClass( "hide");
+            $('#eventos_edit').modal('toggle');
+        } 
+    });
+});
+
+$("#eliminar_evento").click(function(){
+
+    if (confirm("Eliminar este Evento?") == true){
+
+        var value = $("#evento_id").val();
+        var route = "/eventos/"+value;
+        var token = $("#token_evento").val();
+
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN': token},
+            type: 'DELETE',
+            dataType: 'json',
+            success:function(){
+            //$("#msj-success2").removeClass( "hide");
+            //$("#tablaPagos").load(location.href+" #tablaPagos>*","");
+            window.location.reload();
+            },
+            error: function (jqXHR, exception) {
+                $("#msj-fail").removeClass( "hide");
+            } 
+        });
+    } else {
+    } 
 });

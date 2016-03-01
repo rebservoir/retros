@@ -25,12 +25,7 @@
 						{!!Form::file('path', ['id'=>'path1'])!!}
 					</div>
 			</div>
-			<!--
-				<div class="modal-footer">
-					{!!link_to('#', $title='Modificar', $attributes = ['id'=>'actualizar_noticia', 'class'=>'btn btn-primary'], $secure=null)!!}
-					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_noticia', 'class'=>'btn btn-danger'], $secure=null)!!}
-				</div>
-			-->
+			
 				<div class="modal-footer">
 						{!!Form::submit('Modificar Noticia',['class'=>'btn btn-primary'])!!}
 						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_noticia', 'class'=>'btn btn-danger'], $secure=null)!!}

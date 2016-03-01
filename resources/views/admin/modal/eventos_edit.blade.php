@@ -14,7 +14,7 @@
 
 				<div id="the-basics" class="form-group">
 					{!!Form::label('Titulo:')!!}
-					{!!Form::text('title',null,['id'=>'ev_title','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
+					{!!Form::text('title',null,['id'=>'ev_title1','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
 				</div>
 
 				<div class="form-group">
@@ -23,12 +23,13 @@
 				</div>
 
 				<div class="form-group">
-					{!!Form::label('Fecha:')!!}
+					{!!Form::label('Fecha de Termino:')!!}
 					{!! Form::text('end', '', ['id' => 'datepicker_end1'])!!}
 				</div>
 			</div>
 				<div class="modal-footer">
 					{!!link_to('#', $title='Actualizar Evento', $attributes = ['id'=>'actualizar_evento', 'class'=>'btn btn-primary'], $secure=null)!!}
+					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_evento', 'class'=>'btn btn-danger'], $secure=null)!!}
 				</div>
 		</div>
 	</div>

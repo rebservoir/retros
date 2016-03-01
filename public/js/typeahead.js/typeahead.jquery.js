@@ -3,7 +3,7 @@
  * https://github.com/twitter/typeahead.js
  * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
  */
-
+ var context_obj;
  var newIndex_1;
 
 (function(root, factory) {
@@ -700,6 +700,7 @@
                     this._empty();
                 }
                 this.trigger("rendered", this.name, suggestions, false);
+                
             },
             _append: function append(query, suggestions) {
                 suggestions = suggestions || [];
@@ -747,10 +748,13 @@
             },
             _getSuggestionsFragment: function getSuggestionsFragment(query, suggestions) {
                 var that = this, fragment;
+
                 fragment = document.createDocumentFragment();
                 _.each(suggestions, function getSuggestionNode(suggestion) {
                     var $el, context;
                     context = that._injectQuery(query, suggestion);
+                    context_obj = context.split('/');
+                    context = context_obj[0];
                     $el = $(that.templates.suggestion(context)).data(keys.obj, suggestion).data(keys.val, that.displayFn(suggestion)).addClass(that.classes.suggestion + " " + that.classes.selectable);
                     fragment.appendChild($el[0]);
                 });
@@ -1117,7 +1121,6 @@
                 this.eventBus.trigger("asyncreceive", query, dataset);
             },
             _onFocused: function onFocused() {
-                console.log('focused');
                 this._minLengthMet() && this.menu.update(this.input.getQuery());
             },
             _onBlurred: function onBlurred() {
@@ -1259,16 +1262,11 @@
             select: function select($selectable) {
                 
                 var data = this.menu.getSelectableData($selectable);
-                console.log('selectable'+$selectable);
                 var jk = data['obj'].split('/');
                 var id_user = jk[1];
                 get_id_user_pago(id_user);
-                console.log('id_user:'+id_user);
                 data.obj = jk[0];
                 data.val = jk[0];
-                console.log('jk:'+jk);
-                console.log('**select**' + data.obj);
-                console.log('val:'+data.val);
                 if (data && !this.eventBus.before("select", data.obj)) {
                     this.input.setQuery(data.val, true);
                     this.eventBus.trigger("select", data.obj);
@@ -1286,7 +1284,6 @@
                 data.val = jk[0];
                 isValid = data && query !== data.val;
                 if (isValid && !this.eventBus.before("autocomplete", data.obj)) {
-                    console.log('autocomplete:' + data.obj);
                     this.input.setQuery(data.val);
                     this.eventBus.trigger("autocomplete", data.obj);
                     return true;

@@ -4,17 +4,16 @@ namespace TuFracc\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
-use TuFracc\Http\Requests\CalendarioCreateRequest;
 use TuFracc\Http\Controllers\Controller;
-use TuFracc\Calendario;
+use TuFracc\Documentos;
+use TuFracc\Http\Requests\DocumentosCreateRequest;
 use Session;
 use Redirect;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Routing\Route;
 
-class CalendarioController extends Controller
+class DocumentosController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +31,6 @@ class CalendarioController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -41,10 +39,10 @@ class CalendarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CalendarioCreateRequest $request)
+    public function store(DocumentosCreateRequest $request)
     {
         if($request->ajax()){
-            Calendario::create($request->all());
+            Documentos::create($request->all());
             return response()->json([
                     "message" => "creado"
                 ]);
@@ -70,10 +68,10 @@ class CalendarioController extends Controller
      */
     public function edit($id)
     {
-        $calendario = Calendario::find($id);
+        $documentos = Documentos::find($id);
 
         return response()->json(
-            $calendario->toArray()
+            $documentos->toArray()
             );
     }
 
@@ -84,11 +82,11 @@ class CalendarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
-    { 
-        $calendario = Calendario::find($id);
-        $calendario->fill($request->all());
-        $calendario->save();
+    public function update(Request $request, $id)
+    {
+        $documentos = Documentos::find($id);
+        $documentos->fill($request->all());
+        $documentos->save();
 
         return response()->json([
             "mensaje"=>'listo'
@@ -103,8 +101,9 @@ class CalendarioController extends Controller
      */
     public function destroy($id)
     {
-        $calendario = Calendario::find($id);
-        $calendario->delete();
+        $documentos = Documentos::find($id);
+        $documentos->delete();
+        \Storage::delete($documentos->path);
 
             return response()->json([
                 "mensaje"=>'eliminado'

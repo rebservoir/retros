@@ -138,15 +138,6 @@
 		{!!Html::script('js/calendario.js')!!}
 	@stop
 
-<style>
-	#calendar {
-		max-width: 80% !important;
-		margin: 0 auto;
-	}
-	div#select_date{
-		margin-left: 10%;
-		width: 500px;
-	}
-</style>
+
 
 

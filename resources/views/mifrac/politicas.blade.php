@@ -9,11 +9,11 @@
 	    </thead>
 
 	    <tbody>
-	      <tr>
-	        <td>
-	        	<a href="docs/reglamento_interno.pdf" target="_blank">Reglamento Interno</a>
-			</td>
-	      </tr>
+			@foreach($documentos as $doc)
+				<tr>      	
+					<td><p><a href="/file/{{$doc->path}}" target="_blank">{{$doc->titulo}}</a></p></td>
+				</tr>
+			@endforeach
 	    </tbody>
   	</table>
  </div>

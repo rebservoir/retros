@@ -74,6 +74,9 @@
 						<h1>Calendario</h1>
 					</div>
 
+					<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
+						<p>Volver a intentar.</p>
+					</div>
 
 					<div id="select_date">
 						<p>Seleccionar Año y Mes</p>
@@ -135,7 +138,7 @@
 											<p>{{$cale->end}}</p>
 										</td>
 										<td>
-											<button value='{{$cale->id}}' OnClick='Mostrar_evento(this);' class='btn btn-primary' data-toggle="modal" data-target="#eventos_edit">Editar</button>
+											<button value='{{$cale->id}}' onclick="mostrar_evento(this);" class='btn btn-primary' data-toggle="modal" data-target="#eventos_edit">Editar</button>
 										</td>
 									</tr>
 								@endforeach	
@@ -155,20 +158,6 @@
 		{!!Html::script('fullcalendar-2.6.0/lang-all.js')!!}
 	@stop
 
-<style>
-	#calendar {
-		max-width: 80% !important;
-		margin: 0 auto;
-	}
-	div#select_date{
-		margin-left: 10%;
-		width: 500px;
-	}
-	div#tablaEventos{
-		width: 80%;
-		margin: 0 auto;
-	}
-</style>
 
 
     <script type="text/javascript">

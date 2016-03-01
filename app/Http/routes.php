@@ -37,9 +37,10 @@ Route::get('admin/usuarios/sort/{sort?}','UsuarioController@sort');
 Route::get('admin/usuarios/sort_usr/{sort?}','UsuarioController@sort_usr');
 Route::get('admin/usuarios/add/{id?}','UsuarioController@add');
 
-
 Route::get('sendEmail/{id?}','MailController@sendEmail');
 Route::get('sendEmailMsg/{id?}','MailController@sendEmailMsg');
+Route::get('eventos/{id?}','CalendarioController@edit');
+Route::get('eventos_create','CalendarioController@store');
 
 Route::resource('mail','MailController@contact');
 Route::resource('sitio','SitioController');
@@ -52,14 +53,13 @@ Route::resource('pagos','PagosController');
 Route::resource('egresos','EgresosController');
 Route::resource('saldos','SaldosController');
 Route::resource('cuotas','CuotasController');
-Route::resource('calendario','CalendarioController');
-
+Route::resource('eventos','CalendarioController');
+Route::resource('documentos','DocumentosController');
 
 Route::get('logout','LogController@logout');
 Route::get('controlador','PruebaController@index');
 Route::get('name/{nombre}','PruebaController@nombre');
 Route::resource('objeto','ObjetoController');  //php artisan make:controller ObjetoController
-
 
 Route::get('prueba', function(){
 	return "Hola desde routes.php";
