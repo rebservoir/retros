@@ -322,7 +322,6 @@ $("#actualizar_sitio").on("submit", function(e){
         type: 'PUT',
         dataType: 'json',
         data:formData,
-        cache: false,
         contentType: false,
         processData: false,
         //data:{ name: dato1, picture: dato2 },

@@ -79,8 +79,6 @@ class SitioController extends Controller
      */
     public function update(Request $request)
     { 
-
-
       if( $request->hasFile('picture') ){
            $file = $request->file('picture');
 

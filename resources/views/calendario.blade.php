@@ -67,14 +67,16 @@
 
 {{--*/
 	$month = array("x","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"); 
+	$year_cu = date('Y');
 	$year = $year_sel;
 	$mes = $mes_sel;
 	$day = date('j');
-	$fecha = $year . "-" . $mes . "-" . $day;
+	$fecha = $year . "-" . $mes . "-01";
 /*--}}
 
     <script type="text/javascript">
         var date = <?php echo "'" . $fecha . "'" ?>;
+        console.log("fecha:" + date);
         var eventos = [];
         eventos = <?php echo $calendario ?>;
         console.log(eventos);
@@ -96,8 +98,8 @@
 
 							{{--*/ 
 								echo "<select id='year_select' name='year_select' class='select_trans'>";
-									for ($j = ($year-1); $j < ($year+2); $j++){
-										if($j==$year){
+									for ($j = ($year_cu-1); $j < ($year_cu+2); $j++){
+										if($j==$year_cu){
 											echo "<option value='" . $j . "' selected='selected'>" . $j . "</option>";
 										}else{
 											echo "<option value='" . $j . "'>" . $j . "</option>";

@@ -15,7 +15,6 @@ class Sitio extends Model
     public function setPathAttribute($path){
     	$this->attributes['path'] = 'site_' . time() . '.' . $path->getClientOriginalName();
     	$name = 'site_' . time() . '.' . $path->getClientOriginalName();
-    	//$name = Carbon::now()->second.$path->getClientOriginalName();
     	\Storage::disk('local')->put($name, \File::get($path));
     }
 }

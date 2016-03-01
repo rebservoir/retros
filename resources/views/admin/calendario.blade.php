@@ -59,12 +59,12 @@
 
 {{--*/
 	$month = array("x","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"); 
+	$year_cu = date('Y');
 	$year = $year_sel;
 	$mes = $mes_sel;
 	$day = date('j');
-	$fecha = $year . "-" . $mes . "-" . $day;
+	$fecha = $year . "-" . $mes . "-01";
 /*--}}
-
 
 			<div id="main_cont">
 				<div class="cont_left col-lg-12">
@@ -83,8 +83,8 @@
 
 							{{--*/ 
 								echo "<select id='year_select' name='year_select' class='select_trans'>";
-									for ($j = ($year-1); $j < ($year+2); $j++){
-										if($j==$year){
+									for ($j = ($year_cu-1); $j < ($year_cu+2); $j++){
+										if($j==$year_cu){
 											echo "<option value='" . $j . "' selected='selected'>" . $j . "</option>";
 										}else{
 											echo "<option value='" . $j . "'>" . $j . "</option>";
@@ -105,7 +105,6 @@
 								echo "</select>"; 
 							/*--}}
 
-						
 							<button id="btn_cal_admin" value="" class="btn btn-primary">Mostrar</button>
 							<button id="btn_add_event" value="" class="btn btn-primary" data-toggle="modal" data-target="#eventos_create">Crear Evento</button>
 					</div>
@@ -127,20 +126,23 @@
 							</thead>
 							<tbody>
 								@foreach($calendario as $cale)
-									<tr>
-										<td>
-											<p>{{$cale->title}}</p>
-										</td>
-										<td>
-											<p>{{$cale->start}}</p>
-										</td>
-										<td>
-											<p>{{$cale->end}}</p>
-										</td>
-										<td>
-											<button value='{{$cale->id}}' onclick="mostrar_evento(this);" class='btn btn-primary' data-toggle="modal" data-target="#eventos_edit">Editar</button>
-										</td>
-									</tr>
+									{{--*/ 	$date_ev = explode("-", $cale->start); /*--}}
+									@if(($date_ev[0] == $year_sel)&&($date_ev[1] == $mes_sel))
+										<tr>
+											<td>
+												<p>{{$cale->title}}</p>
+											</td>
+											<td>
+												<p>{{$cale->start}}</p>
+											</td>
+											<td>
+												<p>{{$cale->end}}</p>
+											</td>
+											<td>
+												<button value='{{$cale->id}}' onclick="mostrar_evento(this);" class='btn btn-primary' data-toggle="modal" data-target="#eventos_edit">Editar</button>
+											</td>
+										</tr>
+									@endif
 								@endforeach	
 							</tbody>
 						</table>
