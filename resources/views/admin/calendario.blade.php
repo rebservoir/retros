@@ -61,9 +61,14 @@
 	$month = array("x","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"); 
 	$year_cu = date('Y');
 	$year = $year_sel;
-	$mes = $mes_sel;
+	$mes = intval($mes_sel);
 	$day = date('j');
-	$fecha = $year . "-" . $mes . "-01";
+	if(!($mes>10)){
+		$fecha = $year . "-0" . $mes . "-01";
+    }else{
+    	$fecha = $year . "-" . $mes . "-01";
+	}
+	echo $fecha;
 /*--}}
 
 			<div id="main_cont">

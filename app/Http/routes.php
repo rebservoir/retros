@@ -81,3 +81,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Paypal
+
+//Enviamos a PayPal
+
+Route::get('pago/{type?}', array(
+	'as' => 'pago',
+	'uses' => 'PaypalController@postPayment',
+));
+
+// Paypal redirecciona a esta ruta
+Route::get('payment/status', array(
+	'as' => 'payment.status',
+	'uses' => 'PaypalController@getPaymentStatus',
+));

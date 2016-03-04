@@ -96,11 +96,7 @@ $day = date('j');
 			    {{--*/ $date = explode("-", $pago->date) /*--}}
 			    @if(($date[1] == ($q+1)) && ($date[0] == $j))
 					<tr>
-						@foreach($users as $user)
-							@if( $user->id == $pago->id_user)
-								<td><p>{{$user->name}}</p></td>
-							@endif
-						@endforeach
+						<td><p>{{$pago->user_name}}</p></td>
 						{{--*/ $money = number_format($pago->amount, 2, '.', '') /*--}}
 						<td><p>{{'$ '.$money}}</p></td>
 						<td><p>{{$pago->date}}</p></td>

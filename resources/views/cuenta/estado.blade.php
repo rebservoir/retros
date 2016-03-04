@@ -9,6 +9,7 @@ $d_corte = 15;
 $m_corte = 0;
 $y_corte = 0;
 $d_vence = 21;
+$status = 1;
 
   if($day>15){
     if($mes == 12){
@@ -41,19 +42,18 @@ $d_vence = 21;
   @endif
 @endforeach
 
-
-@foreach($pagos as $pago)
-  @if($pago->id_user == Auth::user()->id)
-    @if($pago->status == 1)
+@foreach($ultimo_p as $pa)
       {{--*/ 
-          $pago_hasta = $pago->date; 
-          $pago_monto = $pago->amount; 
-          $pago_hasta_mes = explode("-", $pago_hasta); 
+        $pago_hasta = $pa->date; 
+        $pago_monto = $pa->amount; 
+        $pago_hasta_mes = explode("-", $pago_hasta); 
+        break;
       /*--}}
-    @endif
-  @endif
 @endforeach
 
+@if(!empty($vencidos))
+  {{--*/ $status = 0 /*--}}
+@endif
 
 
 <h3>Factura al Corte</h3>
@@ -61,13 +61,13 @@ $d_vence = 21;
 <table class="table table-bordered table-striped table-condensed ">
   <tbody>
     <tr>
-      <td><p>Cliente:</p></td>
+      <td><p>Cliente: </p></td>
       <td><p>{!!Auth::user()->name!!}</p></td>
     </tr>
     <tr>
       <td><p>Status de Pago:</p></td>
         <td><h3 style="margin-top: 10px">
-          @if (Auth::user()->status == 0)
+          @if($status == 0)
             <span class="label label-danger">Adeudo</span>
           @else
             <span class="label label-success">Al corriente</span>
@@ -225,7 +225,7 @@ $d_vence = 21;
           <tbody>
             <tr>
               <td><p>Aportación</p></td>
-              <td>$500.00</td>
+              <td>{{'$ '. number_format($cuota, 2) }}</td>
               <td>0%</td>
               <td>{{'$ '. number_format($pago->amount, 2) }}</td>
             </tr>

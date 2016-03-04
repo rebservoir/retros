@@ -34,6 +34,9 @@ class FrontController extends Controller
             'mifrac','admin_modulo','contenidos','calendario','transparencia', 'usuarios']]);
     
         $this->auth = $auth;
+
+        if(!\Session::has('pagos_id')) \Session::put('pagos_id', array());
+        if(!\Session::has('pagos_data')) \Session::put('pagos_data', array());
     }
 
     /**
@@ -80,11 +83,14 @@ class FrontController extends Controller
         $morosos = Morosos::all();
         $pagos = Pagos::where(function ($query) {
                 $query->where('id_user', $this->auth->user()->id)
-                ->orderBy('date');
+                ->orderBy('date', 'asc');
                   })->get();
-        //$pagos = Pagos::all()->sortBy('date');
-        $cuotas = Cuotas::all();
-        return view('cuenta', ['pagos' => $pagos, 'cuotas' => $cuotas, 'morosos' => $morosos]);
+        $ultimo_p = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 1)->orderBy('date', 'dsc')->get();
+        $vencidos = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 0)->orderBy('date', 'asc')->get();
+        $cuotas = Cuotas::find($this->auth->user()->type);
+        $cuota = $cuotas->amount;
+        return view('cuenta', ['vencidos' => $vencidos,'pagos' => $pagos, 'cuotas' => $cuotas,
+                                'morosos' => $morosos, 'ultimo_p' => $ultimo_p, 'cuota' => $cuota]);
     }
 
     public function mifrac()
@@ -162,7 +168,9 @@ class FrontController extends Controller
             $egresos = Egresos::all();
             $saldos = Saldos::all();
             $cuotas = Cuotas::orderBy('concepto', 'ASC')->get();
-            return view('/admin/admin_modulo', ['users' => $users, 'pagos' => $pagos, 'egresos' => $egresos, 'cuotas' => $cuotas, 'saldos' => $saldos ]);
+            $cta = Cuotas::find($this->auth->user()->type);
+            $cuota = $cta->amount;
+            return view('/admin/admin_modulo', ['users' => $users, 'pagos' => $pagos, 'egresos' => $egresos, 'cuotas' => $cuotas,'cuota' => $cuota,  'saldos' => $saldos ]);
         }else{
                  return Redirect::to('home');
         }
@@ -188,7 +196,7 @@ class FrontController extends Controller
         if($this->auth->user()->role == 1){
                 $users = User::all();
                 //$users = User::paginate(20);
-                $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
+                $tipos = Cuotas::lists('concepto','id');
             return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos ]);
         }else{
             return Redirect::to('home');

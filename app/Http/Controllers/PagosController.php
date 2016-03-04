@@ -15,14 +15,12 @@ use Illuminate\Routing\Route;
 
 class PagosController extends Controller
 {
-
-
     protected $auth;
 
     public function __construct(Guard $auth){
         $this->middleware('auth', ['only' => ['show']]);
-    
         $this->auth = $auth;
+        
     }
     /**
      * Display a listing of the resource.

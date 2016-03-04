@@ -333,16 +333,16 @@ div#cont_table{
 
 }
 .ingreso{
-	background: #00A885;
-    color: white;
+	background: #E4F1FE;
+    color: #555;
 }
 .anterior{
-    background: #54ACD2;
-    color: white;
+    background: #E4F1FE;
+    color: #555;
 }
 .total{
-    background: #61BD6D;
-    color: white;
+    background: #E4F1FE;
+    color: #555;
 }
 .cifras2{
 	text-align: center;
@@ -351,7 +351,7 @@ div#cont_table{
 }
 .egremes{
 	font-weight: normal;
-	background: #1ABC9C;
+    background: #2574A9;
 	color: white;
     margin: 5px;
 }

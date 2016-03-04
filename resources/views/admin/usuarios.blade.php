@@ -81,9 +81,9 @@
   <p>Intentar de nuevo.</p>
 </div>
 
-		<br>	
-			<button value='' OnClick='' class='btn btn-primary' data-toggle="modal" data-target="#user_create">Registrar un Nuevo Usuario</button>
-		<br><br>
+			
+		<button value='' OnClick='' class='btn btn-primary' data-toggle="modal" data-target="#user_create">Registrar un Nuevo Usuario</button>
+
 		<div id="the-basics" class="form-group">
 			<input type="text" id="search-input" class="typeahead form-control" placeholder="Buscar..." >
 			<button value='' OnClick='search();' class='btn btn-primary'>Buscar</button>		
@@ -93,7 +93,7 @@
 		<div id="search_result">
 		</div>
 
-		<br>
+			<br>
 
 		<div id="tablaUsuarios">
 			@include('usuario.usuarios')
@@ -105,7 +105,6 @@
 	@stop
 
 	@section('script')
-		
 		{!!Html::script('js/typeahead.js/bloodhound.js')!!}
 		{!!Html::script('js/typeahead.js/typeahead.bundle.js')!!}
 		{!!Html::script('js/typeahead.js/typeahead.jquery.js')!!}
@@ -114,7 +113,12 @@
 
 
 
+<style type="text/css">
 
+div#the-basics{
+	float: right !important;
+}
+</style>
 
 
 

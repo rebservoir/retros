@@ -1,5 +1,8 @@
 @extends('layouts.principal')
 
+	@include('alerts.success')
+	@include('alerts.errors')
+
 	@include('modal.user_edit')
 	@include('modal.pass_edit')
 	@include('modal.mensual')

@@ -23,24 +23,15 @@
 				$k = $year_c;
 				$pago_hasta = ''; 
           		$pago_hasta_mes = '';
+          		$monto = $cuota;
 			/*--}}
 
-
-@foreach($cuotas as $cuota)
-  @if($cuota->tipo == Auth::user()->type)
-    {{--*/ $monto = $cuota->amount  /*--}}
-  @endif
-@endforeach  
-
-@foreach($pagos as $pago)
-  @if($pago->id_user == Auth::user()->id)
-    @if($pago->status == 1)
+@foreach($ultimo_p as $pa)
       {{--*/ 
-          $pago_hasta = $pago->date; 
-          $pago_hasta_mes = explode("-", $pago_hasta);
+        $pago_hasta = $pa->date; 
+        $pago_hasta_mes = explode("-", $pago_hasta); 
+        break;
       /*--}}
-    @endif
-  @endif
 @endforeach
 
 <input type="hidden" name="date" value="{{ $pago_hasta }}" id="begin_date">
@@ -96,7 +87,7 @@
 			</div>
 			
 			<div class="modal-footer">
-				{!!link_to('#', $title='Proceder a Pagar', $attributes = ['id'=>'semestral_pago', 'class'=>'btn btn-primary'], $secure=null)!!}
+				{!!link_to('pago/2', $title='Proceder a Pagar', $attributes = ['class'=>'btn btn-primary'], $secure=null)!!}
 			</div>
 		</div>
 	</div>

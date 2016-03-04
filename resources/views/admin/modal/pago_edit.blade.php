@@ -22,8 +22,8 @@
 					{!! Form::text('date', '', ['id' => 'datepicker_pago'])!!}
 				</div>
 				<div class="form-group">
-					{!!Form::label('Cantidad:')!!}
-					{!!Form::text('amount',null,['id'=>'amount_pago','class'=>'form-control','placeholder'=>'Ingresar Cantidad'])!!}
+					{!!Form::label('Monto:')!!}
+					{!!Form::text('amount',null,['id'=>'amount_pago','class'=>'form-control','placeholder'=>'Ingresar Cantidad','disabled' => 'disabled'])!!}
 				</div>
 				<div class="form-group">
 					{!!Form::label('Status:')!!}

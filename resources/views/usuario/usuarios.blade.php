@@ -15,8 +15,6 @@
 					</select></th>
 				</th>
 				<th id="th3" class="th_op">Dirección</th>
-				<th >Telefono</th>
-				<th >Celular</th>
 				<th id="th4" class="th_op">Status<br>
 					<select id="status_select" name="status" class="select_user">
 						<option value="null">--</option>
@@ -32,12 +30,10 @@
 						<td>{{$user->name}}</td>
 						<td>{{$user->email}}</td>
 						<td>{{$user->address}}</td>
-						<td>{{$user->phone}}</td>
-						<td>{{$user->celphone}}</td>
 						<td>
-							@if($user->status==0)
+							@if($user->status==1)
 								<span class="label label-success">Ok</span>
-							@elseif($user->status==1)
+							@elseif($user->status==0)
 								<span class="label label-danger">Adeudo</span>
 							@else
 								<span class="label label-info">Admin</span>

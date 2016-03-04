@@ -20,8 +20,8 @@
 					{!! Form::text('date', '', ['id' => 'datepicker'])!!}
 				</div>
 				<div class="form-group">
-					{!!Form::label('Cantidad:')!!}
-					{!!Form::text('amount',null,['id'=>'amount','class'=>'form-control','placeholder'=>'Ingresar Cantidad'])!!}
+					{!!Form::label('Monto:')!!}
+					<input type="text" id="amount" class="form-control" value="{{$cuota}}" disabled>
 				</div>
 				<div class="form-group">
 					{!!Form::label('Status:')!!}
@@ -34,4 +34,5 @@
 		</div>
 	</div>
 </div>
+
 

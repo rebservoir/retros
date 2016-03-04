@@ -2,6 +2,7 @@
 {{--*/ 
 $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");  
 $total = 0;
+$monto = $cuota;
 /*--}}
 
 <h3>Saldo vencido</h3>
@@ -16,18 +17,14 @@ $total = 0;
 
         <tbody>
             
-@foreach($pagos as $pago)
-  @if($pago->id_user == Auth::user()->id)
-      @if($pago->status == 0)
-      		<tr>
-      			{{--*/ $pago_date = explode("-", $pago->date);  /*--}}
-      			{{--*/ $total += $pago->amount; /*--}}
-				<td><p>{!!$month[$pago_date[1]-1] . " " . $pago_date[0]!!}</p></td>
-				<td>{{'$ '. number_format($pago->amount, 2) }}</td>
-			</tr>
-      @endif
-  @endif
-@endforeach               
+	@foreach($vencidos as $pago)
+	    <tr>
+	    	{{--*/ $pago_date = explode("-", $pago->date);  /*--}}
+	      	{{--*/ $total += $pago->amount; /*--}}
+			<td><p>{!!$month[$pago_date[1]-1] . " " . $pago_date[0]!!}</p></td>
+			<td>{{'$ '. number_format($pago->amount, 2) }}</td>
+		</tr>
+	@endforeach               
             
         </tbody>
 
@@ -38,14 +35,12 @@ $total = 0;
 </table>
 
 
-
-
 <br>
 <p>Proceder a pagar:</p>
 <div>
 	<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 	<input type="hidden" name="id_user" value="{{ Auth::user()->id }}" id="id_user">
-	<button type="button" id="actualizar_pago" class="btn-primary btn-block btn_paypal"></button>
+	<a href="{{'pago/4'}}" class="btn-primary btn-block btn_paypal"></a>
 </div>
 
 <br><br>
@@ -64,20 +59,13 @@ $total = 0;
 <h3>Ya puede realizar el siguiente pago. </h3>
 
 
-@foreach($cuotas as $cuota)
-  @if($cuota->tipo == Auth::user()->type)
-    {{--*/ $monto = $cuota->amount  /*--}}
-  @endif
-@endforeach  
-
-
 <table class="table table-bordered">
 	<tbody>
 		<tr>
 			<td class="text-center precio tipo_pago1">
 				<div class="precio_box">
 					<h1>Mensual</h1>
-					<h3>{{'$ '. number_format($monto, 2) }}</h3>
+					<h3>{{'$ '. number_format($cuota, 2) }}</h3>
 					<div class="precio_tx">
 						<p>*Forma de pago por mes</p>
 						<p>**Se acredita el ultimo mes con falta de pago</p>
@@ -90,7 +78,7 @@ $total = 0;
 			<td class="text-center precio tipo_pago2">
 				<div class="precio_box">
 					<h1>Semestral</h1>
-					<h3>{{'$ '. number_format(($monto*6), 2) }}</h3>
+					<h3>{{'$ '. number_format(($cuota*6), 2) }}</h3>
 					<div class="precio_tx">
 						<p>*Forma de pago para 6 meses</p>
 						<p>**Se acredita desde el ultimo mes con falta de pago</p>	
@@ -103,7 +91,7 @@ $total = 0;
 			<td class="text-center precio tipo_pago3">
 				<div class="precio_box">
 					<h1>Anual</h1>
-					<h3>{{'$ '. number_format(($monto*11), 2) }}</h3>
+					<h3>{{'$ '. number_format(($cuota*11), 2) }}</h3>
 					<div class="precio_tx">
 						<p>*Forma de pago para 12 meses</p>
 						<p>**Se acredita desde el ultimo mes con falta de pago</p>

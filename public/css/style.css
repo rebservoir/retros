@@ -28,12 +28,12 @@ div#mensaje a{
     padding: 0px !important;
 }
 .bg_blue{
-    background-color: #002E9C !important;    
+   
 }
 #navigation {
     text-align: center;
     font-family: 'adelle_sansregular', Arial, sans-serif;
-    background-color: #002E9C;
+    background-color: #246B9C;
     padding: 8px 0px 0px 0px;
     height: 65px;
     border-color: transparent !important;
@@ -52,12 +52,12 @@ div#mensaje a{
     cursor: pointer;
 }
 #ul_interna li:hover{
-    background-color: #243F92;
+    background-color: #246B9C;
     border-radius: 8px;
     color: #fff !important;
 }
 .left_sel{
-    background-color: #243F92;
+    background-color: #246B9C;
     border-radius: 8px;
     color: #fff !important;
 }
@@ -164,7 +164,7 @@ div#main_cont{
 .box_header h1{
     font-family: 'adelle_sanslight', Arial, sans-serif;
     font-size: 22px;
-    border-bottom: solid 6px #224190;
+    border-bottom: solid 6px #246B9C;
     margin: 30px 10px 0px 65px;
     padding: 0px 0px 8px 0px;
 }
@@ -350,7 +350,7 @@ div#tablaEventos{
 div#footer{
     height: 280px;
     margin: 30px 0px 0px 0px;
-    background-color: #224190;
+    background-color: #246B9C;
 }
 
 .success_b{
