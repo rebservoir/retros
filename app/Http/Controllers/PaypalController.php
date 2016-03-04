@@ -37,7 +37,6 @@ class PaypalController extends Controller
 	protected $auth;
     private $_api_context;
     
-
 	public function __construct(Guard $auth)
 	{
 		// setup PayPal api context
@@ -48,7 +47,6 @@ class PaypalController extends Controller
 		$this->auth = $auth;
 	}
 
-	
 
 public function postPayment($type){
 

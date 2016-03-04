@@ -72,7 +72,7 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 					<h1>Transparencia</h1>
 			</div>
 
-				<div id="select_date">
+				<div id="select_date_tr">
 					<p>Seleccionar Año y Mes</p>
 						{{--*/ 
 								echo "<select id='year_select' name='year_select' class='select_trans'>";
@@ -300,80 +300,5 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 		var $mes = document.getElementById('year_select');
 		console.log($mes.value);
 	};
-	
 </script>
-
-<style>
-
-div#select_date{
-	margin: 0px auto;
-	width: 300px;
-}
-div#cont_table{
-	width: 85%;
-    margin: 0pt auto;
-}
-
-.chart{
-	width: 400px;
-	height: 400px;
-	float: right;
-	margin: -60px 100px 0px 0px;
-}
-	
-.tabla{
-	width: 80%;
-    margin: 0pt auto;
-}
-
-.cifras{
-	width:40% !important;
-	text-align: center; 
-	float: left;
-}
-.cifras h3{
-
-}
-.cifras h4{
-
-}
-.ingreso{
-	background: #00A885;
-    color: white;
-}
-.anterior{
-    background: #54ACD2;
-    color: white;
-}
-.total{
-    background: #61BD6D;
-    color: white;
-}
-.cifras2{
-	text-align: center;
-}
-.cifras2 h4{
-}
-.egremes{
-	font-weight: normal;
-	background: #1ABC9C;
-	color: white;
-    margin: 5px;
-}
-.egresos{
-    color: #555;
-}
-.saldo{
-    color: #555;
-}
-.fade {
-    display: none !important;
-}
-.fade.in {
-    display: block !important;
-}
-
-</style>
-
-
 
