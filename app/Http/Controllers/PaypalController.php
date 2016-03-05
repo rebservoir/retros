@@ -2,6 +2,16 @@
 
 namespace TuFracc\Http\Controllers;
 
+//require __DIR__ .'/vendor/autoload.php';
+require '..\vendor\autoload.php';
+
+$apiContext = new \PayPal\Rest\ApiContext(
+    new \PayPal\Auth\OAuthTokenCredential(
+    'AbY2sudkGMJvjkjLpJ041FSnefC-qNAT2YC6gcFczZuIqjIzJPSNrKU_1qgQkriX53PURH0OTrsndXxK', // ClientID
+    'EJCUhai8sQaFsiO6utCJBImMJYZUcNTXdP7J99kIsGV4AI_6pXQp6DlV0zAUhehVQBD_fm_3Ej0G_hwZ' // ClientSecret  
+    )
+);
+
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;
@@ -32,7 +42,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Closure;
 use Session;
 
-class PaypalController extends Controller
+class PaypalController extends BaseController
 {
 	protected $auth;
     private $_api_context;
@@ -302,6 +312,8 @@ public function postPayment($type){
 		}
 		return redirect()->to('micuenta')->with('message', 'El pago ha sido cancelado.');
 	}//end getPaymentStatus
+
+
 
 
 } //end doc
