@@ -15,10 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \TuFracc\Console\Commands\Inspire::class,
-       // \TuFracc\Console\Commands\Test::class,
-        \TuFracc\Console\Commands\limite::class,
-        \TuFracc\Console\Commands\prueba::class,
-        \TuFracc\Console\Commands\LogDemo::class,
+        // \TuFracc\Console\Commands\Test::class,
+        //\TuFracc\Console\Commands\limite::class,
+        //\TuFracc\Console\Commands\prueba::class,
+        //\TuFracc\Console\Commands\LogDemo::class,
     ];
 
     /**
@@ -33,9 +33,15 @@ class Kernel extends ConsoleKernel
                  ->hourly(); 
         
         //$schedule->command('tst:prueba')->everyMinute(); 
-        $schedule->command('lmt:limite')->everyMinute(); 
+        //$schedule->command('lmt:limite')->everyMinute(); 
 
-        $schedule->command('log:demo')->everyMinute(); 
+        //$schedule->command('log:demo')->everyMinute(); 
+/*
+        $schedule->call(function () {
+            \Log::info('I was here @ ' . \Carbon\Carbon::now());
+        })->everyMinute(); 
+*/
+        
 
     }
 }
