@@ -17,22 +17,22 @@
 							</div>
 						</a>
 
-						<a href="/mifraccionamiento">
+						<a href="/misitio">
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 								<div class="nav_ic icon3">
 								</div>
-								<p>Mi Fraccionamiento</p>
+								<p>Mi Sitio</p>
 							</div>
 						</a>
 
 						@foreach($morosos as $moroso)
 							@if($moroso->id == 1)
 								@if($moroso->is_active == 1)
-									<a href="/transparencia">
+									<a href="/finanzas">
 										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 											<div class="nav_ic icon4">
 											</div>
-											<p>Transparencia</p>
+											<p>Finanzas</p>
 										</div>
 									</a>
 								@endif

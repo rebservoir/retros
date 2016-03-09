@@ -31,7 +31,7 @@ class FrontController extends Controller
 
     public function __construct(Guard $auth){
         $this->middleware('auth', ['only' => ['index', 'admin', 'contacto', 'noticias', 'cuenta', 
-            'mifrac','admin_modulo','contenidos','calendario','transparencia', 'usuarios']]);
+            'sitio','admin_modulo','contenidos','calendario','finanzas', 'usuarios']]);
     
         $this->auth = $auth;
 
@@ -93,15 +93,15 @@ class FrontController extends Controller
                                 'morosos' => $morosos, 'ultimo_p' => $ultimo_p, 'cuota' => $cuota]);
     }
 
-    public function mifrac()
+    public function miSitio()
     {
         $utiles = Utiles::all();
         $morosos = Morosos::all();
         $documentos = Documentos::all();
-        return view('mifrac/mifrac', ['utiles' => $utiles, 'morosos' => $morosos, 'documentos' => $documentos]);
+        return view('sitio/misitio', ['utiles' => $utiles, 'morosos' => $morosos, 'documentos' => $documentos]);
     }
 
-    public function transparencia($mes_sel=null, $year_sel=null)
+    public function finanzas($mes_sel=null, $year_sel=null)
     {   
         if(!$mes_sel)
             $mes_sel = date('n');
@@ -113,9 +113,9 @@ class FrontController extends Controller
         $saldos = Saldos::all();
 
         if($this->auth->user()->role == 1){
-            return view('admin/transparencia', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);
+            return view('admin/finanzas', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);
         }else{
-            return view('transparencia', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);     
+            return view('finanzas', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);     
         }  
     }
 
@@ -240,10 +240,42 @@ class FrontController extends Controller
         $user->fill($request->all());
         $user->save();
 
-        return response()->json([
-            "message"=>'listo'
-        ]);
+            return response()->json([
+                "message"=>'listo'
+            ]);
     }
+
+    /********************************/
+    public function cashOut(){
+
+
+
+    }
+
+    public function dueDate(){
+        
+    }
+
+    public function checkStatus($id){
+        
+        $pagos = Pagos::where(function ($query) {
+                $query->where('id_user', $id)->where('status', 0);
+                })->get();
+
+        
+
+        if(empty($pagos)){
+            DB::update('update users set status = 1 where id_user = ?', [$id]);
+        }else{
+            DB::update('update users set status = 0 where id_user = ?', [$id]);
+        }
+
+
+
+        \Log::info('Status de ' . $name . ' = ' . $status);
+
+    }
+
     
 
-}
+} // end

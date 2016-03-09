@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Registrar Telefonos/Sitios Utiles</h4>
+				<h4 class="modal-title" id="myModalLabel">Registrar Telefonos/Lugares Utiles</h4>
 			</div>
 
 			<div class="modal-body">
@@ -28,7 +28,7 @@
 				</div>
 				<div class="form-group">
 					{!!Form::label('Categoria:')!!}
-					{!!Form::select('category', ['Emergencias', 'Fraccionamiento', 'Tintorerias', 'Taxi', 'Farmacias', 'Gruas', 'Ferreterias', 'Otros'],null,['id'=>'category1'])!!}
+					{!!Form::select('category', ['Emergencias', 'Mi Sitio', 'Tintorerias', 'Taxi', 'Farmacias', 'Gruas', 'Ferreterias', 'Otros'],null,['id'=>'category1'])!!}
 				</div>
 			</div>
 				<div class="modal-footer">

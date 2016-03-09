@@ -13,8 +13,8 @@
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_sitio_1">
 					<input type="hidden" value="" id="path_sitio">
 					<div class="form-group">
-						{!!Form::label('Nombre del Fraccionamiento:')!!}
-						{!!Form::text('name',null,['id'=>'name_frac','class'=>'form-control','placeholder'=>'Nombre del fraccionamiento'])!!}
+						{!!Form::label('Nombre del Sitio:')!!}
+						{!!Form::text('name',null,['id'=>'name_frac','class'=>'form-control','placeholder'=>'Nombre del Sitio'])!!}
 					</div>
 					<div class="form-group">
 						{!!Form::label('Imagen:')!!}

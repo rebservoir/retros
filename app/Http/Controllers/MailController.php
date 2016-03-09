@@ -91,18 +91,24 @@ class MailController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $data = [ 'msg'=> $request->input('msg'), 'subj'=> $request->input('subj'), 'user' => $user];
+        $data = [ 'msg'=> $request->input('msg'), 'subj'=> $request->input('subj'), 'user_mail' => $user->email];
 
-
+/*
         Mail::later(5, 'emails.msg', $data , function ($msj) use ($user) {
             $msj->subject('Email');
             $msj->to($user->email);
+        });
+*/
+        Mail::send('emails.msg',$data, function ($msj) use ($data) {
+            $msj->subject($data['subj']);
+            $msj->to($data['user_mail']);
         });
 
         return response()->json([
             "message"=>'listo'
         ]);
     }
+
 
     /**
      * Update the specified resource in storage.

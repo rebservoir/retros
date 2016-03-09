@@ -2,14 +2,14 @@
 $("#btn_select").click(function(){
 	var myYear = document.getElementById('year_select').value;
 	var myMonth = document.getElementById('month_select').value;
-  var route = "/transparencia/" +  myMonth + '/' + myYear;
+  var route = "/finanzas/" +  myMonth + '/' + myYear;
     window.location.assign(route);
 });
 
 $("#btn_select_admin").click(function(){
   var myYear = document.getElementById('year_select').value;
   var myMonth = document.getElementById('month_select').value;
-  var route = "/admin/transparencia/" +  myMonth + '/' + myYear;
+  var route = "/admin/finanzas/" +  myMonth + '/' + myYear;
     window.location.assign(route);
 });
 

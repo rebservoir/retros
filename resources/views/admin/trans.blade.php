@@ -1,5 +1,5 @@
 
-	<h3>Transparencia</h3>
+	<h3>Finanzas</h3>
 
 	<p>Status:</p>
 
@@ -18,7 +18,7 @@
 	{!!Form::model($morosos, ['route'=> ['morosos.update', $morosos->id = 1], 'method'=>'PUT'])!!}
 
 			<div class="form-group">
-				{!!Form::label('Habilitar/Deshabilitar pestaña de Transparencia para usuarios')!!}
+				{!!Form::label('Habilitar/Deshabilitar pestaña de Finanzas para usuarios')!!}
 				{!!Form::select('is_active', ['NO', 'SI'], $moroso->is_active )!!}
 			</div>
 

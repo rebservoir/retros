@@ -33,11 +33,11 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
-		<a href="/admin/transparencia">
+		<a href="/admin/finanzas">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
 				<div class="nav_ic icon4">
 				</div>
-				<p>Transparencia</p>
+				<p>Finanzas</p>
 			</div>
 		</a>
 		<a href="/admin/calendario">

@@ -1,4 +1,4 @@
-<h3>Creacion de Teléfonos y Sitios Útiles</h3>
+<h3>Creacion de Teléfonos y Lugares Útiles</h3>
 <br>
 
 <div id="msj-success4" class="alert alert-success alert-dismissible hide" role="alert">
@@ -22,7 +22,7 @@
 
 @include('alerts.success')
 
-<button class='btn btn-primary' onclick=""  data-toggle="modal" data-target="#util_create">Registrar Nuevo Telefono/Sitio</button>
+<button class='btn btn-primary' onclick=""  data-toggle="modal" data-target="#util_create">Registrar Nuevo Telefono/Lugar</button>
 <br><br>
 <div id="tablaUtiles">
 	<table class="table">

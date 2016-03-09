@@ -4,7 +4,7 @@
 	@foreach($sitio as $sitio)
 		<button value='1' OnClick='Mostrar_sitio(this);' class='btn btn-primary' data-toggle="modal" data-target="#sitio_edit">Editar</button>
 			<br><br>
-			<p>Nombre del Fraccionamiento:</p>
+			<p>Nombre del Sitio:</p>
 				<h3>{{$sitio->name}}</h3>
 			<br><br>
 			<p>Imagen principal de home:</p>

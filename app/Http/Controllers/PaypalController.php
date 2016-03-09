@@ -2,16 +2,6 @@
 
 namespace TuFracc\Http\Controllers;
 
-//require __DIR__ .'/vendor/autoload.php';
-require '..\vendor\autoload.php';
-
-$apiContext = new \PayPal\Rest\ApiContext(
-    new \PayPal\Auth\OAuthTokenCredential(
-    'AbY2sudkGMJvjkjLpJ041FSnefC-qNAT2YC6gcFczZuIqjIzJPSNrKU_1qgQkriX53PURH0OTrsndXxK', // ClientID
-    'EJCUhai8sQaFsiO6utCJBImMJYZUcNTXdP7J99kIsGV4AI_6pXQp6DlV0zAUhehVQBD_fm_3Ej0G_hwZ' // ClientSecret  
-    )
-);
-
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;
@@ -72,7 +62,7 @@ public function postPayment($type){
 		$month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 
 		$cta = $this->auth->user()->type;
-		$cuota = Cuotas::find(2);
+		$cuota = Cuotas::find($cta);
 
 		$payer = new Payer();
 		$payer->setPaymentMethod('paypal');

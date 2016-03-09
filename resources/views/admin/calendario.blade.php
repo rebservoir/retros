@@ -31,11 +31,11 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
-		<a href="/admin/transparencia">
+		<a href="/admin/finanzas">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab ">
 				<div class="nav_ic icon4">
 				</div>
-				<p>Transparencia</p>
+				<p>Finanzas</p>
 			</div>
 		</a>
 		<a href="/admin/calendario">
@@ -89,7 +89,7 @@
 							{{--*/ 
 								echo "<select id='year_select' name='year_select' class='select_trans'>";
 									for ($j = ($year_cu-1); $j < ($year_cu+2); $j++){
-										if($j==$year_cu){
+										if($j==$year){
 											echo "<option value='" . $j . "' selected='selected'>" . $j . "</option>";
 										}else{
 											echo "<option value='" . $j . "'>" . $j . "</option>";

@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Actualizar Telefonos/Sitios Utiles</h4>
+				<h4 class="modal-title" id="myModalLabel">Actualizar Telefonos/Lugares Utiles</h4>
 			</div>
 
 			<div class="modal-body">
@@ -29,7 +29,7 @@
 				</div>
 				<div class="form-group">
 					{!!Form::label('Categoria:')!!}
-					{!!Form::select('category', ['Emergencias', 'Fraccionamiento', 'Tintorerias', 'Taxi', 'Farmacias', 'Gruas', 'Ferreterias', 'Otros'],null,['id'=>'category'])!!}
+					{!!Form::select('category', ['Emergencias', 'Mi Sitio', 'Tintorerias', 'Taxi', 'Farmacias', 'Gruas', 'Ferreterias', 'Otros'],null,['id'=>'category'])!!}
 				</div>
 			</div>
 				<div class="modal-footer">

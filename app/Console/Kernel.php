@@ -41,6 +41,7 @@ class Kernel extends ConsoleKernel
             \Log::info('I was here @ ' . \Carbon\Carbon::now());
         })->everyMinute(); 
 */
+        $schedule->call('FrontController@checkStatus')->everyMinute(); 
         
 
     }
