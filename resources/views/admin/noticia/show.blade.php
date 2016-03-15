@@ -1,28 +1,42 @@
 @extends('admin.admin')
 
 	@section('nav')
-		<a href="/home">
+		<a href="home">
 				<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
 				<div class="nav_ic icon1">
 				</div>
 				<p>Home</p>
 			</div>
 		</a>
-		<a href="/administracion">
+		<a href="administracion">
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon7">
 				</div>
 				<p>Administración</p>
 			</div>
 		</a>
-		<a href="/contenidos">
+		<a href="contenidos">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon8">
 				</div>
 				<p>Contenidos</p>
 			</div>
 		</a>
-		<a href="/usuarios">
+		<a href="/admin/finanzas">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon4">
+				</div>
+				<p>Finanzas</p>
+			</div>
+		</a>
+		<a href="/admin/calendario">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon5">
+				</div>
+				<p>Calendario</p>
+			</div>
+		</a>
+		<a href="usuarios">
 			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
 				<div class="nav_ic icon9">
 				</div>

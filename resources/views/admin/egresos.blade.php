@@ -97,7 +97,11 @@ $day = date('j');
 								<td><p>{{$egreso->date}}</p></td>
 								<td><p>{{$egreso->concept}}</p></td>
 								<td><p>{{'$ '.$money}}</p></td>
-								<td><a href='/file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
+                  @if($egreso->path=="")
+                    <td><p>Sin archivo</p></td>
+                  @else
+                    <td><a href='/file/{{$egreso->path}}'  target="_blank">Ver archivo</a></td>
+                  @endif
 								<td><button value='{{$egreso->id}}' OnClick='Mostrar_egresos(this)' class='btn btn-primary' data-toggle="modal" data-target="#egresos_edit">Editar</button></td>
 							</tr>
 						@endif

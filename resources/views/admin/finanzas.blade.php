@@ -248,9 +248,9 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 								{{--*/ $total_egresos = ($egreso->amount + $total_egresos)/*--}}
 															
 						@if($egreso->path=="")
-							<td><p>No disponible</p></td>
+							<td><p>Sin archivo</p></td>
 						@else
-							<td><a href='/file/{{$egreso->path}}'  target="_blank">Descargar</a></td>
+							<td><a href='/file/{{$egreso->path}}'  target="_blank">Ver archivo</a></td>
 						@endif
 							</tr>
 					@endif

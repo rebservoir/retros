@@ -5,6 +5,7 @@ namespace TuFracc\Http\Controllers;
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
 use TuFracc\Http\Controllers\Controller;
+use TuFracc\Http\Requests\SitioUpdateRequest;
 use TuFracc\Sitio;
 use Session;
 use Redirect;
@@ -77,36 +78,28 @@ class SitioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(SitioUpdateRequest $request)
     { 
-      if( $request->hasFile('picture') ){
-           $file = $request->file('picture');
 
-        $this->attributes['path'] = 'site_' . time() . '.' . $path->getClientOriginalName();
-        $name = 'site_' . time() . '.' . $path->getClientOriginalName();
-        \Storage::disk('local')->put($name, \File::get($path));
+        $sitio = Sitio::find(1);
+        $sitio->name = $request->name;
 
+        if($request->hasFile('picture')){
 
-           $destination_path = 'uploads/';
-           $filename = str_random(6).'_'.$file->getClientOriginalName();
-           $file->move($destination_path, $filename);
-           $image->file = $destination_path . $filename;
-      }
-        
-      // replace old data with new data from the submitted form //
-      $image->caption = $request->input('caption');
-      $image->description = $request->input('description');
-      $image->save();
-
-
-        if($request->ajax()){
-            $sitio= Sitio::find(1);
-            $sitio->fill($request->all());
-            $sitio->save();
-                        return response()->json([
-                    "message" => "actualizado"
-                ]);   
+            $oldFile = $sitio->picture;
+            $file = $request->file('picture');
+            $destination_path = public_path().'/file/';
+            $name = 'sitio_' . time() . '.' . $file->getClientOriginalName();
+            \Storage::disk('local')->put($name, \File::get($file));
+            unlink($destination_path.$oldFile);
+            $sitio->picture = $name;
         }
+
+        $sitio->save();
+
+        \Session::flash('success', 'Sitio actualizado exitosamente.');
+
+        return redirect()->to('/admin/home'); 
     }
 
     /**

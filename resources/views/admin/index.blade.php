@@ -47,6 +47,8 @@
 
 @section('content')
 
+
+
 	<div id="slider" class="">
 		@foreach($sitios as $sitio)
 			<img src="../file/{{$sitio->picture}}" class="col-lg-3">

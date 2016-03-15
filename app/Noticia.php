@@ -12,10 +12,8 @@ class Noticia extends Model
     protected $fillable = ['titulo', 'texto', 'path'];
 
     public function setPathAttribute($path){
-    	if(!empty($path)){
-    		$this->attributes['path'] = 'noticia_' . time() . $path->getClientOriginalName();
-        	$name = 'noticia_' . time() . $path->getClientOriginalName();
-    		\Storage::disk('local')->put($name, \File::get($path));
-    	}
+		$this->attributes['path'] = 'noticia_' . time() . '.' . $path->getClientOriginalName();
+    	$name = 'noticia_' . time() . '.' . $path->getClientOriginalName();
+    	\Storage::disk('local')->put($name, \File::get($path));
     }
 }

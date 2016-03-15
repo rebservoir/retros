@@ -9,7 +9,6 @@
 			</div>
 
 			<div class="modal-body">
-
 				<input type="hidden" name="_token_cuota" value="{{ csrf_token() }}" id="token_cuota1">
 				<input type="hidden" id="id_cuota1">
 				<div class="form-group">
@@ -20,6 +19,7 @@
 					{!!Form::label('Monto:')!!}
 					{!!Form::text('monto',null,['id'=>'monto_cuota1','class'=>'form-control','placeholder'=>'Ingresar monto'])!!}
 				</div>
+		
 			</div>
 
 				<div class="modal-footer">
@@ -29,3 +29,4 @@
 		</div>
 	</div>
 </div>
+

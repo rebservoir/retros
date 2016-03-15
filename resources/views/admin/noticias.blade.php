@@ -22,11 +22,18 @@
 				<p>Contenidos</p>
 			</div>
 		</a>
-		<a href="finanzas">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
-				<div class="nav_ic icon8">
+		<a href="/admin/finanzas">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon4">
 				</div>
 				<p>Finanzas</p>
+			</div>
+		</a>
+		<a href="/admin/calendario">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+				<div class="nav_ic icon5">
+				</div>
+				<p>Calendario</p>
 			</div>
 		</a>
 		<a href="usuarios">
@@ -34,13 +41,6 @@
 				<div class="nav_ic icon9">
 				</div>
 				<p>Usuarios</p>
-			</div>
-		</a>
-		<a href="noticias">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab nav_sel">
-				<div class="nav_ic icon10">
-				</div>
-				<p>Noticias</p>
 			</div>
 		</a>
 	@stop
@@ -54,6 +54,13 @@
 						<div class="box_header">
 							{!!Html::image('img/noticias.png')!!}
 							<h1>Noticias y Avisos</h1>
+
+							@if(Session::has('success'))
+								<div class="alert alert-success alert-dismissible" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									{{Session::get('success')}}
+								</div>
+							@endif
 						</div>
 
 						@include('admin.noticia.noticias')

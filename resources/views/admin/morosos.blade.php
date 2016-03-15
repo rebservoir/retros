@@ -1,6 +1,9 @@
 
 	<h3>Morosos</h3>
-		<p>Status:</p>
+
+	<p>Mostrar u ocultar para los usuarios la sección Morosos.</p>
+		<br>
+	<strong><p>Status:</p></strong>
 
 	@foreach($morosos as $moroso)
 		@if($moroso->id == 0)

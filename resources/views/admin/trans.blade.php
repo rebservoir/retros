@@ -1,7 +1,10 @@
 
 	<h3>Finanzas</h3>
 
-	<p>Status:</p>
+	<p>Mostrar u ocultar para los usuarios la pestaña de Finanzas.</p>
+		<br>
+	<strong><p>Status:</p></strong>
+	
 
 @foreach($morosos as $moroso)	
 	@if($moroso->id == 1)

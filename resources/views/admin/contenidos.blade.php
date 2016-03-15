@@ -1,6 +1,5 @@
 @extends('admin.admin')
 
-	@include('alerts.success')
 	@include('admin.modal.util_edit')
 	@include('admin.modal.util_create')
 	@include('admin.modal.noticia_create')
@@ -63,9 +62,9 @@
 						</div>
 						
 						<ul id="ul_interna">
-							<li id="int_l1" class="left_sel">	<p>Noticias</p></li>
-							<li id="int_l2">					<p>Morosos</p></li>
-							<li id="int_l3">					<p>Finanzas</p></li>
+							<li id="int_l1" class="left_sel">	<p>Edición de Noticias</p></li>
+							<li id="int_l2">					<p>Ventana Morosos</p></li>
+							<li id="int_l3">					<p>Pestaña Finanzas</p></li>
 							<li id="int_l4">					<p>Teléfonos y Lugares Útiles</p></li>
 							<li id="int_l5">					<p>Configuración del sitio</p></li>
 							<li id="int_l6">					<p>Documentos</p></li>
@@ -77,7 +76,7 @@
 
 						<div id="int_div1" class="int_div_sel">
 							<div class="box_header">
-								<p>Contenidos > Creación de Noticias</p>
+								<p>Contenidos > Edición de Noticias</p>
 							</div>
 						
 							<div class="cont_in_r">
@@ -87,7 +86,7 @@
 
 						<div id="int_div2" class="int_div">
 							<div class="box_header">
-								<p>Contenidos > Morosos</p>
+								<p>Contenidos > Ventana Morosos</p>
 							</div>
 						
 							<div class="cont_in_r">
@@ -97,7 +96,7 @@
 
 						<div id="int_div3" class="int_div">
 							<div class="box_header">
-								<p>Contenidos > Finanzas</p>
+								<p>Contenidos > Pestaña Finanzas</p>
 							</div>
 						
 							<div class="cont_in_r">

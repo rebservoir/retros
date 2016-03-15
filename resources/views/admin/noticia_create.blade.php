@@ -1,4 +1,4 @@
-<h3>Creacion de Noticias</h3>
+<h3>Edición de Noticias</h3>
 <br>
 
 <div id="msj-success" class="alert alert-success alert-dismissible hide" role="alert">

@@ -12,8 +12,7 @@ class Sitio extends Model
 
     protected $fillable = ['name', 'picture'];
 
-    public function setPathAttribute($path){
-    	$this->attributes['path'] = 'site_' . time() . '.' . $path->getClientOriginalName();
+    public function setPathAttribute($path, $file){
     	$name = 'site_' . time() . '.' . $path->getClientOriginalName();
     	\Storage::disk('local')->put($name, \File::get($path));
     }

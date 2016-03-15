@@ -166,8 +166,8 @@ $("#registrar_noticia").on("submit", function(e){
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");
     e.preventDefault();
-    var fd = new FormData(this);
 
+    var fd = new FormData(this);
     var route = "/noticia";
     var token = $("#token").val();
 
@@ -204,19 +204,30 @@ $("#actualizar_noticia").on("submit", function(e){
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");
     e.preventDefault();
-    var formData = new FormData(this);
 
-
+    var dato3 = [];
+    var value = $('#id_noti_1').val();
     var dato1 = $("#titulo1").val();
     var dato2 = $("#contenido1").val();
-    var dato3 = $("#path1").val();
+    dato3[0] = $("#path1")[0].files[0];
 
-    var route = "/noticia/"+value+"";
+    //var formData = new FormData();
+    var form = $('#actualizar_noticia');
+    var formData = new FormData(form.get(0));
+
+    //formData.append('titulo', dato1);
+    //formData.append('contenido', dato2);
+
+
+    //No File
+    if ($('#picture').get(0).files.length ==! 0) {
+        console.log("ok file");
+        formData.append('path', $("#path1")[0].files[0]);
+    }  
+
+    //var route = "edit_noticia/"+value+"";
+    var route = "/editNoticia/" + value+ '/';
     var token = $("#token_noti_1").val();
-
-    if(dato3 == ""){
-        dato3 = file_noti;
-    }
 
     $.ajax({
         url: route,
@@ -226,7 +237,7 @@ $("#actualizar_noticia").on("submit", function(e){
         data:formData,
         contentType: false,
         processData: false,
-
+        //data:{ titulo:dato1, texto:dato2},
         success:function(){
             $("#msj-success1").removeClass( "hide");
             $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
@@ -302,13 +313,21 @@ $("#actualizar_sitio").on("submit", function(e){
     e.preventDefault();
 
     var dato1 = $("#name_frac").val();
-    var dato2 = $("#picture").val();
-
-    var formData = new FormData();
-    formData.append("name", dato1);
-    //formData.append("picture", dato2);
-    //formData.append('picture', file);
-
+    //var dato2 = $("#picture")[0].files[0];
+    
+    var formData = new FormData(this);
+    //formData.append('name', dato1);
+    //formData.append('name', 'Chris');
+/*
+    //No File
+    if ($('#picture').get(0).files.length === 0) {
+        console.log("No file, no, no, no file");
+    }
+    //Has File
+    else{
+        formData.append('picture', $("#picture")[0].files[0]);
+    }
+*/
     var route = "/sitio/1";
     var token = $("#token_sitio_1").val();
 
@@ -321,10 +340,10 @@ $("#actualizar_sitio").on("submit", function(e){
         headers: {'X-CSRF-TOKEN': token},
         type: 'PUT',
         dataType: 'json',
-        data:formData,
-        contentType: false,
+        data: formData,
         processData: false,
-        //data:{ name: dato1, picture: dato2 },
+        contentType: false, 
+        //data:{ name: dato1, picture:dato2 },
         success:function(){
             $("#msj-success_sitio").removeClass( "hide");
             $("#divSitio").load(location.href+" #divSitio>*","");
@@ -336,6 +355,10 @@ $("#actualizar_sitio").on("submit", function(e){
             $('#sitio_edit').modal('toggle');
         }
     });
+
+
+
+
 });
 
 

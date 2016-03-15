@@ -5,7 +5,7 @@
 		<title>Bill Box</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-		{!! Html::favicon('img/fav.png') !!}
+		{!!Html::favicon('img/fav.png')!!}
 		{!!Html::style('css/bootstrap.min.css')!!}
 		{!!Html::style('css/style.css')!!}
 		{!!Html::style('css/fonts/stylesheet.css')!!}

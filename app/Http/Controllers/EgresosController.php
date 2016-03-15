@@ -11,6 +11,7 @@ use TuFracc\Egresos;
 use Illuminate\Contracts\Auth\Guard;
 use Session;
 use Redirect;
+use File;
 use Illuminate\Routing\Route;
 
 class EgresosController extends Controller
@@ -84,8 +85,38 @@ class EgresosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EgresosCreateRequest $request, $id)
     {
+
+            $id = $request->id_egresos;
+            $egreso = Egresos::find($id);
+            $egreso->concept = $request->concept;
+            $egreso->date    = $request->date;
+            $egreso->amount  = $request->amount;
+
+            if($request->hasFile('path')){
+                $oldFile = $egreso->path;
+                $file = $request->file('path');
+                $destinationPath = 'file/';
+                //$file = 'noticia_' . time() . '.' . $file->getClientOriginalName();
+                //\Storage::disk('local')->put($name, \File::get($file));
+                if(File::isFile($oldFile)){
+                    //File::delete($old_image);
+                    unlink($destinationPath.$oldFile);
+                }
+
+                
+                $egreso->path = $file;
+            }
+
+            $egreso->save();
+
+            \Session::flash('success', 'Egreso actualizado exitosamente.');
+
+            return redirect()->to('/admin/administracion'); 
+
+
+/*
         if($request->ajax()){
             $egresos = Egresos::find($id);
             $egresos->fill($request->all());
@@ -94,6 +125,7 @@ class EgresosController extends Controller
                         "message" => "creado"
                     ]);
         }   
+ */   
     }
 
     /**

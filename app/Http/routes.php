@@ -10,11 +10,16 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', function () {
+    return redirect('index');
+});
+
 Route::get('login','FrontController@login');
 Route::get('home','FrontController@index');
 Route::get('noticias/{id?}','FrontController@noticias');
 Route::get('contacto','FrontController@contacto');
 Route::get('micuenta','FrontController@cuenta');
+
 
 Route::get('finanzas/{mes_sel?}/{year_sel?}', 'FrontController@finanzas');
 Route::get('calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
@@ -55,9 +60,7 @@ Route::resource('saldos','SaldosController');
 Route::resource('cuotas','CuotasController');
 Route::resource('eventos','CalendarioController');
 Route::resource('documentos','DocumentosController');
-Route::resource('cashout','FrontController@cashOut');
-Route::resource('duedate','FrontController@dueDate');
-Route::resource('checkstatus','FrontController@checkStatus');
+
 
 Route::get('logout','LogController@logout');
 Route::get('controlador','PruebaController@index');
@@ -78,10 +81,6 @@ Route::get('edad/{edad}', function($edad){
 
 Route::get('edad2/{edad?}', function($edad = 20){
 	return "Mi edad es ".$edad;
-});
-
-Route::get('/', function () {
-    return view('welcome');
 });
 
 // Paypal

@@ -12,7 +12,9 @@ use TuFracc\Morosos;
 use Illuminate\Contracts\Auth\Guard;
 use Session;
 use Redirect;
+use File;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Input;
 
 class NoticiaController extends Controller
 {
@@ -105,17 +107,34 @@ class NoticiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
-        if($request->ajax()){
+            $id = $request->id_noti_1;
             $noticia = Noticia::find($id);
-            $noticia->fill($request->all());
+            $noticia->titulo = $request->titulo;
+            $noticia->texto = $request->texto;
+
+            if($request->hasFile('path')){
+                $oldFile = $noticia->path;
+                $file = $request->file('path');
+                $destinationPath = 'file/';
+                //$file = 'noticia_' . time() . '.' . $file->getClientOriginalName();
+                //\Storage::disk('local')->put($name, \File::get($file));
+
+                if(File::isFile($oldFile)){
+                    //File::delete($old_image);
+                    unlink($destinationPath.$oldFile);
+                }
+
+                
+                $noticia->path = $file;
+            }
+
             $noticia->save();
 
-            return response()->json([
-                "mensaje"=>'update done'
-                ]);
-        }
+            \Session::flash('success', 'Noticia actualizada exitosamente.');
+
+            return redirect()->to('/admin/contenidos'); 
     }
     /**
      * Remove the specified resource from storage.
@@ -125,11 +144,11 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-
         $noticia = Noticia::find($id);
+        //$file = \Storage::disk('local')->get($noticia->path, \File::get($path));
+        //\Storage::delete($file);
         $noticia->delete();
-        \Storage::delete($noticia->path);
-
+        
         return response()->json([
             "mensaje"=>'eliminado'
         ]);

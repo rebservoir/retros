@@ -7,6 +7,8 @@ use TuFracc\Http\Requests;
 use TuFracc\Http\Requests\CuotasCreateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Cuotas;
+use TuFracc\User;
+use DB;
 
 class CuotasController extends Controller
 {
@@ -99,11 +101,27 @@ class CuotasController extends Controller
      */
     public function destroy($id)
     {
+        $id_cuota = $id;
         $cuotas = Cuotas::find($id);
-        $cuotas->delete();
+        $users = DB::table('users')->where('type', $id)->get();
+
+
+        if(empty($users)){
+            $cuotas->delete();
 
             return response()->json([
-                "mensaje"=>'eliminado'
-                ]);
+                "tipo" => 'success',
+                "message"=>'Cuota eliminada exitosamente.'
+            ]);
+        }else{
+
+            return response()->json([
+                "tipo" => 'warning',
+                "message"=>'Atencion: Esta cuota no puede ser eliminada porque esta asignada a usuarios.'
+            ]);
+        }
+
     }
 }
+
+

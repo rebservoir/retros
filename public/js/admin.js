@@ -234,7 +234,6 @@ function Mostrar_egresos(btn){
         $("#id_egresos").val(res.id);
     });
     var value = $("#id_egresos").val();
-    console.log("id:" + $("#id_egresos").val());
 }
 
 
@@ -463,6 +462,7 @@ $("#eliminar_cuota").click(function(){
     $("#msj-fail8").addClass( "hide");
     $("#msj-success9").addClass( "hide");
     $("#msj-fail9").addClass( "hide");
+    $("#msj-warning").addClass( "hide");
 
     if (confirm("Eliminar esta Cuota?") == true) {
 
@@ -475,8 +475,15 @@ $("#eliminar_cuota").click(function(){
             headers: {'X-CSRF-TOKEN': token},
             type: 'DELETE',
             dataType: 'json',
-            success:function(){
-                $("#msj-success9").removeClass( "hide");
+            success:function(data){
+                
+                if(data.tipo=='success'){
+                    $("#msj-success9").removeClass( "hide");
+                    $("#msj-success9").html(data.message);
+                }else if(data.tipo=='warning'){
+                    $("#msj-warning").removeClass( "hide");
+                    $("#msj-warning").html(data.message);
+                }
                 $("#divCuotas").load(location.href+" #divCuotas>*","");
                 $('#cuota_edit').modal('toggle');
             },

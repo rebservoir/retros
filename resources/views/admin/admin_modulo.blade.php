@@ -11,6 +11,8 @@
 		{!!Html::style('css/jquery-ui.min.css')!!}
 	@stop
 
+
+
 	@section('nav')
 		<a href="home">
 				<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
@@ -56,6 +58,7 @@
 		</a>
 	@stop
 
+
 	@section('content')
 
 					<div class="cont_left cont_600 col-lg-3">
@@ -68,8 +71,7 @@
 							<li id="int_l1" class="left_sel">	<p>Pagos</p></li>
 							<li id="int_l2">					<p>Egresos</p></li>
 							<li id="int_l3">					<p>Registro de Cuotas</p></li>
-							<li id="int_l4">					<p>Tareas</p></li>
-							<li id="int_l5">					<p>Envió de Correos</p></li>
+							<li id="int_l4">					<p>Envió de Correos</p></li>
 						</ul>
 					</div>
 
@@ -106,16 +108,6 @@
 						</div>
 
 						<div id="int_div4" class="int_div">
-							<div class="box_header">
-								<p>Administración > Tareas</p>
-							</div>
-						
-							<div class="cont_in_r">
-	
-							</div>
-						</div>
-
-						<div id="int_div5" class="int_div">
 							<div class="box_header">
 								<p>Administración > Envió de Correos</p>
 							</div>

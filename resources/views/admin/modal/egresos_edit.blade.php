@@ -9,9 +9,9 @@
 			</div>
 
 			<div class="modal-body">
-			{!! Form::open(array('id' => 'registrar_egresos', 'files' => true)) !!}
+			{!! Form::open(['route' => 'egresos.update', 'method'=>'PUT', 'files' => true ])!!}
 				<input type="hidden" name="_token_edit" value="{{ csrf_token() }}" id="token_eg1">
-				<input type="hidden" id="id_egresos">
+				<input type="hidden" id="id_egresos" name="id_egresos">
 				<div class="form-group">
 					{!!Form::label('Concepto:')!!}
 					{!!Form::text('concept',null,['id'=>'concept_eg','class'=>'form-control','placeholder'=>'Ingresar Concepto'])!!}

@@ -15,8 +15,6 @@
 
 	<body>
 
-	<!-- -->
-
 	<div class="">
 		<div id="head" class="">
 			<div class="container">

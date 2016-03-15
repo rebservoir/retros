@@ -9,9 +9,9 @@
 			</div>
 
 			<div class="modal-body">
-				{!! Form::open(array('id' => 'actualizar_noticia', 'files' => true)) !!}
+				{!! Form::open(['route' => 'noticia.update', 'method'=>'PUT', 'files' => true ])!!}
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_noti_1">
-					<input type="hidden" id="id_noti_1">
+					<input type="hidden" id="id_noti_1" name="id_noti_1">
 					<div class="form-group">
 						{!!Form::label('Titulo:')!!}
 						{!!Form::text('titulo',null,['id'=>'titulo1','class'=>'form-control','placeholder'=>'Titulo'])!!}
@@ -22,6 +22,7 @@
 					</div>
 					<div class="form-group">
 						{!!Form::label('Imagen:')!!}
+						<p>(Dejar vacio para conservar imagen actual.)</p>
 						{!!Form::file('path', ['id'=>'path1'])!!}
 					</div>
 			</div>
@@ -30,8 +31,8 @@
 						{!!Form::submit('Modificar Noticia',['class'=>'btn btn-primary'])!!}
 						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_noticia', 'class'=>'btn btn-danger'], $secure=null)!!}
 				</div>
-			{!! Form::close() !!}
 
+			{!! Form::close() !!}
 
 		</div>
 	</div>
