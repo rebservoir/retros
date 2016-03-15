@@ -206,7 +206,7 @@ class FrontController extends Controller
     public function usuarios2($id)
     {
         if($this->auth->user()->role == 1){
-                $users = User::all()->where('id', $id);;
+                $users = User::all()->where('id', $id);
             return view('/admin/usuarios', [ 'users' => $users]);
         }else{
             return Redirect::to('home');
