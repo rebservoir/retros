@@ -138,7 +138,7 @@ body{
     background-color: #216094 !important;    
 }
 #intro{
-    height: 600px;
+    height: 700px;
 }
 #info_intro{
     height: 300px;
@@ -167,7 +167,7 @@ body{
 .sld_img{
     background-attachment: fixed;
     background-size: cover;
-    height: 600px;
+    height: 800px;
 }
 .sld_1{background-image: url('../img/slider1.jpg');}
 .sld_2{background-image: url('../img/slider2.jpg');}
@@ -186,7 +186,8 @@ body{
     width: 33.33%;
     padding: 12px 0px 12px 0px;
     font-size: 22px;
-    font-weight: 100;
+    font-weight: bold;
+    color: #246B9C;
 }
 #tabla_mision td{
     padding: 26px;
@@ -205,8 +206,16 @@ body{
     padding: 12px;
     font-family: 'adelle_sanslight', Arial, sans-serif !important;
 }
-#table_pricing td{
-    font-size: 16px;
+#table_pricing td:nth-child(1){
+    font-size: 20px;
+    font-weight: 100;
+    color: #246B9C;
+    padding: 16px;
+}
+#table_pricing td:nth-child(2){
+    font-size: 24px;
+    font-weight: bold;
+    color: #22B980;
     padding: 12px;
 }
 

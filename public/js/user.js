@@ -24,6 +24,45 @@ function Mostrar(btn){
     });
 }
 
+$( "#email" ).change(function() {
+    if(!($(this).val() == '')){
+        $("#email_msg").html('');
+        $("#react_btn").addClass('hidden');
+
+        var dato = $(this).val();
+        var route = "checkEmail/"+dato;
+
+        $.get(route, function(response){
+            console.log(response.res);
+            if(response.res == '1'){ //load json data from server and output message 
+                $("#email_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Este mail ya esta registrado para un usuario activo.</p></div>');
+            }else if(response.res == '2'){ //load json data from server and output message 
+                $("#email_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Un usuario con este email fue eliminado anteriormente</p></div>');
+                $("#react_btn").removeClass('hidden');
+                $("#react_btn").val(response.id_user);
+            }else if(response.res == '3'){
+                $("#email_msg").html('<div class="alert alert-success" style="padding: 5px;"><p>Email sin registrar.</p></div>');
+            }
+        });
+    }
+
+});
+
+$("#react_btn").click(function(){
+    console.log('reactivar');
+
+    var dato = $(this).val();
+    var route = "reactivar/"+dato;
+
+        $.get(route, function(response){
+            if(response.res == 'ok'){ //load json data from server and output message 
+                $("#email_msg").html('<div class="alert alert-success" style="padding: 5px;"><p>El usuario se encuentra activo nuevamente.</p></div>');
+                $("#react_btn").addClass('hidden');
+            }
+        });
+
+});
+
 $("#registrar").click(function(){
     $("#msj-success").addClass( "hide");
     $( "#msj-fail").addClass( "hide");

@@ -29,6 +29,8 @@ Route::get('edit_info/{id?}','FrontController@edit_info');
 Route::get('pagos_show','FrontController@pagos_show');
 Route::put('update_info_user/{id?}','FrontController@update_info_user');
 
+Route::get('admin/checkEmail/{email?}','UsuarioController@checkEmail');
+Route::get('admin/reactivar/{id?}','UsuarioController@reactivar');
 Route::get('admin/home','FrontController@admin');
 Route::get('admin/administracion','FrontController@admin_modulo');
 Route::get('admin/calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');

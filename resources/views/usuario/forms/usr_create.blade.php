@@ -7,7 +7,12 @@
 			{!!Form::label('Email:')!!}
 			{!!Form::email('email',null,['id'=>'email','class'=>'form-control','placeholder'=>'Ingresar Email'])!!}
 		</div>
+
+			<div id="email_msg">
+			</div>
+			<button type="button" id="react_btn" class="btn btn-primary hidden" >Reactivar usuario</button>
 		<div class="form-group">
+		<br>
 			{!!Form::label('Contraseña:')!!}
 			{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Ingresar Contraseña'])!!}
 		</div>
@@ -31,6 +36,8 @@
 			{!!Form::label('Rol:')!!}
 			{!!Form::select('role', ['Residente', 'Administrador'],null,['id'=>'role'])!!}
 		</div>
+
+
 
 	
 		

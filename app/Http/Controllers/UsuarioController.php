@@ -11,6 +11,7 @@ use TuFracc\User;
 use TuFracc\Cuotas;
 use Session;
 use Redirect;
+use DB;
 use Illuminate\Routing\Route;
 use Illuminate\Database\Eloquent;
 
@@ -23,11 +24,6 @@ class UsuarioController extends Controller
        // $this->beforeFilter('@find', ['only' => ['edit','update','destroy']]);
     }
 
-/*
-    public function find(Route $route){
-        $this->user User::find($route->getParameter('usuario'));
-    }
-*/
 
     /**
      * Display a listing of the resource.
@@ -59,12 +55,52 @@ class UsuarioController extends Controller
      */
     public function store(UserCreateRequest $request)
     {
-        User::create($request->all());
+        
+
+        //$msg = "email:".$email."-user:".$user->name;
+        //create user
+        //User::create($request->all());
+
         return response()->json([
-            "message"=>'listo'
+            "message"=> $msg
         ]);
 
     }
+
+    public function checkEmail($email){
+
+        $user = DB::table('users')->where('email', $email )->first();
+
+        if(!empty($user)){
+            //el email ya esta registrado
+            if($user->deleted_at == null){
+                //Este mail ya esta registrado para un usuario activo.
+                return response()->json([
+                    "res"=> "1"
+                ]);
+            }else{
+                //Un usuario con este email fue eliminado anteriormente.'
+                return response()->json([
+                    "res"=> "2",
+                    "id_user"=> $user->id
+                ]);
+            }
+         
+        }else{
+            return response()->json([
+                    "res"=> "3"
+            ]);
+        }
+
+    } 
+
+    public function reactivar($id){
+        DB::table('users')->where('id', $id )->update(['deleted_at' => null]);
+
+        return response()->json([
+                    "res"=> "ok"
+        ]);
+    } 
 
     /**
      * Display the specified resource.
