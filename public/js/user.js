@@ -58,6 +58,7 @@ $("#react_btn").click(function(){
             if(response.res == 'ok'){ //load json data from server and output message 
                 $("#email_msg").html('<div class="alert alert-success" style="padding: 5px;"><p>El usuario se encuentra activo nuevamente.</p></div>');
                 $("#react_btn").addClass('hidden');
+                $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
             }
         });
 

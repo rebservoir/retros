@@ -7,12 +7,10 @@
 			{!!Form::label('Email:')!!}
 			{!!Form::email('email',null,['id'=>'email','class'=>'form-control','placeholder'=>'Ingresar Email'])!!}
 		</div>
-
 			<div id="email_msg">
 			</div>
-			<button type="button" id="react_btn" class="btn btn-primary hidden" >Reactivar usuario</button>
+			<button type="button" id="react_btn" class="btn btn-primary hidden" value="" style="margin: -10px 0px 10px 0px;">Reactivar usuario</button>
 		<div class="form-group">
-		<br>
 			{!!Form::label('Contraseña:')!!}
 			{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Ingresar Contraseña'])!!}
 		</div>
