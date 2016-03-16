@@ -183,7 +183,7 @@ class FrontController extends Controller
             $documentos = Documentos::all();
             $utiles = Utiles::all();
             $morosos = Morosos::all();
-            $sitio = Sitio::all()->where('id', 1);
+            $sitio = Sitio::all();
             return view('/admin/contenidos', [ 'morosos' => $morosos, 'utiles' => $utiles, 
                 'noticias' => $noticias, 'sitio' => $sitio, 'documentos' => $documentos ]);
         }else{
@@ -245,36 +245,6 @@ class FrontController extends Controller
             ]);
     }
 
-    /********************************/
-    public function cashOut(){
-
-
-
-    }
-
-    public function dueDate(){
-        
-    }
-
-    public function checkStatus($id){
-        
-        $pagos = Pagos::where(function ($query) {
-                $query->where('id_user', $id)->where('status', 0);
-                })->get();
-
-        
-
-        if(empty($pagos)){
-            DB::update('update users set status = 1 where id_user = ?', [$id]);
-        }else{
-            DB::update('update users set status = 0 where id_user = ?', [$id]);
-        }
-
-
-
-        \Log::info('Status de ' . $name . ' = ' . $status);
-
-    }
 
     
 
