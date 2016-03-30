@@ -15,11 +15,11 @@ Route::get('/', function () {
 });
 
 Route::get('login','FrontController@login');
+Route::get('forgot','FrontController@forgot');
 Route::get('home','FrontController@index');
 Route::get('noticias/{id?}','FrontController@noticias');
 Route::get('contacto','FrontController@contacto');
 Route::get('micuenta','FrontController@cuenta');
-
 
 Route::get('finanzas/{mes_sel?}/{year_sel?}', 'FrontController@finanzas');
 Route::get('calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
@@ -43,6 +43,8 @@ Route::get('admin/usuarios/search/{id?}','UsuarioController@search');
 Route::get('admin/usuarios/sort/{sort?}','UsuarioController@sort');
 Route::get('admin/usuarios/sort_usr/{sort?}','UsuarioController@sort_usr');
 Route::get('admin/usuarios/add/{id?}','UsuarioController@add');
+Route::get('detalle_pagos/{id?}','PagosController@detalle');
+Route::get('load','UsuarioController@loadData');
 
 Route::get('sendEmail/{id?}','MailController@sendEmail');
 Route::get('sendEmailMsg/{id?}','MailController@sendEmailMsg');
@@ -50,8 +52,8 @@ Route::get('eventos/{id?}','CalendarioController@edit');
 Route::get('eventos_create','CalendarioController@store');
 
 Route::resource('mail','MailController@contact');
-Route::resource('sitio','SitioController');
-Route::resource('morosos','MorososController');
+Route::resource('sitio','SitesController');
+Route::resource('sections','SectionsController');
 Route::resource('noticia','NoticiaController');
 Route::resource('utiles','UtilesController');
 Route::resource('usuario','UsuarioController');

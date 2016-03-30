@@ -24,7 +24,8 @@ class CalendarioCreateRequest extends Request
     {
         return [
             'title' => 'required',
-            'start' => 'required',
+            'start' => 'required|date_format:Y-m-d|date',
+            'end' => 'date_format:Y-m-d|date',
         ];
     }
 }

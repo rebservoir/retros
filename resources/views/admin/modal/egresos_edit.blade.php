@@ -10,7 +10,7 @@
 
 			<div class="modal-body">
 			{!! Form::open(['route' => 'egresos.update', 'method'=>'PUT', 'files' => true ])!!}
-				<input type="hidden" name="_token_edit" value="{{ csrf_token() }}" id="token_eg1">
+				
 				<input type="hidden" id="id_egresos" name="id_egresos">
 				<div class="form-group">
 					{!!Form::label('Concepto:')!!}
@@ -20,9 +20,9 @@
 					{!!Form::label('Archivo:')!!}
 					{!!Form::file('path', ['id'=>'path_eg'])!!}
 				</div>
-				<div class="form-group">
-					{!!Form::label('Fecha:')!!}
-					{!! Form::text('date', '', ['id' => 'datepicker_eg_edit'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha con formato: aaaa-mm-dd')!!}
+					{!! Form::text('date', '', ['id' => 'datepicker_eg_edit','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 				<div class="form-group">
 					{!!Form::label('Cantidad:')!!}
@@ -30,8 +30,15 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					{!!Form::submit('Actualizar',['id'=>'actualizar_egresos', 'class'=>'btn btn-primary'])!!}
-					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_egresos', 'class'=>'btn btn-danger'], $secure=null)!!}
+					<div id="btns_delete_egresos">
+						{!!Form::submit('Actualizar',['id'=>'actualizar_egresos', 'class'=>'btn btn-primary'])!!}
+						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_egresos', 'class'=>'btn btn-danger'], $secure=null)!!}
+					</div>
+					<div id="btns_confirm_egresos" class="btns_confirm"> 
+						<p>¿Está seguro de eliminar este egreso?</p>
+				  		<a href="#" id="cancel_egresos" class="btn btn-default cancel">Cancelar</a>
+						<a href="#" id="delete_egresos" class="btn btn-danger">Ok</a>
+					</div>
 				</div>
 			{!! Form::close() !!}
 		</div>

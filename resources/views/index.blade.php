@@ -25,9 +25,9 @@
 							</div>
 						</a>
 
-						@foreach($morosos as $moroso)
-							@if($moroso->id == 1)
-								@if($moroso->is_active == 1)
+						@foreach($sections as $section)
+							@if($section->id == 1)
+								@if($section->is_active == 1)
 									<a href="/finanzas">
 										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 											<div class="nav_ic icon4">
@@ -60,7 +60,7 @@
 
 	<div id="slider" class="">
 		@foreach($sitios as $sitio)
-			<img src="../file/{{$sitio->picture}}" class="col-lg-3">
+			<img src="../file/{{$sitio->path}}" class="col-lg-3">
 			
 				<div id="slider_box">		
 				</div>
@@ -72,9 +72,9 @@
 	</div> <!--END Slider -->
 
 			<div id="main_cont">
-					@foreach($morosos as $moroso)
-						@if($moroso->id == 0)
-							@if($moroso->is_active == 1)
+					@foreach($sections as $section)
+						@if($section->id == 0)
+							@if($section->is_active == 1)
 								<div class="cont_left col-sm-4 col-lg-4 cont_400">
 									<div class="box_header">
 										{!!Html::image('img/morosos.png')!!}
@@ -84,7 +84,7 @@
 									<div class="col-xs-12 pull-right">
 										<ul>
 											@foreach($users as $user)
-												@if ($user->status == 1)
+												@if ($user->status == 0)
 													<li>{{$user->name}}</li>
 												@endif
 											@endforeach		

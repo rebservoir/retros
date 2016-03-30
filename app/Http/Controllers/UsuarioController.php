@@ -9,8 +9,12 @@ use TuFracc\Http\Requests\UserUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\User;
 use TuFracc\Cuotas;
+use TuFracc\Sites;
+use TuFracc\Sites_users;
+use TuFracc\Plans;
 use Session;
 use Redirect;
+use Excel;
 use DB;
 use Illuminate\Routing\Route;
 use Illuminate\Database\Eloquent;
@@ -55,15 +59,46 @@ class UsuarioController extends Controller
      */
     public function store(UserCreateRequest $request)
     {
-        
 
-        //$msg = "email:".$email."-user:".$user->name;
-        //create user
-        //User::create($request->all());
+        if($request->ajax()){
 
-        return response()->json([
-            "message"=> $msg
-        ]);
+            $id_site = \Session::get('id_site');
+            $sitio = Sites::where('id', $id_site)->get();
+            $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
+            //$plan = Plans::where('id', $sitio_plan )->get();
+            $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
+            $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
+
+            if( $user_count<$user_limit){
+
+                $new_user = User::create($request->all());
+
+                DB::table('sites_users')->insert(
+                ['id_user' => $new_user->id,
+                 'id_site' => $id_site
+                 ]
+                );
+                /*    
+                $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
+
+                Mail::send('emails.msg',$data, function ($msj) use ($data) {
+                    $msj->subject($data['subj']);
+                    $msj->to($data['user_mail']);
+                });
+                */
+
+                return response()->json([
+                    "tipo" => 'success',
+                    "message"=> 'Usuario Creado Exitosamente.'
+                ]);
+            }else{
+                return response()->json([
+                    "tipo" => 'limite',
+                    "message"=>'Limite alcanzado. No se pueden crear más usuarios.'
+                ]);
+
+            }     
+        }
 
     }
 
@@ -85,21 +120,38 @@ class UsuarioController extends Controller
                     "id_user"=> $user->id
                 ]);
             }
-         
         }else{
             return response()->json([
-                    "res"=> "3"
+                "res"=> "3"
             ]);
         }
 
     } 
 
     public function reactivar($id){
-        DB::table('users')->where('id', $id )->update(['deleted_at' => null]);
 
-        return response()->json([
-                    "res"=> "ok"
-        ]);
+        $id_site = \Session::get('id_site');
+        $sitio = Sites::where('id', $id_site)->get();
+        $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
+        $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
+        $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
+
+        if( $user_count<$user_limit){
+            DB::table('users')->where('id', $id )->update(['deleted_at' => null]);
+            DB::table('sites_users')->insert(
+                    ['id_user' => $id,
+                     'id_site' => $id_site
+                     ]
+            );
+            return response()->json([
+                "res" => 'ok'
+            ]);
+        }else{
+            return response()->json([
+                "res" => 'fail'
+            ]);
+        }
+
     } 
 
     /**
@@ -118,8 +170,7 @@ class UsuarioController extends Controller
 
     public function search($id)
     {
-        $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
-
+        $tipos = Cuotas::orderBy('id', 'ASC')->lists('concepto','id');
         $users = User::where('id', $id)->get();
             return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos]);
     }
@@ -134,11 +185,10 @@ class UsuarioController extends Controller
 
     public function sort($sort)
     {
-        $tipos = Cuotas::orderBy('tipo', 'ASC')->lists('concepto','id');
+        $tipos = Cuotas::orderBy('id', 'ASC')->lists('concepto','id');
 
         if($sort == 'name'){
             $users = User::all()->sortBy('name');
-            $sel1 = 'name';
         }else if($sort == 'desc'){
             $users = User::all()->sortByDesc('name');
         }else if($sort == 'email'){
@@ -211,11 +261,48 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
+        $id_site = \Session::get('id_site');
         $user = User::find($id);
+        $site_user = DB::delete('delete from sites_users where id_site = ? and id_user = ?', [$id_site, $id]);
         $user->delete();
 
+
         return response()->json([
-            "mensaje"=>'eliminado'
+            "mensaje"=> $site_user
             ]);
     }
+
+
+    public function loadData(Request $request){
+        /*
+        Excel::load('file/file.xlsx', function($file)
+        {
+            $result=$file->get();
+          
+            foreach ($result as $key => $value)
+            {
+                echo $value->nombre.'--'.$value->email.'--'.$value->direccion.'<br>';
+            }
+        
+        })->get();
+        */
+
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $result = Excel::load($file)->get();
+        }   
+
+        //$result = Excel::load('file/file.xlsx')->get();
+        /*
+        return response()->json(
+                $result->toArray()
+            );
+        */
+        $users = User::all();
+        $tipos = Cuotas::lists('concepto','id');
+        return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos, 'result' => $result ]);
+
+    }
+
+
 }

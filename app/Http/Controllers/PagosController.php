@@ -8,10 +8,15 @@ use TuFracc\Http\Requests\PagoCreateRequest;
 use TuFracc\Http\Requests\PagoUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Pagos;
+use TuFracc\Cuotas;
+use TuFracc\User;
 use Illuminate\Contracts\Auth\Guard;
 use Session;
 use Redirect;
 use Illuminate\Routing\Route;
+use DB;
+use Mail;
+use App\Jobs\SendEmail;
 
 class PagosController extends Controller
 {
@@ -48,10 +53,30 @@ class PagosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PagoCreateRequest $request)
+    public function store(PagoUpdateRequest $request)
     {
         if($request->ajax()){
-            Pagos::create($request->all());
+
+            $id_user = $request->id_user;
+            $user = User::find($id_user);
+            $cuota = Cuotas::find($user->type);
+
+            DB::table('pagos')->insert(
+                ['id_user' => $id_user,
+                 'date' => $request->date,
+                 'status' => $request->status,
+                 'amount' => $cuota->amount,
+                 'user_name' => $user->name
+                 ]
+            );
+
+        $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
+
+        Mail::send('emails.msg',$data, function ($msj) use ($data) {
+            $msj->subject($data['subj']);
+            $msj->to($data['user_mail']);
+        });
+
             return response()->json([
                     "message" => "creado"
                 ]);
@@ -64,10 +89,10 @@ class PagosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
-    {
+    public function show(){
+
         $pagos_show = Pagos::where(function ($query) {
-                $query->where('id_user', $id)
+            $query->where('id_user', $id)
                 ->where('status', 0)
                 ->sortBy('date');
                   })->get();
@@ -77,6 +102,14 @@ class PagosController extends Controller
             );
     }
 
+    public function detalle($id){
+
+        $pagos = Pagos::where('id_user', $id)->orderBy('date', 'asc')->get();
+
+        return response()->json(
+            $pagos->toArray()
+            );
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -105,6 +138,8 @@ class PagosController extends Controller
         $pago = Pagos::find($id);
         $pago->fill($request->all());
         $pago->save();
+
+        \Session::flash('update', 'Pago actualizado exitosamente.');
 
         return response()->json([
             "mensaje"=>'listo'

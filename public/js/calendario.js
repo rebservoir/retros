@@ -39,25 +39,52 @@ function calendar(date){
         });
 }
 
+function hide_alert(){
+    $("#msj-success").addClass("hide");
+    $("#msj-fail").addClass("hide");
+    $("#alert-success").addClass("hide");
+}
 
 $(function() {
-    $( "#datepicker_start" ).datepicker();
+
+
+    $( "#datepicker_start" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_start" ).datepicker("option", "dateFormat", "yy-mm-dd");
 
-    $( "#datepicker_start1" ).datepicker();
+    $( "#datepicker_start1" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_start1" ).datepicker("option", "dateFormat", "yy-mm-dd");
 
-    $( "#datepicker_end" ).datepicker();
+    $( "#datepicker_end" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_end" ).datepicker("option", "dateFormat", "yy-mm-dd");
 
-    $( "#datepicker_end1" ).datepicker();
+    $( "#datepicker_end1" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_end1" ).datepicker("option", "dateFormat", "yy-mm-dd");
 });
 
 
 function mostrar_evento(btn){
     
-    $("#msj-fail").addClass( "hide");
+    hide_alert();
 
     var route = "/eventos/"+ btn.value;
 
@@ -72,7 +99,7 @@ function mostrar_evento(btn){
 
 $("#registrar_evento").click(function(){
 
-    $("#msj-fail").addClass( "hide");
+    hide_alert();
 
     var dato1 = $("#ev_title").val();
     var dato2 = $("#datepicker_start").val();
@@ -90,14 +117,24 @@ $("#registrar_evento").click(function(){
             window.location.reload();
         },
         error: function (jqXHR, exception) {
-            $('#eventos_create').modal('toggle');
+            var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail").removeClass( "hide");
+            var msj = obj.title + '<br>' + obj.start + '<br>' + obj.end + '<br>';
+            var res = msj.replace(/undefined<br>/gi, '');
+            var res = res.replace(/title/gi, 'Titulo');
+            var res = res.replace(/start/gi, 'Fecha de Inicio');
+            var res = res.replace(/end/gi, 'Fecha de Termino');
+            var res = res.replace(/Y-m-d/gi, 'año-mes-dia');
+            $("#msj-fail").html(res);
+            $('#eventos_create').modal('toggle');
         }
     });
 });
 
 
 $("#actualizar_evento").click(function(){
+
+    hide_alert();
 
     var value = $("#evento_id").val();
     var dato1 = $("#ev_title1").val();
@@ -114,22 +151,32 @@ $("#actualizar_evento").click(function(){
         dataType: 'json',
         data:{title: dato1, start: dato2, end: dato3},
         success:function(){
-            //$("#msj-success1").removeClass( "hide");
-            $("#tablaEventos").load(location.href+" #tablaEventos>*","");
-            $('#eventos_edit').modal('toggle');
             window.location.reload();
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail").removeClass( "hide");
+            var msj = obj.title + '<br>' + obj.start + '<br>' + obj.end + '<br>';
+            var res = msj.replace(/undefined<br>/gi, '');
+            var res = res.replace(/title/gi, 'Titulo');
+            var res = res.replace(/start/gi, 'Fecha de Inicio');
+            var res = res.replace(/end/gi, 'Fecha de Termino');
+            var res = res.replace(/Y-m-d/gi, 'año-mes-dia');
+            $("#msj-fail").html(res);
             $('#eventos_edit').modal('toggle');
         } 
     });
 });
 
-$("#eliminar_evento").click(function(){
+$("#delete_att").click(function(){
+    $('#btns_delete').slideUp( "fast", function() {
+        $("#btns_confirm").show( "fast" );
+    });
+});
 
-    if (confirm("Eliminar este Evento?") == true){
+$("#delete").click(function(){
+
+        hide_alert();
 
         var value = $("#evento_id").val();
         var route = "/eventos/"+value;
@@ -141,14 +188,26 @@ $("#eliminar_evento").click(function(){
             type: 'DELETE',
             dataType: 'json',
             success:function(){
-            //$("#msj-success2").removeClass( "hide");
-            //$("#tablaPagos").load(location.href+" #tablaPagos>*","");
-            window.location.reload();
+                window.location.reload();
             },
             error: function (jqXHR, exception) {
                 $("#msj-fail").removeClass( "hide");
+
             } 
         });
-    } else {
-    } 
+
+        $('#btns_confirm').hide( "fast");
+        $("#btns_delete").show( "fast" );
 });
+
+$("#cancel").click(function(){
+    $('#btns_confirm').hide( "fast", function() {
+        $("#btns_delete").show( "fast" );
+    });
+});
+
+
+
+
+
+

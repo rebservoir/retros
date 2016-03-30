@@ -3,18 +3,19 @@ body{
     padding: 0px 0px 0px 0px;
     font-family: 'adelle_sansregular', Arial, sans-serif;
 }
-
 header{
 }
-div#head {
+div#head{
     border-bottom: solid 6px #67CA69;
     background-color: #fff;
 }
 div#logo{
     margin: 20px 0px 10px 0px;
+    width: 250px;
+    float: left;
 }
 div#logo img{
-    width: 250px;
+    width: 100%;
 }
 div#mensaje{
     float: right;
@@ -28,7 +29,6 @@ div#mensaje a{
     padding: 0px !important;
 }
 .bg_blue{
-   
 }
 #navigation {
     text-align: center;
@@ -45,7 +45,7 @@ div#mensaje a{
     display: inline-block;
 }
 #ul_interna li{
-    padding: 8px 0px 0px 25px;
+    padding: 8px 0px 0px 10px;
     margin: 0px 0px 15px -25px;
     list-style: none;
     height: 38px;
@@ -88,6 +88,14 @@ div#navigation a{
     display: inline-block;
     margin: 12px 5px -6px 0px;
 }
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #f5f5f5 !important;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    background-color: #246B9C;
+}
+
 .icon1{ background-image: url('../img/n_1w.png');}
 .icon2{ background-image: url('../img/n_2w.png');}
 .icon3{ background-image: url('../img/n_3w.png');}
@@ -101,25 +109,25 @@ div#navigation a{
 
 div#slider {
     background-color: #111;
-    background-size: cover;
     height: 400px;
     padding: 0px;
     margin-top: 20px;
+    position: relative;
 }
 div#slider img{
     width: 100%;
     height: 400px;
-    position: relative;
     margin: 0px;
     padding: 0px;
 }
 div#slider_box {
     border: 1px solid #fff;
-    margin: 0px 15px 0px 15px;
+    margin: 0px 2% 0% 2%;
     border-top: none;
-    height: 380px;
-    position: relative;
-    z-index: 999;
+    position: absolute;
+    height: 95%;
+    top: 0;
+    width: 96%;
 }
 div#slider_name {
     font-size: 20px;
@@ -133,7 +141,6 @@ div#slider_name {
     margin: -50px 0px 0px 0px;
     font-family: 'adelle_sanslight', Arial, sans-serif;
     position: relative;
-    z-index: 999;
 }
 div#container{
     background-color: #fff;
@@ -141,20 +148,18 @@ div#container{
     border-bottom: 1px solid #e2e2e2;
     margin-top: 20px;
 }
-
 div#main_cont{
     margin: 20px 0px 0px 0px;
 }
-
 .int_div{
     display: none;
 }
 .int_div_sel{
     display: inline;
 }
-
 .box_header{
     margin-bottom: 30px;
+    height: 50px;
 }
 .box_header img{
     width: 40px;
@@ -171,7 +176,7 @@ div#main_cont{
 .box_header p{
     font-family: 'adelle_sanslight', Arial, sans-serif;
     font-size: 16px;
-    border-bottom: solid 6px #224190;
+    border-bottom: solid 6px #246B9C;
     margin: 30px 10px 0px 20px;
     padding: 0px 0px 8px 0px;
 }
@@ -193,6 +198,9 @@ div#main_cont{
 }
 .cont_400{
     height: 400px;
+}
+.cont_500{
+    height: 500px;
 }
 .cont_600{
     height: 600px;
@@ -267,24 +275,37 @@ div#main_cont{
 
 .noticia{
     height: 125px;
+    margin-bottom: 20px;
+    margin-left: -15px;
+}
+.noticias{
     margin-left: 50px;
 }
+.noticia_show{
+    margin: 0px 50px 30px 50px;
+}
 .noticia_show img{
-    margin: 0px 15px 0px 0px;
-    float: right;
+    margin: 0px 0px 20px 20px;
     background-color: #000;
-    width: 600px;
+    width: 500px;
     height: 330px;
+    float: right;
 }
 .noticia_show h1{
     font-size: 26px;
     font-family: 'adelle_sansregular', Arial, sans-serif;
-    margin: 10px 0px 20px 20px;
+    margin: 0px 0px 0px 0px;
+}
+.noticia_show h3{
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'adelle_sansregular', Arial, sans-serif;
+    margin: 10px 0px 10px 0px;
 }
 .noticia_show p{
     font-size: 20px;
     font-family: 'adelle_sansthin', Arial, sans-serif;
-    padding: 20px;
+    padding: 0px;
 }
 .noticia_show_a{
     float: right;
@@ -292,9 +313,9 @@ div#main_cont{
     font-size: 18px;
 }
 .noticia img{
-    margin: 0px 15px 0px 0px;
+    margin: 0px;
     float: left;
-    width: 130px;
+    width: 100%;
     height: 80px;
     background-color: #000;
 }
@@ -342,10 +363,15 @@ div#select_date{
     padding: 5px 5px 5px 5px  !important;
 }
 div#tablaEventos{
-    width: 80%;
+
     margin: 0 auto;
 }
-/** Transparencia **/
+div#btns_cal{
+    display: inline; 
+}
+
+
+/** FINANZAS **/
 div#select_date_tr{
     margin: 0px auto;
     width: 300px;
@@ -409,32 +435,82 @@ div#cont_table{
     display: block !important;
 }
 
-/** footer **/
+/** btns delete **/
+.cancel{
+    margin-right: 10px;
+}
+.btns_confirm{
+    display: none;
+}
+.btns_confirm p{
+    margin: -5px 0px 6px 0px;
+    font-size: 16px;
+}
+.btns_confirm_morosos{
 
-div#footer{
-    height: 280px;
-    margin: 30px 0px 0px 0px;
-    background-color: #246B9C;
+}
+.btns_confirm_morosos p{
+    margin: -5px 0px 6px 0px;
+    font-size: 16px;
 }
 
+.form_date img{
+    width: 25px;
+    margin: -8px 0px 0px 10px;
+    cursor: pointer;    
+}
+
+/* alerts */
+.alert_top{
+    margin-bottom: 0px; 
+}
+#msj-success{ 
+    margin-top: 15px; 
+}
+#msj-fail{ 
+    margin-top: 15px; 
+}
 .success_b{
     background-color: #6BD000;   
 }
 .danger_b{
     background-color: #EF0808;
 }
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-    background-color: #f5f5f5 !important;
+
+/*contacto*/
+button, input, select, textarea {
+    resize: none;
+    padding: 4px 0px 4px 0px;
+    margin-bottom: 8px;
+}
+textarea{
+    width: 100%;
 }
 
 
-@media only screen and (min-width: 0px) {
+
+/** footer **/
+div#footer{
+    height: 280px;
+    margin: 30px 0px 0px 0px;
+    background-color: #246B9C;
 }
-@media only screen and (min-width: 480px) {
+
+.bx_title{
+    float: none;
 }
-@media only screen and (min-width: 768px) {
-}
-@media only screen and (min-width: 1024px) {
+.burger{
+    display: none;
+    background-color: #246B9C;
+    border: 1px solid #DEDEDE;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    float: right;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px 0px 0px 0px;
 }
 
 
@@ -492,167 +568,24 @@ div#login_box label{
     background-image: url("../img/txtr1.png")
 }
 
-/*contacto*/
-button, input, select, textarea {
-    resize: none;
-    padding: 4px 0px 4px 0px;
-    margin-bottom: 8px;
+/** USUARIOS **/
+.reg_user{
+    float: left;
+    margin-bottom: 12px;
 }
-textarea{
+
+/** contenidos **/
+#divSitio img{
     width: 100%;
 }
-
-/* XS */
-@media (min-width: 0px) and (max-width: 768px) {
-
-#navigation{
-    position: relative;
-    z-index: 999;
-    width: 100%;
-}
-.nav_sel{
-    border: none;
-}
-div#logo img{
-    width: 100%;
-}
-div#mensaje{
-    text-align: center;
-    float: none;
-    margin: 0px;        
-}
-.navbar-collapse{
-    overflow: hidden;
-}
-div#slider {
-    height: 150px;
-    padding: 0px 20px 20px 20px;
-}
-div#slider_box {
-    height: 140px;
-}
-div#slider_name {
-    font-size: 16px;
-    color: #fff;
-    background-color: #EE5025;
-    width: 100%;
-    padding: 8px 0px 0px 0px;
-    height: auto;
-    margin: -30px 0px 0px 0px;
-}
-.cont_right {
-    border-left: 1px solid #e2e2e2;
-    height: auto;
-    margin-bottom: 30px;
-}
-.noticia {
-    height: auto;
-    margin-bottom: 20px;
-}
-.noticia h1 {
-    font-size: 16px;
-}
-.noticia p {
-    font-size: 16px;
-}
-.noticia a {
-    font-size: 16px;
-    float: right;
-}
-.noticia img {
-    margin-bottom: 20px; 
-}
-.cont_right {
-    padding-bottom: 20px;
-}
-
-/*  login  */
-div#login_box {
-    width: auto;
-    height: 500px;
-    margin-top: 100px;
-}
-
-
-/* mi_fraccionamiento*/
-.box_header h1 {
-    font-size: 16px;
-    margin: 20px 10px 0px 65px;
-}
-#ul_interna{
-    padding: 0px;
-}
-#ul_interna li {
-    padding: 8px 0px 1px 20px;
-    margin: 0px 0px 10px 0px;
-    width: auto;
-    list-style: none;
-    height: auto;
-    cursor: pointer;
-}
-
-
-}/**END XS*/
-
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) and (max-width: 992px) {
-
-#navigation div p {font-size: 12px;}
-.container {width: inherit !important;}
-.noticia {
-    height: 125px;
-}
-.noticia h1 {
-    font-size: 16px;
-}
-.noticia p {
-    font-size: 16px;
-}
-.noticia a {
-    font-size: 16px;
-    float: right;
-}
-.vmas{
-    margin-top: 0px;
-}
-
-}/*end sm*/
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
-#navigation div p {font-size: 14px;}
-
-/*mi fraccionamiento*/
-.cont_left ul {
-    margin-left: 50px;
-}
-
-}/* end md*/
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-#navigation div p {font-size: 14px;} 
-
-/*contacto*/
-#form{
-    margin: 0px 0px 0px 65px;
-}
-#submit_btn{
-    width: auto;
-}
-
-/*mi fraccionamiento*/
-.cont_left ul {
-    margin-left: 50px;
-}
-
-}/*end lg*/
-
 
 
 
 /********************** TYPEHEAD ************************/
+div#the-basics{
+    float: right;
+    margin-top: 0px;
+}
 
 .tt-menu,
 .gist {

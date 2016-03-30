@@ -8,6 +8,7 @@
 		{!!Html::favicon('img/fav.png')!!}
 		{!!Html::style('css/bootstrap.min.css')!!}
 		{!!Html::style('css/style.css')!!}
+		{!!Html::style('css/media_query.css')!!}
 		{!!Html::style('css/fonts/stylesheet.css')!!}
 		@yield('css')
 
@@ -18,7 +19,7 @@
 	<div class="">
 		<div id="head" class="">
 			<div class="container">
-				<div id="logo" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
+				<div id="logo" class="">
 					{!!Html::image('img/logo_tu.jpg')!!}
 				</div>
 
@@ -59,9 +60,7 @@
 
 
 		<div id="container" class="container">
-			<div id="main_cont">
 				@yield('content')
-			</div> 
 		</div> <!-- END container-->
 
 		

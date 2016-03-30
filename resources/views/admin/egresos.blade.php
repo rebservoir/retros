@@ -1,24 +1,11 @@
 <h3>Egresos</h3>
 
 <!-- Egresos ALERTS -->
-<div id="msj-success4" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Egreso actualizado exitosamente.</p>
+<div id="msj-success-egreso" class="alert alert-success alert-dismissible hide" role="alert">
 </div>
-<div id="msj-success5" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Egreso eliminado exitosamente.</p>
+<div id="msj-fail-egreso" class="alert alert-danger alert-dismissible hide" role="alert">
 </div>
-<div id="msj-fail4" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
-<div id="msj-fail5" class="alert alert-danger alert-dismissible hide" role="alert">
-  <p>Intentar de nuevo.</p>
-</div>
-<div id="msj-success3" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Egreso registrado exitosamente.</p>
-</div>
-<div id="msj-fail3" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
+
 
 <!-- Egresos ALERTS END -->
 
@@ -78,7 +65,7 @@ $day = date('j');
     <br><br>
 
 <div id="tablaEgresos">
-	<table class="table">
+	<table class="table table-striped">
 		<thead>
 					<th>Fecha</th>
 					<th>Concepto</th>

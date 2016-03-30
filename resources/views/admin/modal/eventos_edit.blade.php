@@ -17,20 +17,28 @@
 					{!!Form::text('title',null,['id'=>'ev_title1','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
 				</div>
 
-				<div class="form-group">
-					{!!Form::label('Fecha de Inicio:')!!}
-					{!! Form::text('start', '', ['id' => 'datepicker_start1'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha de Inicio con formato: aaaa-mm-dd:')!!}
+					{!! Form::text('start', '', ['id' => 'datepicker_start1','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 
-				<div class="form-group">
-					{!!Form::label('Fecha de Termino:')!!}
-					{!! Form::text('end', '', ['id' => 'datepicker_end1'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha de Termino con formato: aaaa-mm-dd:')!!}
+					{!! Form::text('end', '', ['id' => 'datepicker_end1','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 			</div>
 				<div class="modal-footer">
+				<div id="btns_delete">
 					{!!link_to('#', $title='Actualizar Evento', $attributes = ['id'=>'actualizar_evento', 'class'=>'btn btn-primary'], $secure=null)!!}
-					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar_evento', 'class'=>'btn btn-danger'], $secure=null)!!}
+					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att', 'class'=>'btn btn-danger'], $secure=null)!!}
 				</div>
+				
+				<div id="btns_confirm" class="btns_confirm"> 
+					<p>¿Está seguro de eliminar este evento?</p>
+			  		<a href="#" id="cancel" class="btn btn-default">Cancelar</a>
+					<a href="#" id="delete" class="btn btn-danger">Ok</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -41,5 +49,4 @@
 	.input_title{
 		 width: 100%;
 	}
-	
 </style>

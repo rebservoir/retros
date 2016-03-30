@@ -24,8 +24,8 @@ class EgresosUpdateRequest extends Request
     {
         return [
             'concept' => 'required',
-            'date' => 'required',
-            'amount' => 'required',
+            'date' => 'required|date_format:Y-m-d|date',
+            'amount' => 'required|numeric',
         ];
     }
 }

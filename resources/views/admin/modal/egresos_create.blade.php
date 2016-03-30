@@ -19,9 +19,9 @@
 					{!!Form::label('Archivo:')!!}
 					{!!Form::file('path', ['id'=>'path'])!!}
 				</div>
-				<div class="form-group">
-					{!!Form::label('Fecha:')!!}
-					{!! Form::text('date', '', ['id' => 'datepicker_eg'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha con formato: aaaa-mm-dd')!!}
+					{!! Form::text('date', '', ['id' => 'datepicker_eg','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 				<div class="form-group">
 					{!!Form::label('Cantidad:')!!}
@@ -35,3 +35,12 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+
+
+

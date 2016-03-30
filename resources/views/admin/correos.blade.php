@@ -38,18 +38,17 @@
 	</div>
 
 	<h4>Destinatarios:</h4>
-	<div id="user_table">
-		<table class="table">
-			<thead>
-				<th>Marcar</th>
-				<th>Nombre</th>
-				<th>Email</th>
-				<th>Status</th>
-			</thead>
-		</table>	
-	</div>
 
-		<br>
+		<div id="user_table">
+			<table class="table table-striped">
+				<thead>
+					<th>Marcar</th>
+					<th>Nombre</th>
+					<th>Email</th>
+					<th>Status</th>
+				</thead>
+			</table>	
+		</div>
 
 	<div id="tipos">
 		<div>
@@ -64,17 +63,47 @@
 	</div>
 
 	<br>
-
 <input type="hidden" name="token_send" value="{{ csrf_token() }}" id="token_send">
-		<button id="btn_send" class='btn btn-primary'>Enviar Correo</button>
+<button id="btn_send" class='btn btn-primary'>Enviar Correo</button>
 
 
 <style type="text/css">
+
 #user_table{
-	height: 200px;
-	overflow-y: scroll;
-	border: 1px solid rgb(169, 169, 169);	
 }
+
+tr {
+	width: 100%;
+	display: inline-table;  
+    table-layout: fixed;
+}
+
+table{
+ 	height:300px; 
+}
+tbody{
+  	overflow-y: scroll;
+  	height: 260px;
+  	position: absolute;
+    border: 1px solid #e2e2e2;
+    border-top: none;
+}
+thead th:last-child {
+    text-align: center;
+}
+tbody td:last-child {
+    text-align: center;
+}
+
+#user_table thead th:first-child{
+    width: 80px;
+	text-align: center;
+}
+#user_table tbody td:first-child{
+    width: 80px;
+	text-align: center;
+}
+
 </style>
 
 

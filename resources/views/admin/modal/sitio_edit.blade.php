@@ -9,7 +9,7 @@
 			</div>
 			
 			<div class="modal-body">
-				{!! Form::open(['route' => ['sitio.update' , 45 ], 'method'=>'PUT', 'files' => true ])!!}
+				{!! Form::open(['route' => ['sitio.update' , $id_site ], 'method'=>'PUT', 'files' => true ])!!}
 					<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_sitio_1">
 					<input type="hidden" value="" id="path_sitio">
 					<div class="form-group">
@@ -19,7 +19,7 @@
 					<div class="form-group">
 						{!!Form::label('Imagen:')!!}
 						<p>(Dejar vacio para conservar imagen actual.)</p>
-						{!!Form::file('picture', ['id'=>'picture'])!!}
+						{!!Form::file('path', ['id'=>'path'])!!}
 					</div>
 			</div>
 				<div class="modal-footer">

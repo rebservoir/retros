@@ -1,27 +1,8 @@
 <!-- ALERTAS PAGOS -->
 
-<div id="msj-success" class="alert alert-success alert-dismissible hide" role="alert">
-  	<p>Pago registrado exitosamente.</p>
+<div id="msj-success-pago" class="alert alert-success alert-dismissible hide" role="alert">
 </div>
-
-<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
-  	<div class="msj"></div>
-</div>
-
-<div id="msj-success1" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Pago actualizado exitosamente.</p>
-</div>
-
-<div id="msj-success2" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Pago eliminado exitosamente.</p>
-</div>
-
-<div id="msj-fail1" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
-
-<div id="msj-fail2" class="alert alert-danger alert-dismissible hide" role="alert">
-  <p>Intentar de nuevo.</p>
+<div id="msj-fail-pago" class="alert alert-danger alert-dismissible hide" role="alert">
 </div>
 
 <!-- ALERTAS PAGOS END -->
@@ -84,7 +65,7 @@ $day = date('j');
     <br><br>
 
 <div id="tablaPagos">
-	<table class="table">
+	<table class="table table-striped">
 		<thead>
 			<th>Usuario</th>
 			<th>Monto</th>

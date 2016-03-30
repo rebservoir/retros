@@ -12,5 +12,4 @@ class Pagos extends Model
 
     protected $fillable = ['id_user','date','status','amount','user_name'];
 
-    
 }

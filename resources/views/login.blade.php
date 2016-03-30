@@ -2,11 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Tu Fraccionamiento</title>
+		<title>Bill Box</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/fonts/stylesheet.css"/>
+		{!!Html::favicon('img/fav.png')!!}
 	</head>
 
 	<body>
@@ -31,8 +32,9 @@
 					{!!Form::label('Contraseña','Contraseña:')!!}
 					{!!Form::password('password',['class'=>'form-control', 'placeholder'=>'Ingresa tu contraseña'])!!}
 				</div>
-				{!!Form::submit('Login',['id'=>'submit_btn', 'class'=>'btn btn-primary'])!!}
+				{!!Form::submit('Entrar',['id'=>'submit_btn', 'class'=>'btn btn-primary'])!!}
 			{!!Form::close()!!}
+			<a href="/forgot">¿Olvidaste tu contraseña?</a>
 
 		</div>
 	</div> <!-- END container-->

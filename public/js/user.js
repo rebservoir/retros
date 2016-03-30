@@ -1,3 +1,11 @@
+
+
+function hide_alert(){
+    $("#msj-success").addClass("hide");
+    $("#msj-fail").addClass("hide");
+    $("#alert-success").addClass("hide");
+}
+
 var id_usuario;
 function get_id_user_pago(id_user){
     id_usuario = id_user;
@@ -5,12 +13,9 @@ function get_id_user_pago(id_user){
 }
 
 function Mostrar(btn){
-    $("#msj-success").addClass( "hide");
-    $( "#msj-fail").addClass( "hide");
-    $("#msj-success1").addClass( "hide");
-    $( "#msj-fail1").addClass( "hide");
-    $("#msj-success2").addClass( "hide");
-    $( "#msj-fail2").addClass( "hide");
+
+    hide_alert();
+
     var route = "/usuario/"+btn.value+"/edit";
     $.get(route, function(res){
         $("#name1").val(res.name);
@@ -22,6 +27,115 @@ function Mostrar(btn){
         $("#id1").val(res.id);
         $("#type1").val(res.type);
     });
+}
+
+function loadData(){
+
+    var route = "/load";
+    $.get(route, function(res){
+        console.log(res);
+    });
+}
+
+ $("#load_data").on("submit", function(e){
+    console.log('carga');
+
+    hide_alert();
+    e.preventDefault();
+    var fd = new FormData(this);
+
+    var route = "/load";
+    var token = $("#token_load").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'POST',
+        dataType: 'json',
+        data: fd,
+        contentType: false,
+        processData: false,
+
+        success:function(){
+
+        },
+        error: function (jqXHR, exception) {
+        }    
+    });
+});
+
+
+function detalle_pagos(btn){
+
+    $('#tab-content').html("");
+    hide_alert();
+    $pagos = [];
+    var JSONObject='';
+    var s_year='';
+    var year='';
+    var years = [];
+    var n=0;
+    var str='',str2='',str3='';
+    meses = ["x","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    var route = "/detalle_pagos/"+btn.value;
+
+    $.get(route, function(res){
+
+        str+="<table class='table table-condensed'><tbody><tr><td><strong>Cliente:</strong></td><td>"+ res[0].user_name +"</td></tr></tbody></table><br><br>";
+        
+        year = (res[0].date).split('-');
+        save = year[0];
+        years[n] = save;
+        n++;
+        for(index = 0; index < res.length; index++){
+            year = (res[index].date).split('-');
+            if(save !== year[0]){
+                save = year[0];
+                years[n] = save;
+                n++
+            }
+        }
+        
+        str += "<ul class='nav nav-tabs'>"; // ul years
+        str2 += "<div class='tab-content'>"; // tab years
+        for(j=0;j<years.length;j++){
+            str+= "<li><a href='#" + years[j] + "' data-toggle='pill'>" + years[j] + "</a></li>"; // li years
+            str2+= "<div id='" + years[j] + "' class='tab-pane fade'>"; // divs years
+            str2+="<ul class='nav nav-pills'>"; // ul months
+
+            for(index = 0; index < res.length; index++){
+                year = (res[index].date).split('-');
+                if(years[j] == year[0]){
+                    // li months
+                    if(res[index].status == 0){
+                        str2+="<li><a class='adeudo' href='#" + meses[parseInt(year[1])] + year[0] + "' data-toggle='pill'>" + meses[parseInt(year[1])] + "</a></li>";
+                    }else if(res[index].status == 1){
+                        str2+="<li><a class='saldado' href='#" + meses[parseInt(year[1])] + year[0] + "' data-toggle='pill'>" + meses[parseInt(year[1])] + "</a></li>";
+                    }
+                    str3+= "<div id='" + meses[parseInt(year[1])] + year[0] + "' class='tab-pane fade'>"; // divs months
+                    str3+="<br><table class='table table-condensed'><thead><tr><th>Fecha</th><th>Importe</th><th>Status</th></tr></thead><tbody><tr><td><p>";
+                    str3+= year[2]+"-"+meses[parseInt(year[1])]+"-"+year[0]+"</p></td><td><p>$"+res[index].amount+".00</p></td><td>";
+                    if(res[index].status == 0){
+                        str3+="<span class='label label-danger'>Adeudo</span>"; 
+                    }else if(res[index].status == 1){
+                        str3+="<span class='label label-success'>Saldado</span>";
+                    }
+                    str3+="</td></tr></tbody></table></div>";
+                }
+            }
+
+            str2+="</ul><div class='tab-content'>"; // end ul months
+            str3+="</div>";
+            str2+=str3;
+            str3='';
+            str2+="</div>"; // end tab-pane
+        }
+        str += "</ul>"; // end ul years
+        str2+="</div>"; // end tab-content
+
+        $('#tab-content').html(str + str2);
+    });
+                                                    
 }
 
 $( "#email" ).change(function() {
@@ -56,17 +170,25 @@ $("#react_btn").click(function(){
 
         $.get(route, function(response){
             if(response.res == 'ok'){ //load json data from server and output message 
-                $("#email_msg").html('<div class="alert alert-success" style="padding: 5px;"><p>El usuario se encuentra activo nuevamente.</p></div>');
+                $("#msj-success").removeClass("hide");
+                $("#msj-success").html('<p>El usuario se encuentra activo nuevamente.</p>');
                 $("#react_btn").addClass('hidden');
                 $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+                $("#divSitio").load(location.href+" #divSitio>*","");
+                $('#user_create').modal('toggle');
+            }else if(response.res == 'fail'){ //load json data from server and output message
+                $("#msj-fail").removeClass("hide"); 
+                $("#msj-fail").html('<p>Limite alcanzado. No se pueden crear más usuarios.</p>');
+                $("#react_btn").addClass('hidden');
+                $('#user_create').modal('toggle');
             }
         });
-
 });
 
 $("#registrar").click(function(){
-    $("#msj-success").addClass( "hide");
-    $( "#msj-fail").addClass( "hide");
+
+    hide_alert();
+
     var value = $("#id").val();
     var dato1 = $("#name").val();
     var dato2 = $("#email").val();
@@ -95,21 +217,29 @@ $("#registrar").click(function(){
             password:   dato7,
             type:       dato8
         },
-        success:function(){
-            $("#msj-success").removeClass( "hide");
-            $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
-            $('#user_create').modal('toggle');
+        success:function(data){
+            if(data.tipo=='success'){
+                    $("#msj-success").removeClass("hide");
+                    $("#msj-success").html(data.message);
+                    $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+                    $("#divSitio").load(location.href+" #divSitio>*","");
+                    $('#user_create').modal('toggle');
+            }else if(data.tipo=='limite'){
+                    $("#msj-fail").removeClass( "hide");
+                    $("#msj-fail").html(data.message);
+                    $('#user_create').modal('toggle');
+            } 
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail").removeClass( "hide");
             var msj = obj.name + '<br>' + obj.email + '<br>' + obj.password + '<br>' + obj.address + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
-             var res = res.replace(/name/gi, 'Nombre');
-              var res = res.replace(/address/gi, 'Dirección');
-              var res = res.replace(/email/gi, 'Email');
-              var res = res.replace(/password/gi, 'Password');
-            $(".msj").html(res);
+            var res = res.replace(/name/gi, 'Nombre');
+            var res = res.replace(/address/gi, 'Dirección');
+            var res = res.replace(/email/gi, 'Email');
+            var res = res.replace(/password/gi, 'Password');
+            $("#msj-fail").html(res);
             $('#user_create').modal('toggle');
         }              
     });
@@ -117,8 +247,7 @@ $("#registrar").click(function(){
 
 $("#actualizar").click(function(){
 
-    $("#msj-success1").addClass( "hide");
-    $( "#msj-fail1").addClass( "hide");
+    hide_alert();
 
     var value = $("#id1").val();
     var dato1 = $("#name1").val();
@@ -149,19 +278,20 @@ $("#actualizar").click(function(){
         },
 
         success:function(){
-            $("#msj-success1").removeClass( "hide");
+            $("#msj-success").removeClass( "hide");
+            $("#msj-success").html("Usuario actualizado exitosamente.");
             $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
             $('#user_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail1").removeClass( "hide");
+            $("#msj-fail").removeClass( "hide");
             var msj = obj.name + '<br>' + obj.email + '<br>' + obj.password + '<br>' + obj.address + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
-             var res = res.replace(/name/gi, 'Nombre');
-              var res = res.replace(/address/gi, 'Dirección');
-              var res = res.replace(/email/gi, 'Email');
-            $(".msj").html(res);
+            var res = res.replace(/name/gi, 'Nombre');
+            var res = res.replace(/address/gi, 'Dirección');
+            var res = res.replace(/email/gi, 'Email');
+            $("#msj-fail").html(res);
             $('#user_edit').modal('toggle');
         }
 
@@ -169,22 +299,47 @@ $("#actualizar").click(function(){
 });
 
 
-$("#eliminar").click(function(){
+$("#delete_att").click(function(){
+    $('#btns_delete').slideUp( "fast", function() {
+        console.log('hola');
+        $("#btns_confirm").show( "fast" );
+    });
+});
 
-    var value = $("#id1").val();
-    var route = "/usuario/"+value+"";
-    var token = $("#token").val();
+$("#delete").click(function(){
 
-    $.ajax({
-        url: route,
-        headers: {'X-CSRF-TOKEN': token},
-        type: 'DELETE',
-        dataType: 'json',
-        success:function(){
-            $("#msj-success2").removeClass( "hide");
-            $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
-            $('#user_edit').modal('toggle');
-        }
+    hide_alert();
+
+        var value = $("#id1").val();
+        var route = "/usuario/"+value+"";
+        var token = $("#token").val();
+
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN': token},
+            type: 'DELETE',
+            dataType: 'json',
+            success:function(){
+                $("#msj-success").removeClass( "hide");
+                $("#msj-success").html("Usuario eliminado exitosamente.");
+                $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+                $("#divSitio").load(location.href+" #divSitio>*","");
+                $('#user_edit').modal('toggle');
+            },
+            error: function (jqXHR, exception) {
+                $("#msj-fail").removeClass("hide");
+                $("#msj-fail").html("<p>Intentar de nuevo.</p>");
+                $('#user_edit').modal('toggle');
+            } 
+        });
+
+        $('#btns_confirm').hide( "fast");
+        $("#btns_delete").show( "fast" );
+});
+
+$("#cancel").click(function(){
+    $('#btns_confirm').hide( "fast", function() {
+        $("#btns_delete").show( "fast" );
     });
 });
 

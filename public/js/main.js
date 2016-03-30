@@ -9,7 +9,8 @@ function Toogle(x,y){
     current_li=x;
     current_div = y;
     $( current_li ).addClass( "left_sel" );
-    $( current_div ).css("display", "inline");    
+    $( current_div ).css("display", "inline");
+    $(".alert-success").addClass("hide"); 
 }
 
 
@@ -100,6 +101,20 @@ $("#enviar_contacto").click(function(){
     });
 });
 
+
+/** burger nav mobile **/
+
+var flag = true; 
+
+$(".burger").click(function(){
+    if(flag){
+        $('.nav_menu').slideUp("fast");
+        flag=false;
+    }else{
+        $('.nav_menu').slideDown("fast");
+        flag=true;
+    }
+});
 
 
 

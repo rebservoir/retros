@@ -87,7 +87,6 @@ class EgresosController extends Controller
      */
     public function update(EgresosCreateRequest $request, $id)
     {
-
             $id = $request->id_egresos;
             $egreso = Egresos::find($id);
             $egreso->concept = $request->concept;
@@ -111,21 +110,9 @@ class EgresosController extends Controller
 
             $egreso->save();
 
-            \Session::flash('success', 'Egreso actualizado exitosamente.');
-
+            \Session::flash('update', 'Egreso actualizado exitosamente.');
+        
             return redirect()->to('/admin/administracion'); 
-
-
-/*
-        if($request->ajax()){
-            $egresos = Egresos::find($id);
-            $egresos->fill($request->all());
-            $egresos->save();
-                return response()->json([
-                        "message" => "creado"
-                    ]);
-        }   
- */   
     }
 
     /**

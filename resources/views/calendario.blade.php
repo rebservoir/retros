@@ -31,9 +31,9 @@
 							</div>
 						</a>
 
-						@foreach($morosos as $moroso)
-							@if($moroso->id == 1)
-								@if($moroso->is_active == 1)
+						@foreach($sections as $section)
+							@if($section->id == 1)
+								@if($section->is_active == 1)
 									<a href="/finanzas">
 										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 											<div class="nav_ic icon4">

@@ -16,14 +16,14 @@
 					{!!Form::text('title',null,['id'=>'ev_title','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
 				</div>
 
-				<div class="form-group">
-					{!!Form::label('Fecha de Inicio:')!!}
-					{!! Form::text('start', '', ['id' => 'datepicker_start'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha de Inicio (aaaa-mm-dd):')!!}
+					{!! Form::text('start', '', ['id' => 'datepicker_start','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 
-				<div class="form-group">
-					{!!Form::label('Fecha de Termino:')!!}
-					{!! Form::text('end', '', ['id' => 'datepicker_end'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha de Termino (aaaa-mm-dd):')!!}
+					{!! Form::text('end', '', ['id' => 'datepicker_end','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 			</div>
 				<div class="modal-footer">

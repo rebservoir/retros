@@ -1,5 +1,3 @@
-
-
 <div class="modal fade" id="user_create" role="dialog">
 
 	<div class="modal-dialog" role="document">

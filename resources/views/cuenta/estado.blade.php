@@ -116,10 +116,9 @@ $status = 1;
     <h3>Tabla de pagos</h3>
   <br>
 
-
   <ul class="nav nav-tabs">
     {{--*/ 
-      for ($j = 2014; $j < 2017; $j++) {
+      for ($j = $year_c-2; $j < $year_c+2; $j++) {
         if( $j == $year_c)
           echo "<li class='active'><a href='#" . $j  . "'>" . $j . "</a></li>";
         else
@@ -133,7 +132,7 @@ $status = 1;
 <div class="tab-content">
 
   {{--*/ 
-    for ($j = 2014; $j < 2017; $j++) {
+    for ($j = $year_c-2; $j < $year_c+2; $j++) {
       if($j==$year_c)
         echo "<div id='" . $j . "' class='tab-pane fade in active'>";
       else
@@ -154,7 +153,6 @@ $status = 1;
                       echo "<li class='active'><a class='adeudo' href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
                     else
                       echo "<li><a class='adeudo' href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
-                    
                 /*--}}
             @elseif($pago->status == 1)
                 {{--*/ 
@@ -162,14 +160,13 @@ $status = 1;
                       echo "<li class='active'><a class='saldado' href='#" .$month[$k] . $j . "'>".$month[$k]."</a></li>";
                     else
                       echo "<li><a class='saldado' href='#" .$month[$k] . $j ."'>".$month[$k]."</a></li>";         
-                    
                 /*--}}
             @endif
           @endif
       @endforeach
   {{--*/ 
                   }
-              /*--}}
+  /*--}}
   </ul>
 
   {{--*/ 

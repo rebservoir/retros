@@ -8,7 +8,7 @@ use TuFracc\Http\Requests\NoticiaCreateRequest;
 use TuFracc\Http\Requests\NoticiaUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Noticia;
-use TuFracc\Morosos;
+use TuFracc\Sections;
 use Illuminate\Contracts\Auth\Guard;
 use Session;
 use Redirect;
@@ -75,12 +75,12 @@ class NoticiaController extends Controller
     {
 
         $noti_show = Noticia::where('id', $id)->get();
-        $morosos = Morosos::all();
+        $sections = Sections::all();
 
         if($this->auth->user()->role == 1){
-            return view('admin.noticia.show',['noti_show'=>$noti_show, 'morosos' => $morosos]);    
+            return view('admin.noticia.show',['noti_show'=>$noti_show, 'sections' => $sections]);    
         }else{
-            return view('noticia.show',['noti_show'=>$noti_show, 'morosos' => $morosos]);   
+            return view('noticia.show',['noti_show'=>$noti_show, 'sections' => $sections]);   
         }
     }
 
@@ -132,7 +132,7 @@ class NoticiaController extends Controller
 
             $noticia->save();
 
-            \Session::flash('success', 'Noticia actualizada exitosamente.');
+            \Session::flash('update', 'Noticia actualizada exitosamente.');
 
             return redirect()->to('/admin/contenidos'); 
     }

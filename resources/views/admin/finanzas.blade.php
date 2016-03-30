@@ -3,7 +3,7 @@
 
 	@section('nav')
 		<a href="/admin/home">
-				<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon1">
 				</div>
 				<p>Home</p>
@@ -16,32 +16,32 @@
 				<p>Administración</p>
 			</div>
 		</a>
+		<a href="/admin/usuarios">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab">
+				<div class="nav_ic icon9">
+				</div>
+				<p>Usuarios</p>
+			</div>
+		</a>
 		<a href="/admin/contenidos">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon8">
 				</div>
 				<p>Contenidos</p>
 			</div>
 		</a>
 		<a href="/admin/finanzas">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab nav_sel">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab nav_sel">
 				<div class="nav_ic icon4">
 				</div>
 				<p>Finanzas</p>
 			</div>
 		</a>
 		<a href="/admin/calendario">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon5">
 				</div>
 				<p>Calendario</p>
-			</div>
-		</a>
-		<a href="/admin/usuarios">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
-				<div class="nav_ic icon9">
-				</div>
-				<p>Usuarios</p>
 			</div>
 		</a>
 	@stop
@@ -66,8 +66,10 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 		<div class="cont_left col-lg-12">
 	
 			<div class="box_header">
-				{!!Html::image('img/n_4.png')!!}
+				<div class="bx_title">
+					{!!Html::image('img/n_4.png')!!}
 					<h1>Finanzas</h1>
+				</div>
 			</div>
 
 				<div id="select_date_tr">

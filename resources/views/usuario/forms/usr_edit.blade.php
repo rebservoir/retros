@@ -21,7 +21,7 @@
 			{!!Form::text('celphone',null,['id'=>'cel1','class'=>'form-control','placeholder'=>'Ingresar direccion'])!!}
 		</div>
 		<div class="form-group">
-			{!!Form::label('Tipo:')!!}
+			{!!Form::label('Cuota:')!!}
 			{!!Form::select('type', $tipos ,null,['id'=>'type1', 'placeholder'=>'Seleccionar opción', 'required' ])!!}
 		</div>
 		<div class="form-group">

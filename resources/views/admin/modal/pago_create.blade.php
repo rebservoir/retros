@@ -11,17 +11,17 @@
 			<div class="modal-body">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 
-				<div id="the-basics" class="form-group">
+				<div id="the-basics" class="form-group" style="float:left;">
 					{!!Form::label('Usuario:')!!}
 					{!!Form::text('id_user',null,['id'=>'search-input','class'=>'typeahead form-control','placeholder'=>'Ingresar Usuario'])!!}
 				</div>
-				<div class="form-group">
-					{!!Form::label('Fecha:')!!}
-					{!! Form::text('date', '', ['id' => 'datepicker'])!!}
+				<div class="form-group form_date">
+					{!!Form::label('Fecha con formato: aaaa-mm-dd')!!}
+					{!! Form::text('date', '',['id' => 'datepicker', 'placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 				<div class="form-group">
 					{!!Form::label('Monto:')!!}
-					<input type="text" id="amount" class="form-control" value="{{$cuota}}" disabled>
+					<input type="text" id="amount" class="form-control" value="Cuota de usuario (automatico)" disabled>
 				</div>
 				<div class="form-group">
 					{!!Form::label('Status:')!!}

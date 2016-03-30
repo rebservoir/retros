@@ -1,26 +1,9 @@
 <h3>Cuotas</h3>
 
-<div id="msj-success7" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Nueva Cuota Creada exitosamente.</p>
+<div id="msj-success-cuota" class="alert alert-success alert-dismissible hide" role="alert">
 </div>
-<div id="msj-fail7" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
+<div id="msj-fail-cuota" class="alert alert-danger alert-dismissible hide" role="alert">
 </div>
-
-<div id="msj-success8" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Cuota actualizada exitosamente.</p>
-</div>
-<div id="msj-fail8" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
-
-<div id="msj-success9" class="alert alert-success alert-dismissible hide" role="alert">
-  <p>Cuota eliminada exitosamente.</p>
-</div>
-<div id="msj-fail9" class="alert alert-danger alert-dismissible hide" role="alert">
-  <div class="msj"></div>
-</div>
-
 <div id="msj-warning" class="alert alert-warning alert-dismissible hide" role="alert">
 </div>
 
@@ -29,7 +12,7 @@
 	<br><br>
 
 <div id="divCuotas">
-	<table class="table">
+	<table class="table table-striped">
 		<thead>
 			<th>Concepto</th>
 			<th>Monto</th>

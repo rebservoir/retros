@@ -24,9 +24,11 @@ class PagoCreateRequest extends Request
     {
         return [
             'id_user' => 'required',
-            'date' => 'required',
+            //'date' => 'required|date_format:Y/m/d',
+            'date' => 'required|date_format:d/m/Y',
             'status' => 'required',
             'amount' => 'required',
         ];
     }
 }
+

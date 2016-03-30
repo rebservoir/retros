@@ -15,9 +15,18 @@
 			</div>
 			
 			<div class="modal-footer">
-				{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar', 'class'=>'btn btn-primary'], $secure=null)!!}
-				{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'eliminar', 'class'=>'btn btn-danger'], $secure=null)!!}
+				<div id="btns_delete">
+					{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar', 'class'=>'btn btn-primary'], $secure=null)!!}
+					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att', 'class'=>'btn btn-danger'], $secure=null)!!}
+				</div>
+				
+				<div id="btns_confirm" class="btns_confirm"> 
+					<p>¿Está seguro de eliminar este usuario?</p>
+			  		<a href="#" id="cancel" class="btn btn-default">Cancelar</a>
+					<a href="#" id="delete" class="btn btn-danger">Ok</a>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+

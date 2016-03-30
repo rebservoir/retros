@@ -82,7 +82,7 @@ class CuotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CuotasCreateRequest $request, $id)
     {
         $cuotas = Cuotas::find($id);
         $cuotas->fill($request->all());

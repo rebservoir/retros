@@ -24,7 +24,7 @@ class CuotasCreateRequest extends Request
     {
         return [
             'concepto' => 'required',
-            'amount' => 'required',
+            'amount' => 'required|numeric',
         ];
     }
 }

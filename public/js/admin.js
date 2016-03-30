@@ -8,46 +8,56 @@ function get_id_user_pago(id_user){
     //console.log('la id_user es:' + id_usuario);
 }
 
+function hide_alert(){
+    $("#msj-success").addClass("hide");
+    $("#msj-fail").addClass("hide");
+    $("#alert-success").addClass("hide");
+}
+
 $(function() {
-	$( "#datepicker" ).datepicker();
+
+    $( "#datepicker" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker" ).datepicker("option", "dateFormat", "yy-mm-dd");
   
-	$( "#datepicker_eg" ).datepicker();
+	$( "#datepicker_eg" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_eg" ).datepicker("option", "dateFormat", "yy-mm-dd");
 
-    $( "#datepicker_pago" ).datepicker();
+    $( "#datepicker_pago" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_pago" ).datepicker("option", "dateFormat", "yy-mm-dd");
 
-    $( "#datepicker_eg_edit" ).datepicker();
+    $( "#datepicker_eg_edit" ).datepicker({
+      showOn: "button",
+      buttonImage: "../img/n_5.png",
+      buttonImageOnly: true,
+      buttonText: "seleccionar Fecha"
+    });
     $( "#datepicker_eg_edit" ).datepicker("option", "dateFormat", "yy-mm-dd");
   });
 
 
-function close_modals(){
-    $("#msj-success").addClass( "hide");
-    $("#msj-success1").addClass( "hide");
-    $("#msj-success2").addClass( "hide");
-    $("#msj-success3").addClass( "hide");
-    $("#msj-success4").addClass( "hide");
-    $("#msj-success5").addClass( "hide");
-    $( "#msj-fail").addClass( "hide");
-    $( "#msj-fail1").addClass( "hide");
-    $( "#msj-fail2").addClass( "hide");
-    $( "#msj-fail3").addClass( "hide");
-    $( "#msj-fail4").addClass( "hide");
-    $( "#msj-fail5").addClass( "hide");
-}
-
 $("#registrar_pago").click(function(){
 
-    $("#msj-success").addClass( "hide");
-    $( "#msj-fail").addClass( "hide");
+    hide_alert();
 
     var dato1 = id_usuario;
     var dato2 = $("#datepicker").val();
-    var dato3 = $("#amount").val();
-    var dato4 = $("#status").val();
-    var dato5 = $('#search-input').val();
+    var dato3 = $("#status").val();
+    var dato4 = $('#search-input').val();
    
     var route = "/pagos";
     var token = $("#token").val();
@@ -57,42 +67,40 @@ $("#registrar_pago").click(function(){
         headers: {'X-CSRF-TOKEN': token},
         type: 'POST',
         dataType: 'json',
-        data:{id_user: dato1, date: dato2, amount: dato3, status: dato4, user_name: dato5},
+        data:{id_user: dato1, date: dato2, status: dato3, user_name: dato4},
 
         success:function(){
-            $("#msj-success").removeClass( "hide");
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Pago registrado exitosamente.");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
             $('#pago_create').modal('toggle');
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
             $("#msj-fail").removeClass( "hide");
-            //console.log(obj);
-            var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
+            console.log(obj);
+            var msj = obj.id_user + '<br>' + obj.date[0] + '<br>' + obj.date[1] + '<br>' + obj.amount + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/id_user/gi, 'Usuario');
+            var res = res.replace(/id user/gi, 'Usuario');
             var res = res.replace(/date/gi, 'Fecha');
             var res = res.replace(/amount/gi, 'Cantidad');
-            $(".msj").html(res);
+            var res = res.replace(/Y-m-d/gi, 'año-mes-dia');
+            $("#msj-fail").html(res);
+            $('#pago_create').modal('toggle');
         } 
     });
 });
 
 function Mostrar_pago(btn){
-    id_usuario='';
-    $("#msj-success").addClass( "hide");
-    $("#msj-fail").addClass( "hide");
-    $("#msj-success1").addClass( "hide");
-    $("#msj-fail1").addClass( "hide");
-    $("#msj-success2").addClass( "hide");
-    $("#msj-fail2").addClass( "hide");
 
-    
+    hide_alert();
+
+    id_usuario='';
     var route = "/pagos/"+btn.value+"/edit";
 
     $.get(route, function(res){
         //console.log(res);
-        $("#hidden_id").val(res.id);
+        $("#id_pago").val(res.id);
         $("#hidden_id_user").val(res.id_user);
         $("#datepicker_pago").val(res.date);
         $("#amount_pago").val(res.amount);
@@ -103,17 +111,15 @@ function Mostrar_pago(btn){
 }
 
 $("#actualizar_pago").click(function(){
-    $("#msj-success1").addClass( "hide");
-    $("#msj-fail1").addClass("hide");
-    $("#msj-success2").addClass("hide");
-    $("#msj-fail2").addClass("hide");
-    
+
+    hide_alert();
+ 
     var dato1 = $("#hidden_id_user").val();
     var dato2 = $("#datepicker_pago").val();
     var dato3 = $("#amount_pago").val();
     var dato4 = $("#status_pago").val();
     var dato5 = $("#search-input2").val();
-    var value = $("#hidden_id").val();
+    var value = $("#id_pago").val();
 
     if(id_usuario!=''){
         if(dato1!=id_usuario){
@@ -131,32 +137,39 @@ $("#actualizar_pago").click(function(){
         dataType: 'json',
         data:{id_user: dato1, date: dato2, amount: dato3, status: dato4, user_name: dato5},
         success:function(){
-            $("#msj-success1").removeClass( "hide");
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Pago actualizado exitosamente.");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
             $('#pago_edit').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail1").removeClass( "hide");
-            //console.log(obj);
-            var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
+            $("#msj-fail").removeClass( "hide");
+            var msj = obj.id_user + '<br>' + obj.date[0] + '<br>' + obj.date[1] + '<br>' + obj.amount + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/id_user/gi, 'Usuario');
+            var res = res.replace(/id user/gi, 'Usuario');
             var res = res.replace(/date/gi, 'Fecha');
+            var res = res.replace(/Y-m-d/gi, 'año-mes-dia');
             var res = res.replace(/amount/gi, 'Cantidad');
-            $(".msj").html(res);
+            $("#msj-fail").html(res);
+            $('#pago_edit').modal('toggle');
         } 
 
     });
 });
 
-$("#eliminar_pago").click(function(){
-    $("#msj-success1").addClass( "hide");
-    $( "#msj-fail1").addClass( "hide");
-    $("#msj-success2").addClass( "hide");
-    $( "#msj-fail2").addClass( "hide");
-    if (confirm("Eliminar este pago?") == true) {
-        var value = $("#hidden_id").val();
+
+$("#delete_att_pago").click(function(){
+    $('#btns_delete_pago').slideUp( "fast", function() {
+        $("#btns_confirm_pago").show( "fast" );
+    });
+});
+
+$("#delete_pago").click(function(){
+
+    hide_alert();
+
+        var value = $("#id_pago").val();
         var route = "/pagos/"+value;
         var token = $("#token_pago").val();
 
@@ -166,22 +179,33 @@ $("#eliminar_pago").click(function(){
             type: 'DELETE',
             dataType: 'json',
             success:function(){
-            $("#msj-success2").removeClass( "hide");
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Pago eliminado exitosamente.");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
             $('#pago_edit').modal('toggle');
             },
             error: function (jqXHR, exception) {
-                $("#msj-fail2").removeClass( "hide");
+                $("#msj-fail").removeClass( "hide");
+                $("#msj-fail").html("Intentar de nuevo.");
             } 
-        });
-    } else {
-    } 
+        });     
+
+        $('#btns_confirm').hide( "fast");
+        $("#btns_delete").show( "fast" );
 });
 
+$("#cancel_pago").click(function(){
+    $('#btns_confirm').hide( "fast", function() {
+        $("#btns_delete").show( "fast" );
+    });
+});
+
+/* EGRESOS */
 
  $("#registrar_egresos").on("submit", function(e){
-        $("#msj-success3").addClass( "hide");
-    $("#msj-fail3").addClass( "hide");
+
+    hide_alert();
+
     e.preventDefault();
     var fd = new FormData(this);
 
@@ -202,30 +226,29 @@ $("#eliminar_pago").click(function(){
         processData: false,
 
         success:function(){
-            $("#msj-success3").removeClass("hide");
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Egreso registrado exitosamente.");
             $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
             $('#egresos_create').modal('toggle');
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail3").removeClass("hide");
-            var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
+            $("#msj-fail").removeClass("hide");
+            var msj = obj.id_user + '<br>' + obj.date[0] + '<br>' + obj.date[1] + '<br>' + obj.amount + '<br>';
             var res = msj.replace(/undefined<br>/gi, '');
             var res = res.replace(/id_user/gi, 'Usuario');
             var res = res.replace(/date/gi, 'Fecha');
             var res = res.replace(/amount/gi, 'Cantidad');
-            $(".msj").html(res);
+            $("#msj-fail").html(res);
+            $('#egresos_create').modal('toggle');
         }    
     });
 });
 
 function Mostrar_egresos(btn){
-    $("#msj-success3").addClass( "hide");
-    $("#msj-fail3").addClass( "hide");
-    $("#msj-success4").addClass( "hide");
-    $("#msj-fail4").addClass( "hide");
-    $("#msj-success5").addClass( "hide");
-    $("#msj-fail6").addClass( "hide");
+
+    hide_alert();
+
     var route = "/egresos/"+btn.value+"/edit";
     $.get(route, function(res){
         $("#concept_eg").val(res.concept);
@@ -236,45 +259,16 @@ function Mostrar_egresos(btn){
     var value = $("#id_egresos").val();
 }
 
-
-$("#actualizar_egresos").on("submit", function(e){
-    e.preventDefault();
-    var fd = new FormData(this);
-
-    var value = $("#id_egresos").val();
-    var route = "/egresos/" + value;
-    var token = $("#token_eg1").val();
-
-    $.ajax({
-        url: route,
-        headers: {'X-CSRF-TOKEN': token},
-        type: 'PUT',
-        dataType: 'json',
-        data: fd,
-        contentType: false,
-        processData: false,
-
-        success:function(){
-            //$("#msj-success3").removeClass("hide");
-            $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
-            $('#egresos_edit').modal('toggle');
-        },
-        error: function (jqXHR, exception) {
-            var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail3").removeClass("hide");
-            $('#egresos_edit').modal('toggle');
-            var msj = obj.id_user + '<br>' + obj.date + '<br>' + obj.amount + '<br>';
-            var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/id_user/gi, 'Usuario');
-            var res = res.replace(/date/gi, 'Fecha');
-            var res = res.replace(/amount/gi, 'Cantidad');
-            $(".msj").html(res);
-        }    
+$("#delete_att_egresos").click(function(){
+    $('#btns_delete_egresos').slideUp( "fast", function() {
+        $("#btns_confirm_egresos").show( "fast" );
     });
 });
 
-$("#eliminar_egresos").click(function(){
-    if (confirm("Eliminar este egreso?") == true) {
+$("#delete_egresos").click(function(){
+
+    hide_alert();
+
         var value = $("#id_egresos").val();
         var route = "/egresos/"+value;
         var token = $("#token_eg1").val();
@@ -285,19 +279,27 @@ $("#eliminar_egresos").click(function(){
             type: 'DELETE',
             dataType: 'json',
             success:function(){
-            $("#msj-success5").removeClass( "hide");
-            $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
-             $('#egresos_edit').modal('toggle');
+                $("#msj-success").removeClass("hide");
+                $("#msj-success").html("Egreso eliminado exitosamente.");
+                $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
+                $('#egresos_edit').modal('toggle');
             },
             error: function (jqXHR, exception) {
-                $( "#msj-fail5").removeClass( "hide");
+                $("#msj-fail").removeClass("hide");
+                $("#msj-fail").html("Intentar de nuevo.");
             } 
 
         });
-    } else {
-    } 
+
+        $('#btns_confirm_egresos').hide( "fast");
+        $("#btns_delete_egresos").show( "fast" );
 });
 
+$("#cancel_egresos").click(function(){
+    $('#btns_confirm_egresos').hide( "fast", function() {
+        $("#btns_delete_egresos").show( "fast" );
+    });
+});
 
 
 
@@ -353,17 +355,11 @@ $('#the-basics .typeahead').typeahead({
   source: substringMatcher(names)
 });
 
-
+/* CUOTA */
 
 function mostrar_cuota(btn){
 
-    $("#msj-success7").addClass( "hide");
-    $("#msj-fail7").addClass( "hide");
-    $("#msj-success8").addClass( "hide");
-    $("#msj-fail8").addClass( "hide");
-    $("#msj-success9").addClass( "hide");
-    $("#msj-fail9").addClass( "hide");
-
+    hide_alert();
 
     var route = "/cuotas/"+btn.value+"/edit";
 
@@ -376,12 +372,7 @@ function mostrar_cuota(btn){
 
 $("#registrar_cuota").click(function(){
 
-    $("#msj-success7").addClass( "hide");
-    $("#msj-fail7").addClass( "hide");
-    $("#msj-success8").addClass( "hide");
-    $("#msj-fail8").addClass( "hide");
-    $("#msj-success9").addClass( "hide");
-    $("#msj-fail9").addClass( "hide");
+    hide_alert();
 
     var dato1 = $("#concept_cuota").val();
     var dato2 = $("#monto_cuota").val();
@@ -396,17 +387,19 @@ $("#registrar_cuota").click(function(){
         data:{concepto: dato1, amount: dato2},
 
         success:function(){
-            $("#msj-success7").removeClass( "hide");
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Cuota registrada exitosamente.");
             $("#divCuotas").load(location.href+" #divCuotas>*","");
             $('#cuota_create').modal('toggle');
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail7").removeClass( "hide");
-            var msj = obj.concept + '<br>';
-            var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/concept/gi, 'Concepto');
-            $(".msj").html(res);
+            $("#msj-fail").removeClass("hide");
+            var msj = obj.concepto + '<br>' + obj.amount;
+            var res = msj.replace(/undefined/gi, 'Error');
+            var res = res.replace(/concepto/gi, 'Concepto');
+            var res = res.replace(/amount/gi, 'Monto');
+            $("#msj-fail").html(res);
             $('#cuota_create').modal('toggle');
         } 
     });
@@ -415,12 +408,7 @@ $("#registrar_cuota").click(function(){
 
 $("#actualizar_cuota").click(function(){
 
-    $("#msj-success7").addClass( "hide");
-    $("#msj-fail7").addClass( "hide");
-    $("#msj-success8").addClass( "hide");
-    $("#msj-fail8").addClass( "hide");
-    $("#msj-success9").addClass( "hide");
-    $("#msj-fail9").addClass( "hide");
+    hide_alert();
 
     var value = $("#id_cuota1").val();
     var dato1 = $("#concept_cuota1").val();
@@ -437,34 +425,34 @@ $("#actualizar_cuota").click(function(){
         data:{concepto: dato1, amount: dato2},
 
         success:function(){
-            $("#msj-success8").removeClass( "hide");
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Cuota actualizada exitosamente.");
             $("#divCuotas").load(location.href+" #divCuotas>*","");
             $('#cuota_edit').modal('toggle');
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail8").removeClass( "hide");
-            var msj = obj.concept + '<br>';
-            var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/concept/gi, 'Concepto');
-            //$(".msj").html(res);
-            $('#cuotas_edit').modal('toggle');
+            $("#msj-fail").removeClass( "hide");
+            var msj = obj.concepto + '<br>' + obj.amount;
+            var res = msj.replace(/undefined/gi, 'Error');
+            var res = res.replace(/concepto/gi, 'Concepto');
+            var res = res.replace(/amount/gi, 'Monto');
+            $("#msj-fail").html(res);
+            $('#cuota_edit').modal('toggle');
         } 
 
     });
 });
 
-$("#eliminar_cuota").click(function(){
+$("#delete_att_cuota").click(function(){
+    $('#btns_delete_cuota').slideUp( "fast", function() {
+        $("#btns_confirm_cuota").show( "fast" );
+    });
+});
 
-    $("#msj-success7").addClass( "hide");
-    $("#msj-fail7").addClass( "hide");
-    $("#msj-success8").addClass( "hide");
-    $("#msj-fail8").addClass( "hide");
-    $("#msj-success9").addClass( "hide");
-    $("#msj-fail9").addClass( "hide");
-    $("#msj-warning").addClass( "hide");
+$("#delete_cuota").click(function(){
 
-    if (confirm("Eliminar esta Cuota?") == true) {
+    hide_alert();
 
         var value = $("#id_cuota1").val();
         var route = "/cuotas/"+value;
@@ -478,8 +466,8 @@ $("#eliminar_cuota").click(function(){
             success:function(data){
                 
                 if(data.tipo=='success'){
-                    $("#msj-success9").removeClass( "hide");
-                    $("#msj-success9").html(data.message);
+                    $("#msj-success").removeClass("hide");
+                    $("#msj-success").html("Cuota eliminada exitosamente.");
                 }else if(data.tipo=='warning'){
                     $("#msj-warning").removeClass( "hide");
                     $("#msj-warning").html(data.message);
@@ -488,12 +476,22 @@ $("#eliminar_cuota").click(function(){
                 $('#cuota_edit').modal('toggle');
             },
             error: function (jqXHR, exception) {
-                $( "#msj-fail9").removeClass( "hide");
+                $( "#msj-fail").removeClass( "hide");
+                $("#msj-fail").html("Intentar de nuevo.");
             }
-        });
-    } else {
-    } 
+        });        
+
+        $('#btns_confirm_cuota').hide( "fast");
+        $("#btns_delete_cuota").show( "fast" );
 });
+
+$("#cancel_cuota").click(function(){
+    $('#btns_confirm_cuota').hide( "fast", function() {
+        $("#btns_delete_cuota").show( "fast" );
+    });
+});
+
+
 
 var tipo=1;
 //se selecciona el tipo de mensaje y se agrega el codigo correspondiente.
@@ -532,8 +530,8 @@ $( "#to_select" ).change(function(){
             $( "#add_user").addClass( "hidden");
         }else if( this.value ==4 ){
             $( "#add_user").removeClass( "hidden");
-            $('#user_table').html("<table id='myTable' class='table'<thead><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th></thead><tbody></tbody></table>");
-        }
+            $('#user_table').html("<table id='myTable' class='table table-striped'><thead><tr><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th></tr></thead><tbody></tbody></table>");
+        } 
 });
 
     var usrs = [];
@@ -544,7 +542,7 @@ function getUsers(sort){
 
     $.get(route, function(res){
 
-        var code="<table class='table'<thead><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th></thead><tbody>";
+        var code="<table class='table table-striped'><thead><tr><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th><tr></thead><tbody>";
 
         for (index = 0; index < res.length; index++){
             code+="<tr><td><input type='checkbox' name='chk' value='" + res[index].id + "' checked></td><td>";
@@ -594,8 +592,7 @@ $(document).ready(function() {
 //el array esta listo para mandarse y enviar mails.  
 $("#btn_send").click(function(){
 
-    $("#msj-success-email").addClass( "hide");
-    $("#msj-fail-email").addClass( "hide");
+    hide_alert();
 
     var usrs = [];
     var index=0;
@@ -625,11 +622,14 @@ $("#btn_send").click(function(){
                                 },
                                 success:function(){
                                     console.log('ok');
-                                    $("#msj-success-email").removeClass( "hide");
+                                    $("#msj-success").removeClass( "hide");
+                                    $("#msj-success").html('Su mensaje ha sido enviado.');
                                 },
                                 error: function (jqXHR, exception) {
                                     console.log('nope');
-                                    $("#msj-fail-email").removeClass( "hide");
+                                    $("#msj-fail").removeClass( "hide");
+                                    var obj = jQuery.parseJSON(jqXHR.responseText);
+                                    console.log(obj);
                                 }
                             });
                                 console.log(usrs[index]);
@@ -647,11 +647,11 @@ $("#btn_send").click(function(){
                         dataType: 'json',
                         success:function(){
                             console.log('ok');
-                            $("#msj-success-email").removeClass( "hide")
+                            $("#msj-success").removeClass( "hide")
                         },
                         error: function (jqXHR, exception) {
                             console.log('nope');
-                            $("#msj-fail-email").removeClass( "hide");
+                            $("#msj-fail").removeClass( "hide");
                         }
                     });
                         console.log(usrs[index]);
@@ -715,3 +715,19 @@ $("#btn_send").click(function(){
     
 
 });
+
+
+/** Sitio **/
+
+function Mostrar_sitio(btn){
+
+    hide_alert();
+
+    var route = "/sitio/"+btn.value+"/edit";
+
+    $.get(route, function(res){
+        $("#name_frac").val(res.name);
+        $("#path_sitio").val(res.path);
+    });
+}
+

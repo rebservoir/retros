@@ -11,7 +11,7 @@
 
 @section('nav')
 		<a href="/admin/home">
-				<div class="col-xs-12 col-sm-1 col-md-1 col-lg-2 nav_tab">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon1">
 				</div>
 				<p>Home</p>
@@ -24,32 +24,32 @@
 				<p>Administración</p>
 			</div>
 		</a>
+		<a href="/admin/usuarios">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2  nav_tab">
+				<div class="nav_ic icon9">
+				</div>
+				<p>Usuarios</p>
+			</div>
+		</a>
 		<a href="/admin/contenidos">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon8">
 				</div>
 				<p>Contenidos</p>
 			</div>
 		</a>
 		<a href="/admin/finanzas">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab ">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab ">
 				<div class="nav_ic icon4">
 				</div>
 				<p>Finanzas</p>
 			</div>
 		</a>
 		<a href="/admin/calendario">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nav_tab nav_sel">
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab nav_sel">
 				<div class="nav_ic icon5">
 				</div>
 				<p>Calendario</p>
-			</div>
-		</a>
-		<a href="/admin/usuarios">
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2  nav_tab">
-				<div class="nav_ic icon9">
-				</div>
-				<p>Usuarios</p>
 			</div>
 		</a>
 	@stop
@@ -68,15 +68,19 @@
     }else{
     	$fecha = $year . "-" . $mes . "-01";
 	}
-	echo $fecha;
 /*--}}
+
+			@include('alerts.update')
+			@include('alerts.msg')
 
 			<div id="main_cont">
 				<div class="cont_left col-lg-12">
 
 					<div class="box_header">
-						{!!Html::image('img/n_5.png')!!}
-						<h1>Calendario</h1>
+						<div class="bx_title">
+							{!!Html::image('img/n_5.png')!!}
+							<h1>Calendario</h1>
+						</div>
 					</div>
 
 					<div id="msj-fail" class="alert alert-danger alert-dismissible hide" role="alert">
@@ -110,8 +114,11 @@
 								echo "</select>"; 
 							/*--}}
 
-							<button id="btn_cal_admin" value="" class="btn btn-primary">Mostrar</button>
-							<button id="btn_add_event" value="" class="btn btn-primary" data-toggle="modal" data-target="#eventos_create">Crear Evento</button>
+							<div id="btns_cal">
+								<button id="btn_cal_admin" value="" class="btn btn-primary">Mostrar</button>
+								<button id="btn_add_event" value="" class="btn btn-primary" data-toggle="modal" data-target="#eventos_create">Crear Evento</button>
+							</div>
+
 					</div>
 
 						<br><br>
@@ -122,12 +129,14 @@
 						<br><br>
 
 					<div id="tablaEventos">
-						<table class="table">
+						<table class="table table-striped">
 							<thead>
-								<th>Titulo</th>
-								<th>Inicio</th>
-								<th>Fin</th>
-								<th>Editar</th>
+								<tr>
+									<th>Titulo</th>
+									<th>Inicio</th>
+									<th>Fin</th>
+									<th>Editar</th>	
+								</tr>
 							</thead>
 							<tbody>
 								@foreach($calendario as $cale)
@@ -175,3 +184,24 @@
         	calendar(date,eventos);	
         }
     </script>
+
+<style type="text/css">
+
+#tablaEventos tr{
+	width: 100%;
+	display: inline-table;  
+    table-layout: fixed;
+}
+
+#tablaEventos table{
+ 	height:300px; 
+}
+#tablaEventos tbody{
+  	overflow-y: scroll;
+  	height: 260px;
+  	position: absolute;
+    border: 1px solid #e2e2e2;
+    border-top: none;
+}
+
+</style>

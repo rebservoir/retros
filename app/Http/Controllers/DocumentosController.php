@@ -7,10 +7,12 @@ use TuFracc\Http\Requests;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Documentos;
 use TuFracc\Http\Requests\DocumentosCreateRequest;
+use TuFracc\Http\Requests\DocumentosUpdateRequest;
 use Session;
 use Redirect;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Routing\Route;
+use File;
 
 class DocumentosController extends Controller
 {
@@ -82,15 +84,29 @@ class DocumentosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DocumentosUpdateRequest $request, $id)
     {
-        $documentos = Documentos::find($id);
-        $documentos->fill($request->all());
-        $documentos->save();
+        $id = $request->id_doc;
+        $documento = Documentos::find($id);
+        $documento->titulo = $request->titulo;
 
-        return response()->json([
-            "mensaje"=>'listo'
-            ]);
+            if($request->hasFile('path')){
+                $oldFile = $documento->path;
+                $file = $request->file('path');
+                $destinationPath = 'file/';
+
+                if(File::isFile($oldFile)){
+                    unlink($destinationPath.$oldFile);
+                }
+                $documento->path = $file;
+            }
+
+            $documento->save();
+
+            \Session::flash('update', 'Documento actualizado exitosamente.');
+
+            return redirect()->to('/admin/contenidos'); 
+
     }
 
     /**
@@ -104,6 +120,8 @@ class DocumentosController extends Controller
         $documentos = Documentos::find($id);
         $documentos->delete();
         \Storage::delete($documentos->path);
+
+        \Session::flash('update', 'Documento eliminado exitosamente.');
 
             return response()->json([
                 "mensaje"=>'eliminado'

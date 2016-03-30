@@ -5,6 +5,7 @@ namespace TuFracc\Http\Controllers;
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
 use TuFracc\Http\Requests\CalendarioCreateRequest;
+use TuFracc\Http\Requests\CalendarioUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Calendario;
 use Session;
@@ -43,6 +44,9 @@ class CalendarioController extends Controller
      */
     public function store(CalendarioCreateRequest $request)
     {
+
+        \Session::flash('update', 'Evento creado exitosamente.');
+
         if($request->ajax()){
             Calendario::create($request->all());
             return response()->json([
@@ -84,11 +88,20 @@ class CalendarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(CalendarioUpdateRequest $request,$id)
     { 
+
         $calendario = Calendario::find($id);
-        $calendario->fill($request->all());
+
+        if($request->end === 0000-00-00){
+            $calendario->end = '';
+        }
+
+        $calendario->start = $request->start;
+        $calendario->end = $request->end;
         $calendario->save();
+
+        \Session::flash('update', 'Evento actualizado exitosamente.');
 
         return response()->json([
             "mensaje"=>'listo'
@@ -105,6 +118,8 @@ class CalendarioController extends Controller
     {
         $calendario = Calendario::find($id);
         $calendario->delete();
+
+        \Session::flash('update', 'Evento eliminado exitosamente.');
 
             return response()->json([
                 "mensaje"=>'eliminado'
