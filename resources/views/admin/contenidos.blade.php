@@ -58,20 +58,18 @@
 		@include('alerts.msg')
 
 		<div id="main_cont">
-
 			<div class="cont_left cont_600 col-lg-4">
-						
 				<div class="box_header">
-
-					<div class="bx_title">
+					<div class="bx_title bx_80">
 						{!!Html::image('img/n_8.png')!!}
 						<h1>Contenidos</h1>
 					</div>
 
-					<button class="burger">
-						<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-		       		</button>
-
+					<div class="bx_20">
+						<button class="burger">
+							<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+		       			</button>
+					</div>
 				</div>
 						
 				<ul id="ul_interna" class="nav_menu">

@@ -1,7 +1,6 @@
 @extends('admin.admin')
 
-
-	@section('nav')
+@section('nav')
 		<a href="/admin/home">
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
 				<div class="nav_ic icon1">
@@ -44,7 +43,7 @@
 				<p>Calendario</p>
 			</div>
 		</a>
-	@stop
+@stop
 
 @section('content')
 
@@ -66,7 +65,7 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 		<div class="cont_left col-lg-12">
 	
 			<div class="box_header">
-				<div class="bx_title">
+				<div class="bx_title bx_100">
 					{!!Html::image('img/n_4.png')!!}
 					<h1>Finanzas</h1>
 				</div>
@@ -104,9 +103,6 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 				</div>
 
 				<br><br>
-
-
-
 
 	{{--*/ $pagos_num=0; $pagos_p=0; $pagos_a=0; /*--}}
 		@foreach($pagos as $pago)
@@ -162,7 +158,6 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
         }
     </script>
 
-
     <div id="cont_table">
 		<table class="table cifras table-bordered table-condensed">
 			<thead>
@@ -170,8 +165,6 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 					<h4>{{$month[$mes_sel-1]}} {{$year_sel}}</h4>
 				</th>
 			</thead>
-
-
 
 		@foreach($pagos as $pago)
 			{{--*/ 	$date_pago = explode("-", $pago->date);/*--}}

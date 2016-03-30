@@ -77,7 +77,7 @@
 				<div class="cont_left col-lg-12">
 
 					<div class="box_header">
-						<div class="bx_title">
+						<div class="bx_title bx_100">
 							{!!Html::image('img/n_5.png')!!}
 							<h1>Calendario</h1>
 						</div>

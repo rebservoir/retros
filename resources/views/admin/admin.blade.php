@@ -37,17 +37,15 @@
 
 		<nav id="navigation" class="navbar navbar-default">
 		    <div class="container bg_blue">
-
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		    </div>
-
+			    <!-- Brand and toggle get grouped for better mobile display -->
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			    </div>
 		    	<!-- Collect the nav links, forms, and other content for toggling -->
 		    	<div class="collapse navbar-collapse no_pd" id="bs-example-navbar-collapse-1">
 		    		<ul class="nav navbar-nav col-sm-12 col-md-12 col-lg-12 no_pd">

@@ -77,7 +77,6 @@ class SectionsController extends Controller
      */
     public function update(Request $request, $id)
     { 
-        
         $section= Sections::find($id);
         $section->fill($request->all());
         $section->save();

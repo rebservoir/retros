@@ -92,9 +92,12 @@ class SitesController extends Controller
             $destination_path = public_path().'/file/';
             $name = 'sitio_' . time() . '.' . $file->getClientOriginalName();
             \Storage::disk('local')->put($name, \File::get($file));
-            if (File::exists($destination_path.$oldFile)) {
+
+            if(!empty($oldFile)){
+                if (File::exists($destination_path.$oldFile)) {
                 unlink($destination_path.$oldFile);
-            } 
+                }
+            }
             $sitio->path = $name;
         }
 

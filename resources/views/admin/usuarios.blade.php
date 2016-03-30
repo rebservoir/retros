@@ -60,7 +60,7 @@
 			<div class="cont_left col-lg-12">
 
 				<div class="box_header">	
-					<div class="bx_title">
+					<div class="bx_title bx_100">
 						{!!Html::image('img/n_9.png')!!}
 						<h1>Usuarios</h1>
 					</div>
