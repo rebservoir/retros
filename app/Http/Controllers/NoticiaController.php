@@ -8,7 +8,7 @@ use TuFracc\Http\Requests\NoticiaCreateRequest;
 use TuFracc\Http\Requests\NoticiaUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Noticia;
-use TuFracc\Sections;
+use TuFracc\Sites;
 use Illuminate\Contracts\Auth\Guard;
 use Session;
 use Redirect;
@@ -58,7 +58,13 @@ class NoticiaController extends Controller
     public function store(NoticiaCreateRequest $request)
     {
         if($request->ajax()){
-            Noticia::create($request->all());
+
+            $id_site = \Session::get('id_site');
+            $new = Noticia::create($request->all());
+            $noticia = Noticia::find($new->id);
+            $noticia->id_site = $id_site;
+            $noticia->save();
+
             return response()->json([
                     "message" => "creado"
                 ]);
@@ -73,14 +79,14 @@ class NoticiaController extends Controller
      */
     public function show($id)
     {
-
+        $id_site = \Session::get('id_site');
         $noti_show = Noticia::where('id', $id)->get();
-        $sections = Sections::all();
+        $sitios = Sites::where('id', $id_site)->get();
 
         if($this->auth->user()->role == 1){
-            return view('admin.noticia.show',['noti_show'=>$noti_show, 'sections' => $sections]);    
+            return view('admin.noticia.show',['noti_show'=>$noti_show, 'sitios' => $sitios]);    
         }else{
-            return view('noticia.show',['noti_show'=>$noti_show, 'sections' => $sections]);   
+            return view('noticia.show',['noti_show'=>$noti_show, 'sitios' => $sitios]);   
         }
     }
 
@@ -122,10 +128,10 @@ class NoticiaController extends Controller
                 //\Storage::disk('local')->put($name, \File::get($file));
 
                 if(File::isFile($oldFile)){
-                    //File::delete($old_image);
-                    unlink($destinationPath.$oldFile);
+                    if(File::exists($destinationPath.$oldFile)){
+                        unlink($destinationPath.$oldFile);
+                    }
                 }
-
                 
                 $noticia->path = $file;
             }
@@ -145,10 +151,13 @@ class NoticiaController extends Controller
     public function destroy($id)
     {
         $noticia = Noticia::find($id);
-        //$file = \Storage::disk('local')->get($noticia->path, \File::get($path));
-        //\Storage::delete($file);
+        $file = 'file/'.$noticia->path;
         $noticia->delete();
-        
+
+        if(File::exists($file)){
+            unlink($file);
+        }
+
         return response()->json([
             "mensaje"=>'eliminado'
         ]);

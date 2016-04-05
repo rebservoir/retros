@@ -16,7 +16,11 @@ Route::get('/', function () {
 
 Route::get('login','FrontController@login');
 Route::get('forgot','FrontController@forgot');
+Route::get('sitios','FrontController@checkSites');
+Route::get('setSite/{id_site?}','FrontController@setSite');
 Route::get('home','FrontController@index');
+Route::get('file','FrontController@index');
+Route::get('admin/file','FrontController@index');
 Route::get('noticias/{id?}','FrontController@noticias');
 Route::get('contacto','FrontController@contacto');
 Route::get('micuenta','FrontController@cuenta');
@@ -31,6 +35,7 @@ Route::put('update_info_user/{id?}','FrontController@update_info_user');
 
 Route::get('admin/checkEmail/{email?}','UsuarioController@checkEmail');
 Route::get('admin/reactivar/{id?}','UsuarioController@reactivar');
+Route::get('admin/asignar/{id?}','UsuarioController@asignar');
 Route::get('admin/home','FrontController@admin');
 Route::get('admin/administracion','FrontController@admin_modulo');
 Route::get('admin/calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
@@ -46,7 +51,7 @@ Route::get('admin/usuarios/add/{id?}','UsuarioController@add');
 Route::get('detalle_pagos/{id?}','PagosController@detalle');
 Route::get('load','UsuarioController@loadData');
 
-Route::get('sendEmail/{id?}','MailController@sendEmail');
+Route::get('sendEmail/{id?}/{tipo?}','MailController@sendEmail');
 Route::get('sendEmailMsg/{id?}','MailController@sendEmailMsg');
 Route::get('eventos/{id?}','CalendarioController@edit');
 Route::get('eventos_create','CalendarioController@store');
@@ -64,7 +69,6 @@ Route::resource('saldos','SaldosController');
 Route::resource('cuotas','CuotasController');
 Route::resource('eventos','CalendarioController');
 Route::resource('documentos','DocumentosController');
-
 
 Route::get('logout','LogController@logout');
 Route::get('controlador','PruebaController@index');

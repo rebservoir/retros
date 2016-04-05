@@ -9,7 +9,7 @@ class Egresos extends Model
 {
 	protected $table = 'egresos';
 
-    protected $fillable = ['concept','path','date','amount'];
+    protected $fillable = ['concept','path','date','amount','id_site'];
 
     public function setPathAttribute($path){
 		$this->attributes['path'] = 'egresos_' . time() . '.' . $path->getClientOriginalName();

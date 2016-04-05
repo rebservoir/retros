@@ -9,6 +9,7 @@ use TuFracc\Http\Requests\CalendarioUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\Calendario;
 use Session;
+use DB;
 use Redirect;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Routing\Route;
@@ -44,15 +45,25 @@ class CalendarioController extends Controller
      */
     public function store(CalendarioCreateRequest $request)
     {
-
-        \Session::flash('update', 'Evento creado exitosamente.');
+        
 
         if($request->ajax()){
-            Calendario::create($request->all());
+
+            $id_site = \Session::get('id_site');
+
+            DB::table('calendario')->insert(
+                ['title' => $request->title,
+                 'start' => $request->start,
+                 'end' =>   $request->end,
+                 'id_site' => $id_site
+                ]);
+
             return response()->json([
                     "message" => "creado"
                 ]);
         }
+
+        \Session::flash('update', 'Evento creado exitosamente.');
     }
 
     /**

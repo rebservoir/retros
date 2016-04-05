@@ -6,22 +6,20 @@
 	<strong><p>Status:</p></strong>
 	
 
-@foreach($sections as $section)	
-	@if($section->id == 1)
-		@if($section->is_active == 1)
-			<h3><span class="label label-success">Mostrando</span></h3>
-		@else
-			<h3><span class="label label-danger">Oculto</span></h3>
-		@endif
+@foreach($sitios as $sitio)	
+	@if($sitio->finanzas_active == 1)
+		<h3><span class="label label-success">Mostrando</span></h3>
+	@else
+		<h3><span class="label label-danger">Oculto</span></h3>
 	@endif
 @endforeach	
 
 	<br>
 
-	{!!Form::model($sections, ['route'=> ['sections.update', $sections->id = 1], 'method'=>'PUT'])!!}
+	{!!Form::model($sitios, ['route'=> ['sections.update'], 'method'=>'PUT'])!!}
 			<div class="form-group">
 				{!!Form::label('Habilitar/Deshabilitar pestaña de Finanzas para usuarios')!!}
-				{!!Form::select('is_active', ['NO', 'SI'], $section->is_active )!!}
+				{!!Form::select('finanzas_active', ['NO', 'SI'], $sitio->finanzas_active )!!}
 			</div>
 
 			<div id="btns_finanzas">

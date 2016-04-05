@@ -22,17 +22,15 @@
 			<p>Mi Sitio</p>
 		</div>
 	</a>
-	@foreach($sections as $section)
-		@if($section->id == 1)
-			@if($section->is_active == 1)
-				<a href="/finanzas">
-					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
-						<div class="nav_ic icon4">
-						</div>
-						<p>Finanzas</p>
+	@foreach($sitios as $sitio)
+		@if($sitio->finanzas_active == 1)
+			<a href="/finanzas">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+					<div class="nav_ic icon4">
 					</div>
-				</a>
-			@endif
+					<p>Finanzas</p>
+				</div>
+			</a>
 		@endif
 	@endforeach
 	<a href="/calendario">
@@ -64,37 +62,34 @@
 	</div> <!--END Slider -->
 
 	<div id="main_cont">
-		@foreach($sections as $section)
-				@if($section->id == 0)
-						@if($section->is_active == 1)
-							<div class="cont_left col-sm-4 col-lg-4 cont_500">
-								<div class="row">
-									<div class="box_header">
-										<div class="bx_title bx_100">
-											{!!Html::image('img/morosos.png')!!}
-											<h1>Morosos</h1>
-										</div>
-									</div>
-
-									<div class="col-xs-12 pull-right">
-										<ul>
-											@foreach($users as $user)
-												@if ($user->status == 0)
-													<li>{{$user->name}}</li>
-												@endif
-											@endforeach		
-										</ul>
-									</div>
-									{!!$users->render()!!}
-								</div>
+		@foreach($sitios as $sitio)
+			@if($sitio->morosos_active == 1)
+				<div class="cont_left col-sm-4 col-lg-4 cont_500">
+					<div class="row">
+						<div class="box_header">
+							<div class="bx_title bx_100">
+								{!!Html::image('img/morosos.png')!!}
+								<h1>Morosos</h1>
 							</div>
+						</div>
 
-								<div class="cont_right col-xs-12 col-sm-8 col-lg-8 cont_500">
-							@else
-								<div class="cont_right col-xs-12 col-sm-12 col-lg-12 cont_500" style="border-left: 1px solid #e2e2e2;">
-							@endif
-						@endif
-					@endforeach
+						<div id="morosos" class="col-xs-12 pull-right">
+							<ul>
+								@foreach($users as $user)
+									@if ($user->status == 0)
+										<li>{{$user->name}}</li>
+									@endif
+								@endforeach		
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				<div class="cont_right col-xs-12 col-sm-8 col-lg-8 cont_500">
+			@else
+				<div class="cont_right col-xs-12 col-sm-12 col-lg-12 cont_500" style="border-left: 1px solid #e2e2e2;">
+			@endif
+		@endforeach
 									<div class="row">
 										<div class="box_header">
 											<div class="bx_title bx_100">

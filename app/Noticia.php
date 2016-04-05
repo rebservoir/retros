@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Noticia extends Model
 {
     protected $table = 'noticias';
-    protected $fillable = ['titulo', 'texto', 'path'];
+    protected $fillable = ['titulo', 'texto', 'path','id_site'];
 
     public function setPathAttribute($path){
 		$this->attributes['path'] = 'noticia_' . time() . '.' . $path->getClientOriginalName();

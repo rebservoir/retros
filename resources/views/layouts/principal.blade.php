@@ -61,7 +61,7 @@
 				</div>
 
 				<div class="publicidad col-sm-12 col-lg-12 row">
-					<p>Espacio para publicidad</p>
+					{!!Html::image('img/banner.png')!!}
 				</div>
 
 			</div> <!-- END container-->

@@ -29,10 +29,18 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					{!!link_to('#', $title='Registrar pago', $attributes = ['id'=>'registrar_pago', 'class'=>'btn btn-primary'], $secure=null)!!}
+					<div class="btn_go">
+						{!!link_to('#', $title='Registrar pago', $attributes = ['id'=>'registrar_pago', 'class'=>'btn btn-primary'], $secure=null)!!}
+					</div>
+					<div class="procesando hide">
+						<p>Procesando...</p>
+					</div>
 				</div>
 		</div>
 	</div>
 </div>
 
 
+
+					
+					

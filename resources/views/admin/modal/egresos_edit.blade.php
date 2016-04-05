@@ -10,8 +10,9 @@
 
 			<div class="modal-body">
 			{!! Form::open(['route' => 'egresos.update', 'method'=>'PUT', 'files' => true ])!!}
-				
+				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eg1">
 				<input type="hidden" id="id_egresos" name="id_egresos">
+
 				<div class="form-group">
 					{!!Form::label('Concepto:')!!}
 					{!!Form::text('concept',null,['id'=>'concept_eg','class'=>'form-control','placeholder'=>'Ingresar Concepto'])!!}
@@ -30,14 +31,19 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					<div id="btns_delete_egresos">
-						{!!Form::submit('Actualizar',['id'=>'actualizar_egresos', 'class'=>'btn btn-primary'])!!}
-						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_egresos', 'class'=>'btn btn-danger'], $secure=null)!!}
+					<div class="btn_go">
+						<div id="btns_delete_egresos">
+							{!!Form::submit('Actualizar',['id'=>'actualizar_egresos', 'class'=>'btn btn-primary'])!!}
+							{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_egresos', 'class'=>'btn btn-danger'], $secure=null)!!}
+						</div>
+						<div id="btns_confirm_egresos" class="btns_confirm"> 
+							<p>¿Está seguro de eliminar este egreso?</p>
+					  		<a href="#" id="cancel_egresos" class="btn btn-default cancel">Cancelar</a>
+							<a href="#" id="delete_egresos" class="btn btn-danger">Ok</a>
+						</div>
 					</div>
-					<div id="btns_confirm_egresos" class="btns_confirm"> 
-						<p>¿Está seguro de eliminar este egreso?</p>
-				  		<a href="#" id="cancel_egresos" class="btn btn-default cancel">Cancelar</a>
-						<a href="#" id="delete_egresos" class="btn btn-danger">Ok</a>
+					<div class="procesando hide">
+						<p>Procesando...</p>
 					</div>
 				</div>
 			{!! Form::close() !!}

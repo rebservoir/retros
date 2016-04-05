@@ -72,19 +72,32 @@ class MailController extends Controller
     }
 
 
-    public function sendEmail(Request $request,$id)
+    public function sendEmail(Request $request,$id,$tipo)
     {
         $user = User::findOrFail($id);
 
         //Mail::later(5, 'emails.email', ['user' => $user], function ($msj) use ($user) {
-        Mail::queue('emails.email', ['user' => $user], function ($msj) use ($user){   
-            $msj->subject('Email');
-            $msj->to($user->email);
-        });
+        if($tipo==2){
+            Mail::queue('emails.corte', ['user' => $user], function ($msj) use ($user){   
+                $msj->subject('Email');
+                $msj->to($user->email);
+            });
+            
+            return response()->json([
+                "message"=>'listo'
+            ]);
+        }else{
+            Mail::queue('emails.email', ['user' => $user], function ($msj) use ($user){   
+                $msj->subject('Email');
+                $msj->to($user->email);
+            });
 
-        return response()->json([
-            "message"=>'listo'
-        ]);
+            return response()->json([
+                "message"=>'listo'
+            ]);
+        }
+
+
     }
 
     public function sendEmailMsg(Request $request,$id)

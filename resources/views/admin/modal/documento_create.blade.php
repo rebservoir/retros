@@ -21,7 +21,12 @@
 					</div>
 			</div>
 				<div class="modal-footer">
-					{!!Form::submit('Crear Documento',['id'=>'crear_doc', 'class'=>'btn btn-primary'])!!}
+					<div class="btn_go">
+						{!!Form::submit('Crear Documento',['id'=>'crear_doc', 'class'=>'btn btn-primary'])!!}
+					</div>
+					<div class="procesando hide">
+						<p>Procesando...</p>
+					</div>
 				</div>
 			{!! Form::close() !!}
 		</div>

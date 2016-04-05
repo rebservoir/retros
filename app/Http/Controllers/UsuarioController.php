@@ -11,6 +11,7 @@ use TuFracc\User;
 use TuFracc\Cuotas;
 use TuFracc\Sites;
 use TuFracc\Sites_users;
+use TuFracc\Sites_users_deleted;
 use TuFracc\Plans;
 use Session;
 use Redirect;
@@ -104,29 +105,78 @@ class UsuarioController extends Controller
 
     public function checkEmail($email){
 
+        $id_site = \Session::get('id_site');
         $user = DB::table('users')->where('email', $email )->first();
+        
+        if(!empty($user)){  //si existe
+            //activo en este sitio?
+            $sites_users = Sites_users::where('id_user',$user->id)->where('id_site',$id_site)->count();
 
-        if(!empty($user)){
-            //el email ya esta registrado
-            if($user->deleted_at == null){
-                //Este mail ya esta registrado para un usuario activo.
+            if($sites_users>0){ //activo en sitio
                 return response()->json([
-                    "res"=> "1"
+                    "res"=> "2"
                 ]);
-            }else{
-                //Un usuario con este email fue eliminado anteriormente.'
-                return response()->json([
-                    "res"=> "2",
-                    "id_user"=> $user->id
-                ]);
-            }
+            }else{ //no activo en sitio
+
+                //esta en otro sitio?
+                $site_user = Sites_users::where('id_user',$user->id)->count();
+                
+                if($site_user>0){ //activo en otro sitio
+                    return response()->json([
+                        "res"=> "3",
+                        "id_user"=> $user->id
+                    ]);
+                }else{ //no activo en otro sitio
+
+                    //fue eliminado de este sitio?
+                    $site_user_del = Sites_users_deleted::where('id_user',$user->id)->where('id_site',$id_site)->count();
+
+                    if($site_user_del>0){ //fue eliminado de este sitio
+                        return response()->json([
+                            "res"=> "5",
+                            "id_user"=> $user->id
+                        ]);
+                    }else{ //fue eliminado de otro sitio
+                        return response()->json([
+                                "res"=> "4",
+                                "id_user"=> $user->id
+                            ]);
+                    }
+                }
+            }  
+        }else{  //no existe
+            return response()->json([
+                "res"=> "1"
+            ]);
+        }
+        
+    } 
+
+    public function asignar($id){
+
+        $id_site = \Session::get('id_site');
+        $sitio = Sites::where('id', $id_site)->get();
+        $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
+        $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
+        $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
+
+        if( $user_count<$user_limit){
+            
+            DB::table('sites_users')->insert(
+                    ['id_user' => $id,
+                     'id_site' => $id_site
+                     ]
+            );
+            return response()->json([
+                "res" => 'ok'
+            ]);
         }else{
             return response()->json([
-                "res"=> "3"
+                "res" => 'fail'
             ]);
         }
 
-    } 
+    }
 
     public function reactivar($id){
 
@@ -137,7 +187,10 @@ class UsuarioController extends Controller
         $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
 
         if( $user_count<$user_limit){
-            DB::table('users')->where('id', $id )->update(['deleted_at' => null]);
+
+            $site_user_del = DB::table('sites_users_deleted')->where('id_user',$id)->where('id_site',$id_site);
+            $site_user_del->delete();
+
             DB::table('sites_users')->insert(
                     ['id_user' => $id,
                      'id_site' => $id_site
@@ -162,17 +215,20 @@ class UsuarioController extends Controller
      */
     public function show()
     {
-        $user = User::all();
-        return response()->json(
-            $user->toArray()
-            );
+        $id_site = \Session::get('id_site');
+        $user = DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
+        return response()->json($user);
     }
 
     public function search($id)
     {
+        $id_site = \Session::get('id_site');
+        $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
+        $plan = Plans::where('id', $sitio_plan )->get();
+        $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
         $tipos = Cuotas::orderBy('id', 'ASC')->lists('concepto','id');
         $users = User::where('id', $id)->get();
-            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos]);
+            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan]);
     }
 
     public function add($id)
@@ -185,36 +241,46 @@ class UsuarioController extends Controller
 
     public function sort($sort)
     {
+        $id_site = \Session::get('id_site');
+        $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
+        $plan = Plans::where('id', $sitio_plan )->get();
+        $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
         $tipos = Cuotas::orderBy('id', 'ASC')->lists('concepto','id');
+        $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
+        $users = collect($users);
 
         if($sort == 'name'){
-            $users = User::all()->sortBy('name');
+            $users = $users->sortBy('name');
         }else if($sort == 'desc'){
-            $users = User::all()->sortByDesc('name');
+            $users = $users->sortByDesc('name');
         }else if($sort == 'email'){
-            $users = User::all()->sortBy('email');
+            $users = $users->sortBy('email');
         }else if($sort == 'email_desc'){
-            $users = User::all()->sortByDesc('email');
+            $users = $users->sortByDesc('email');
         }else if($sort == 'all'){
-            $users = User::all();
+            $users = $users;
         }else if($sort == 'adeudo'){
-            $users = User::where('status', 1 )->get();
+            $users = $users->where('status', 0);
         }else if($sort == 'corriente'){
-            $users = User::where('status', 0 )->get();
+            $users = $users->where('status', 1);
         }
-            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos ]);
+            return view('/admin/usuarios', ['users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan]);
     }
 
 
     public function sort_usr($sort)
     {
+        $id_site = \Session::get('id_site');
+        
         if($sort == 1){ //all
-            $users = User::where('role','!=',1)->orderBy('name', 'ASC')->get();
+            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id AND users.role = 0 order by users.name', ['id' => $id_site]);
+            //$users = $users->sortBy('name');
         }else if($sort == 2){ //adeudo
-            $users = User::where('status', 1 )->get();
+            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id AND users.role = 0 AND users.status = 0 order by users.name', ['id' => $id_site]);
         }else if($sort == 3){ //corriente
-            $users = User::where('status', 0 )->get();
+            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id AND users.role = 0 AND users.status = 1 order by users.name', ['id' => $id_site]);
         }
+            $users = collect($users);
             return response()->json(
                 $users->toArray()
             );
@@ -262,9 +328,10 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
         $id_site = \Session::get('id_site');
-        $user = User::find($id);
+        //$user = User::find($id);
         $site_user = DB::delete('delete from sites_users where id_site = ? and id_user = ?', [$id_site, $id]);
-        $user->delete();
+        DB::table('sites_users_deleted')->insert(['id_user' => $id,'id_site' => $id_site]);
+        //$user->delete();
 
 
         return response()->json([

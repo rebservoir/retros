@@ -46,7 +46,12 @@
 								@endif
 							</td>
 							<td><button value='{{$user->id}}' OnClick='Mostrar(this);' class='btn btn-primary' data-toggle="modal" data-target="#user_edit">Editar</button></td>
-							<td><button value='{{$user->id}}' OnClick='detalle_pagos(this)' class='btn btn-primary' data-toggle="modal" data-target="#detalle_pagos">Ver Detalle</button></td>
+							
+							@if($user->role==1)
+								<td></td>
+							@elseif($user->role==0)
+								<td><button value='{{$user->id}}' OnClick='detalle_pagos(this)' class='btn btn-primary' data-toggle="modal" data-target="#detalle_pagos">Ver Detalle</button></td>
+							@endif
 						</tr>
 					@endforeach
 				</tbody>

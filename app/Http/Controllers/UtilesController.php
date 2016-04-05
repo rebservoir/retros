@@ -41,7 +41,13 @@ class UtilesController extends Controller
     public function store(UtilCreateRequest $request)
     {
         if($request->ajax()){
-            Utiles::create($request->all());
+            
+            $id_site = \Session::get('id_site');
+            $newUtil = Utiles::create($request->all());
+            $util = Utiles::find($newUtil->id);
+            $util->id_site = $id_site;
+            $util->save();
+
             return response()->json([
                     "message" => "creado"
                 ]);

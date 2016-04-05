@@ -10,5 +10,5 @@ class Calendario extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['title','start','end'];
+    protected $fillable = ['title','start','end','id_site'];
 }

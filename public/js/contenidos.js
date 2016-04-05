@@ -1,9 +1,18 @@
 
-
 function hide_alert(){
     $("#msj-success").addClass("hide");
     $("#msj-fail").addClass("hide");
     $("#alert-success").addClass("hide");
+}
+
+function hide_btn(){
+    $(".btn_go").addClass("hide");
+    $(".procesando").removeClass("hide");
+}
+
+function hide_btn2(){
+    $(".procesando").addClass("hide");
+    $(".btn_go").removeClass("hide");
 }
 
 /** Utiles **/
@@ -11,6 +20,7 @@ function hide_alert(){
 $("#registrar").click(function(){
 
     hide_alert();
+    hide_btn();
 
     var dato1 = $("#concept1").val();
     var dato2 = $("#address1").val();
@@ -32,6 +42,7 @@ $("#registrar").click(function(){
             $("#msj-success").html("<p>Datos registrados exitosamente.</p>");
             $("#tablaUtiles").load(location.href+" #tablaUtiles>*","");
             $('#util_create').modal('toggle');
+            hide_btn2();
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -45,6 +56,7 @@ $("#registrar").click(function(){
             var res = res.replace(/url/gi, 'URL');
             $("#msj-fail").html(res);
             $('#util_create').modal('toggle');
+            hide_btn2();
         } 
     });
 });
@@ -67,6 +79,7 @@ function Mostrar(btn){
 $("#actualizar_util").click(function(){
 
     hide_alert();
+    hide_btn();
 
     var value = $("#id").val();
     var dato1 = $("#concept").val();
@@ -90,6 +103,7 @@ $("#actualizar_util").click(function(){
             $("#msj-success").html("<p>Datos actualizados exitosamente.</p>");
             $("#tablaUtiles").load(location.href+" #tablaUtiles>*","");
             $('#util_edit').modal('toggle');
+            hide_btn2();
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -103,6 +117,7 @@ $("#actualizar_util").click(function(){
             var res = res.replace(/url/gi, 'URL');
             $("#msj-fail").html(res);
             $('#util_create').modal('toggle');
+            hide_btn2();
         } 
 
     });
@@ -117,6 +132,7 @@ $("#delete_att_util").click(function(){
 $("#delete_util").click(function(){
 
     hide_alert();
+    hide_btn();
        
     var value = $("#id").val();
     var route = "/utiles/"+value+"";
@@ -132,11 +148,13 @@ $("#delete_util").click(function(){
             $("#msj-success").html("<p>Dato eliminado exitosamente.</p>");
             $("#tablaUtiles").load(location.href+" #tablaUtiles>*","");
             $('#util_edit').modal('toggle');
+            hide_btn2();
         },
         error: function (jqXHR, exception) {
             $("#msj-fail").removeClass("hide");
             $("#msj-fail").html("<p>Intentar de nuevo.</p>");
             $('#util_edit').modal('toggle');
+            hide_btn2();
         } 
     });
 
@@ -171,6 +189,7 @@ function Mostrar_noticia(btn){
 $("#registrar_noticia").on("submit", function(e){
 
     hide_alert();
+    hide_btn();
     
     e.preventDefault();
 
@@ -192,6 +211,7 @@ $("#registrar_noticia").on("submit", function(e){
             $("#msj-success").html("<p>Noticia Creada exitosamente.</p>");
             $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
             $('#noticia_create').modal('toggle');
+            hide_btn2();
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -203,6 +223,7 @@ $("#registrar_noticia").on("submit", function(e){
             $("#msj-fail").removeClass("hide");
             $("#msj-fail").html(res);
             $('#noticia_create').modal('toggle');
+            hide_btn2();
         }
     });
 
@@ -278,6 +299,7 @@ $("#delete_att_noticia").click(function(){
 $("#delete_noticia").click(function(){
       
         hide_alert();
+        hide_btn();
 
         var value = $("#id_noti_1").val();
         var route = "/noticia/"+value;
@@ -293,11 +315,13 @@ $("#delete_noticia").click(function(){
                 $("#msj-success").html("Noticia eliminada exitosamente.");
                 $("#tablaNoticias").load(location.href+" #tablaNoticias>*","");
                 $('#noticia_edit').modal('toggle');
+                hide_btn2();
             },
             error: function (jqXHR, exception){
                 $("#msj-fail").removeClass("hide");
                 $("#msj-fail").html("<p>Intentar de nuevo.</p>");
                 $('#noticia_edit').modal('toggle');
+                hide_btn2();
             }
         });
 
@@ -330,6 +354,7 @@ function mostrar_doc(btn){
  $("#registrar_doc").on("submit", function(e){
 
     hide_alert();
+    hide_btn();
 
     e.preventDefault();
     var fd = new FormData(this);
@@ -351,6 +376,7 @@ function mostrar_doc(btn){
             $("#msj-success").html("Nuevo Documento Creado exitosamente.");
             $("#divDocs").load(location.href+" #divDocs>*","");
             $('#documento_create').modal('toggle');
+            hide_btn2();
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -361,6 +387,7 @@ function mostrar_doc(btn){
             $("#msj-fail").removeClass("hide");
             $("#msj-fail").html(res);
             $('#documento_create').modal('toggle');
+            hide_btn2();
         }    
     });
 });
@@ -374,6 +401,7 @@ $("#delete_att_documento").click(function(){
 $("#delete_documento").click(function(){
 
     hide_alert();
+    hide_btn();
 
     var value = $("#id_doc").val();
     var route = "/documentos/"+value;
@@ -389,11 +417,13 @@ $("#delete_documento").click(function(){
                 $("#msj-success").html("Documento eliminado exitosamente.");
                 $("#divDocs").load(location.href+" #divDocs>*","");
                 $('#documento_edit').modal('toggle');
+                hide_btn2();
             },
             error: function (jqXHR, exception) {
                 $("#msj-fail").removeClass("hide");
                 $("#msj-fail").html("Intentar de nuevo.");
                 $('#documento_edit').modal('toggle');
+                hide_btn2();
             } 
         });
 

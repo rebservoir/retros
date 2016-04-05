@@ -11,7 +11,7 @@
 			<div class="modal-body">
 				<input type="hidden" name="_token_evento" value="{{ csrf_token() }}" id="token_evento">
 
-				<div id="the-basics" class="form-group">
+				<div class="form-group">
 					{!!Form::label('Titulo:')!!}
 					{!!Form::text('title',null,['id'=>'ev_title','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
 				</div>
@@ -26,9 +26,14 @@
 					{!! Form::text('end', '', ['id' => 'datepicker_end','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 			</div>
-				<div class="modal-footer">
+			<div class="modal-footer">
+				<div class="btn_go">
 					{!!link_to('#', $title='Crear Evento', $attributes = ['id'=>'registrar_evento', 'class'=>'btn btn-primary'], $secure=null)!!}
 				</div>
+				<div class="procesando hide">
+					<p>Procesando...</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

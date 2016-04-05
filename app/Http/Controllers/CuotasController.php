@@ -42,7 +42,15 @@ class CuotasController extends Controller
     public function store(CuotasCreateRequest $request)
     {
         if($request->ajax()){
-            Cuotas::create($request->all());
+
+            $id_site = \Session::get('id_site');
+
+            DB::table('cuotas')->insert(
+                ['concepto' => $request->concepto,
+                 'amount' => $request->amount,
+                 'id_site' => $id_site
+                ]);
+
             return response()->json([
                     "message" => "creado"
                 ]);

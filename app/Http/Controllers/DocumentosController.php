@@ -13,6 +13,7 @@ use Redirect;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Routing\Route;
 use File;
+use DB;
 
 class DocumentosController extends Controller
 {
@@ -44,7 +45,12 @@ class DocumentosController extends Controller
     public function store(DocumentosCreateRequest $request)
     {
         if($request->ajax()){
-            Documentos::create($request->all());
+            $id_site = \Session::get('id_site');
+            $newDoc = Documentos::create($request->all());
+            $doc = Documentos::find($newDoc->id);
+            $doc->id_site = $id_site;
+            $doc->save();
+
             return response()->json([
                     "message" => "creado"
                 ]);
@@ -118,8 +124,12 @@ class DocumentosController extends Controller
     public function destroy($id)
     {
         $documentos = Documentos::find($id);
+        $file = 'file/'.$documentos->path;
         $documentos->delete();
-        \Storage::delete($documentos->path);
+
+        if(File::exists($file)){
+            unlink($file);
+        }
 
         \Session::flash('update', 'Documento eliminado exitosamente.');
 

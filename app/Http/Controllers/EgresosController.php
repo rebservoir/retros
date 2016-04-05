@@ -45,7 +45,13 @@ class EgresosController extends Controller
     public function store(EgresosCreateRequest $request)
     {
         if($request->ajax()){
-            Egresos::create($request->all());
+
+            $id_site = \Session::get('id_site');
+            $newEg = Egresos::create($request->all());
+            $egreso = Egresos::find($newEg->id);
+            $egreso->id_site = $id_site;
+            $egreso->save();
+
             return response()->json([
                     "message" => "creado"
                 ]);
@@ -100,11 +106,11 @@ class EgresosController extends Controller
                 //$file = 'noticia_' . time() . '.' . $file->getClientOriginalName();
                 //\Storage::disk('local')->put($name, \File::get($file));
                 if(File::isFile($oldFile)){
-                    //File::delete($old_image);
-                    unlink($destinationPath.$oldFile);
+                    if(File::exists($destinationPath.$oldFile)){
+                        unlink($destinationPath.$oldFile);
+                    }
                 }
 
-                
                 $egreso->path = $file;
             }
 
@@ -124,8 +130,12 @@ class EgresosController extends Controller
     public function destroy($id)
     {
         $egresos = Egresos::find($id);
+        $file = 'file/'.$egresos->path;
         $egresos->delete();
-        \Storage::delete($egresos->path);
+
+        if(File::exists($file)){
+            unlink($file);
+        }
 
         return response()->json([
             "mensaje"=>'eliminado'

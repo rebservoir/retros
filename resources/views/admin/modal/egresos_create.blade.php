@@ -29,7 +29,12 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					{!!Form::submit('Registrar Egresos',['id'=>'registrar_egresos', 'class'=>'btn btn-primary'])!!}
+					<div class="btn_go">
+						{!!Form::submit('Registrar Egresos',['id'=>'registrar_egresos', 'class'=>'btn btn-primary'])!!}
+					</div>
+					<div class="procesando hide">
+						<p>Procesando...</p>
+					</div>
 				</div>
 			{!! Form::close() !!}
 		</div>

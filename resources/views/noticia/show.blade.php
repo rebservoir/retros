@@ -25,17 +25,15 @@
 							</div>
 						</a>
 
-						@foreach($sections as $section)
-							@if($section->id == 1)
-								@if($section->is_active == 1)
-									<a href="/transparencia">
-										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
-											<div class="nav_ic icon4">
-											</div>
-											<p>Transparencia</p>
+						@foreach($sitios as $sitio)
+							@if($sitio->finanzas_active == 1)
+								<a href="/finanzas">
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nav_tab">
+										<div class="nav_ic icon4">
 										</div>
-									</a>
-								@endif
+										<p>Finanzas</p>
+									</div>
+								</a>
 							@endif
 						@endforeach
 

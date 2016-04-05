@@ -9,7 +9,6 @@ use TuFracc\Http\Requests\UserUpdateRequest;
 use TuFracc\Http\Controllers\Controller;
 use TuFracc\User;
 use TuFracc\Noticia;
-use TuFracc\Sections;
 use TuFracc\Utiles;
 use TuFracc\Pagos;
 use TuFracc\Egresos;
@@ -32,7 +31,7 @@ class FrontController extends Controller
     protected $auth;
 
     public function __construct(Guard $auth){
-        $this->middleware('auth', ['only' => ['index', 'admin', 'contacto', 'noticias', 'cuenta', 
+        $this->middleware('auth', ['only' => ['index', 'admin', 'file' , 'contacto', 'noticias', 'cuenta', 
             'sitio','admin_modulo','contenidos','calendario','finanzas', 'usuarios']]);
     
         $this->auth = $auth;
@@ -47,26 +46,41 @@ class FrontController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function CheckSite(){
-
+    public function CheckSites(){
         $id_user = $this->auth->user()->id;
+        $sites = Sites_users::where('id_user', $id_user)->get();
 
+        if( ($sites->count())>1){
+            $sitios = DB::select('select sites.* FROM sites INNER JOIN sites_users ON sites_users.id_user = :id_user AND sites.id = sites_users.id_site', ['id_user' => $id_user]);
+            return view('sites', [ 'sitios' => $sitios ]);
+        }else{
+            $id_site = Sites_users::where('id_user', $id_user)->value('id_site');
+            return redirect()->to('setSite/'.$id_site);
+        }
+    }
 
-
+    public function setSite($id_site){
+        
+        $id_user = $this->auth->user()->id;
+        $is_site = Sites_users::where('id_user', $id_user)->where('id_site',$id_site)->count();
+        
+        if($is_site==0){
+            return redirect()->to('home');
+        }else{
+            \Session::put('id_site', $id_site );
+            return redirect()->to('home');
+        }
     }
 
     public function index()
     {
-
-        $id_site = 1;
-        \Session::put('id_site', $id_site );
-
+        $id_site = \Session::get('id_site');
         if($this->auth->user()->role != 1){
-            $sections = Sections::all();
-            $users = User::paginate(10);
-            $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
-            $sitios = Sites::where('id', 1)->get();
-            return view('index', ['users' => $users, 'noticias' => $noticias, 'sections' => $sections, 'sitios' => $sitios ]);
+            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id order by users.name', ['id' => $id_site]);
+            $users = collect($users);
+            $noticias = Noticia::where('id_site', $id_site)->orderBy('created_at','desc')->take(2)->get();
+            $sitios = Sites::where('id', $id_site)->get();
+            return view('index', ['users' => $users, 'noticias' => $noticias, 'sitios' => $sitios ]);
         }else{
             return redirect()->to('/admin/home');
         }
@@ -84,97 +98,107 @@ class FrontController extends Controller
 
     public function noticias(Request $request)
     {
-        $sections = Sections::all();
-        $noticias = Noticia::orderBy('created_at', 'desc')->paginate(5);
+        $id_site = \Session::get('id_site');
+        $sitios = Sites::where('id', $id_site)->get();
+        $noticias = Noticia::where('id_site', $id_site )->orderBy('created_at', 'desc')->paginate(5);
 
         if($this->auth->user()->role != 1){
             $noticias->setPath('/noticias');
             if($request->ajax()){
-            return view('noticia.noticias', ['noticias' => $noticias, 'sections' => $sections]);
+            return view('noticia.noticias', ['noticias' => $noticias, 'sitios' => $sitios]);
             }
-            return view('noticias', ['noticias' => $noticias, 'sections' => $sections]);
+            return view('noticias', ['noticias' => $noticias, 'sitios' => $sitios]);
         }else{
             $noticias->setPath('/admin/noticias');
-            return view('admin.noticias', ['noticias' => $noticias, 'sections' => $sections]);
+            return view('admin.noticias', ['noticias' => $noticias, 'sitios' => $sitios]);
         }
     }
 
     public function cuenta()
     {
-        $sections = Sections::all();
+        $id_site = \Session::get('id_site');
+        $sitios = Sites::where('id', $id_site)->get();
         $pagos = Pagos::where(function ($query) {
+            $id_site = \Session::get('id_site');
                 $query->where('id_user', $this->auth->user()->id)
+                ->where('id_site', $id_site)
                 ->orderBy('date', 'asc');
                   })->get();
-        $ultimo_p = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 1)->orderBy('date', 'dsc')->get();
-        $vencidos = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 0)->orderBy('date', 'asc')->get();
+        $ultimo_p = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 1)->where('id_site', $id_site)->orderBy('date', 'dsc')->get();
+        $vencidos = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 0)->where('id_site', $id_site)->orderBy('date', 'asc')->get();
         $cuotas = Cuotas::find($this->auth->user()->type);
         $cuota = $cuotas->amount;
         return view('cuenta', ['vencidos' => $vencidos,'pagos' => $pagos, 'cuotas' => $cuotas,
-                                'sections' => $sections, 'ultimo_p' => $ultimo_p, 'cuota' => $cuota]);
+                                'sitios' => $sitios, 'ultimo_p' => $ultimo_p, 'cuota' => $cuota]);
     }
 
     public function miSitio()
     {
-        $utiles = Utiles::all();
-        $sections = Sections::all();
-        $documentos = Documentos::all();
-        return view('sitio/misitio', ['utiles' => $utiles, 'sections' => $sections, 'documentos' => $documentos]);
+        $id_site = \Session::get('id_site');
+
+        $utiles = Utiles::where('id_site', $id_site )->get();
+        $sitios = Sites::where('id', $id_site)->get();
+        $documentos = Documentos::where('id_site', $id_site )->get();
+        return view('sitio/misitio', ['utiles' => $utiles, 'sitios' => $sitios, 'documentos' => $documentos]);
     }
 
     public function finanzas($mes_sel=null, $year_sel=null)
     {   
+        $id_site = \Session::get('id_site');
+
         if(!$mes_sel)
             $mes_sel = date('n');
         if(!$year_sel)
             $year_sel= date('Y');
 
-        $pagos = Pagos::all(); 
-        $egresos = Egresos::all();
-        $saldos = Saldos::all();
+        $pagos = Pagos::where('id_site', $id_site )->get();
+        $egresos = Egresos::where('id_site', $id_site )->get();
 
         if($this->auth->user()->role == 1){
-            return view('admin/finanzas', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);
+            return view('admin/finanzas', [ 'pagos' => $pagos,'egresos' => $egresos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);
         }else{
-            return view('finanzas', [ 'pagos' => $pagos,'egresos' => $egresos, 'saldos' => $saldos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);     
+            return view('finanzas', [ 'pagos' => $pagos,'egresos' => $egresos, 'mes_sel' => $mes_sel, 'year_sel' => $year_sel ]);     
         }  
     }
 
     
     public function calendario($mes_sel=null, $year_sel=null)
     {   
+        $id_site = \Session::get('id_site');
+
         if(!$mes_sel)
             $mes_sel = date('n');
         if(!$year_sel)
             $year_sel= date('Y');
-
-        $sections = Sections::all();
-        $calendario = Calendario::all();
+;
+        $sitios = Sites::where('id', $id_site)->get();
+        $calendario = Calendario::where('id_site', $id_site )->get();
 
         if($this->auth->user()->role == 1){
-            return view('admin/calendario', [ 'mes_sel' => $mes_sel, 'year_sel' => $year_sel, 'sections' => $sections, 'calendario' => $calendario ]);
+            return view('admin/calendario', [ 'mes_sel' => $mes_sel, 'year_sel' => $year_sel, 'sitios' => $sitios, 'calendario' => $calendario ]);
         }else{
-            return view('calendario', [ 'mes_sel' => $mes_sel, 'year_sel' => $year_sel, 'sections' => $sections, 'calendario' => $calendario ]);     
+            return view('calendario', [ 'mes_sel' => $mes_sel, 'year_sel' => $year_sel, 'sitios' => $sitios, 'calendario' => $calendario ]);     
         }  
     }
 
 
     public function contacto()
     {
-        $sections = Sections::all();
-        return view('contacto', ['sections' => $sections ]);
+        $id_site = \Session::get('id_site');
+        $sitios = Sites::where('id', $id_site)->get();
+        return view('contacto', ['sitios' => $sitios ]);
     }
 
     public function admin()
-    {
+    {   
+        $id_site = \Session::get('id_site');
+        
         if($this->auth->user()->role == 1){
-                $users = User::paginate(10);
-                $users->setPath('/admin/home');
-                $id_site = \Session::get('id_site');
+                $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id order by users.name', ['id' => $id_site]);
+                $users = collect($users);
                 $sitios = Sites::where('id', $id_site)->get();
-                $sections = Sections::all();
-                $noticias = Noticia::all()->sortByDesc('created_at')->take(2);
-                return view('admin/index', ['noticias' => $noticias, 'users' => $users, 'sections' => $sections, 'sitios' => $sitios ]);
+                $noticias = Noticia::where('id_site', $id_site)->orderBy('created_at','desc')->take(2)->get();
+                return view('admin/index', ['noticias' => $noticias, 'users' => $users, 'sitios' => $sitios ]);
         }else{
                  return Redirect::to('home');
         }
@@ -189,16 +213,12 @@ class FrontController extends Controller
             $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
             $plan = Plans::where('id', $sitio_plan )->get();
             $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
-            
-            $users = User::paginate(20);
-            $users->setPath('/admin/administracion');
-            $pagos = Pagos::all();
-            $egresos = Egresos::all();
-            $saldos = Saldos::all();
-            $cuotas = Cuotas::orderBy('concepto', 'ASC')->get();
+            $pagos = Pagos::where('id_site', $id_site )->get();
+            $egresos = Egresos::where('id_site', $id_site )->get();
+            $cuotas = Cuotas::where('id_site', $id_site )->orderBy('concepto', 'ASC')->get();
 
-            return view('/admin/admin_modulo', ['users' => $users, 'pagos' => $pagos, 'egresos' => $egresos, 'cuotas' => $cuotas,
-                'saldos' => $saldos, 'sitio' => $sitio, 'plan' => $plan, 'id_site' => $id_site, 'user_count'=>$user_count ]);
+            return view('/admin/admin_modulo', [ 'pagos' => $pagos, 'egresos' => $egresos, 'cuotas' => $cuotas,
+                'sitio' => $sitio, 'plan' => $plan, 'id_site' => $id_site, 'user_count'=>$user_count ]);
         }else{
                  return Redirect::to('home');
         }
@@ -206,12 +226,14 @@ class FrontController extends Controller
 
     public function contenidos()
     {
+        $id_site = \Session::get('id_site');
+
         if($this->auth->user()->role == 1){
-            $noticias = Noticia::all();
-            $documentos = Documentos::all();
-            $utiles = Utiles::all();
-            $sections = Sections::all();
-            return view('/admin/contenidos', [ 'sections' => $sections, 'utiles' => $utiles, 
+            $noticias = Noticia::where('id_site', $id_site )->get();
+            $documentos = Documentos::where('id_site', $id_site )->get();
+            $utiles = Utiles::where('id_site', $id_site )->get();
+            $sitios = Sites::where('id', $id_site)->get();
+            return view('/admin/contenidos', [ 'sitios' => $sitios, 'utiles' => $utiles, 
                 'noticias' => $noticias, 'documentos' => $documentos ]);
         }else{
             return Redirect::to('home');
@@ -227,11 +249,8 @@ class FrontController extends Controller
                 $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
                 $plan = Plans::where('id', $sitio_plan )->get();
                 $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
-
-                $users = User::all();
-                //$users = User::paginate(5);
-                //$users->setPath('/admin/usuarios');
-                $tipos = Cuotas::lists('concepto','id');
+                $users = DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
+                $tipos = Cuotas::where('id_site', $id_site )->lists('concepto','id');
 
             return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan ]);
         }else{
@@ -239,6 +258,7 @@ class FrontController extends Controller
         }
     }
 
+/*
     public function usuarios2($id)
     {
         if($this->auth->user()->role == 1){
@@ -248,7 +268,7 @@ class FrontController extends Controller
             return Redirect::to('home');
         }
     }
-
+*/
     public function edit_info($id)
     {
         $user = User::find($id);
@@ -260,8 +280,10 @@ class FrontController extends Controller
 
     public function pagos_show()
     {
+        $id_site = \Session::get('id_site');
         $pagos_show = Pagos::where(function ($query) {
                 $query->where('id_user', $this->auth->user()->id)
+                ->where('id_site', $id_site)
                 ->where('status', 0);
                   })->get();
 

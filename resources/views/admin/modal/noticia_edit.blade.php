@@ -28,17 +28,21 @@
 			</div>
 			
 				<div class="modal-footer">
-					<div id="btns_delete_noticia">
-						{!!Form::submit('Modificar Noticia',['class'=>'btn btn-primary'])!!}
-						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_noticia', 'class'=>'btn btn-danger'], $secure=null)!!}
+					<div class="btn_go">
+						<div id="btns_delete_noticia">
+							{!!Form::submit('Modificar Noticia',['class'=>'btn btn-primary'])!!}
+							{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_noticia', 'class'=>'btn btn-danger'], $secure=null)!!}
+						</div>
+						<div id="btns_confirm_noticia" class="btns_confirm"> 
+							<p>¿Está seguro de eliminar esta noticia?</p>
+					  		<a href="#" id="cancel_noticia" class="btn btn-default">Cancelar</a>
+							<a href="#" id="delete_noticia" class="btn btn-danger">Ok</a>
+						</div>
 					</div>
-					<div id="btns_confirm_noticia" class="btns_confirm"> 
-						<p>¿Está seguro de eliminar esta noticia?</p>
-				  		<a href="#" id="cancel_noticia" class="btn btn-default">Cancelar</a>
-						<a href="#" id="delete_noticia" class="btn btn-danger">Ok</a>
+					<div class="procesando hide">
+						<p>Procesando...</p>
 					</div>
 				</div>
-
 			{!! Form::close() !!}
 
 		</div>

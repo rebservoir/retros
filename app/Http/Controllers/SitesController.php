@@ -108,6 +108,30 @@ class SitesController extends Controller
         return redirect()->to('/admin/home'); 
     }
 
+    public function finanzas(SitioUpdateRequest $request){
+
+        $id_site = \Session::get('id_site');
+        $sitio = Sites::find($id_site);
+        $sitio->fill($request->all());
+        $sitio->save();
+        
+        Session::flash('update','Cambios realizados exitosamente');
+
+        return Redirect::to('/admin/contenidos');
+    }
+
+    public function morosos(SitioUpdateRequest $request){
+
+        $id_site = \Session::get('id_site');
+        $sitio = Sites::find($id_site);
+        $sitio->fill($request->all());
+        $sitio->save();
+        
+        Session::flash('update','Cambios realizados exitosamente');
+
+        return Redirect::to('/admin/contenidos');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

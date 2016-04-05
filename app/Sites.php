@@ -10,7 +10,7 @@ class Sites extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'path', 'plan'];
+    protected $fillable = ['name', 'path', 'plan', 'finanzas_active', 'morosos_active'];
 
 
 }

@@ -11,11 +11,7 @@
 				<div id="btns_confirm_alert" class="btns_confirm_alert"> 
 					<p>¿Está seguro de eliminar este egreso?</p>
 				  		<a href="#" id="cancel_egresos" class="btn btn-default">Cancelar</a>
-						<a href="#" id="delete_egresos" class="btn btn-danger">Ok</a>
-
-						
-
-						
+						<a href="#" id="delete_egresos" class="btn btn-danger">Ok</a>	
 				</div>
 			</div>
 

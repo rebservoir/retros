@@ -33,14 +33,19 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					<div id="btns_delete_util">
-						{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar_util', 'class'=>'btn btn-primary'], $secure=null)!!}
-						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_util', 'class'=>'btn btn-danger'], $secure=null)!!}
+					<div class="btn_go">
+						<div id="btns_delete_util">
+							{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar_util', 'class'=>'btn btn-primary'], $secure=null)!!}
+							{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_util', 'class'=>'btn btn-danger'], $secure=null)!!}
+						</div>
+						<div id="btns_confirm_util" class="btns_confirm"> 
+							<p>¿Está seguro de eliminar este dato?</p>
+					  		<a href="#" id="cancel_util" class="btn btn-default cancel">Cancelar</a>
+							<a href="#" id="delete_util" class="btn btn-danger">Ok</a>
+						</div>
 					</div>
-					<div id="btns_confirm_util" class="btns_confirm"> 
-						<p>¿Está seguro de eliminar este dato?</p>
-				  		<a href="#" id="cancel_util" class="btn btn-default cancel">Cancelar</a>
-						<a href="#" id="delete_util" class="btn btn-danger">Ok</a>
+					<div class="procesando hide">
+						<p>Procesando...</p>
 					</div>
 				</div>
 

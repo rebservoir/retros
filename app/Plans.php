@@ -10,6 +10,6 @@ class Plans extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'price', 'user_limit'];
+    protected $fillable = ['name', 'price', 'user_limit','id_site'];
 
 }

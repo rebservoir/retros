@@ -10,6 +10,7 @@
 			<div id="email_msg">
 			</div>
 			<button type="button" id="react_btn" class="btn btn-primary hidden" value="" style="margin: -10px 0px 10px 0px;">Reactivar usuario</button>
+			<button type="button" id="asignar_btn" class="btn btn-primary hidden" value="" style="margin: -10px 0px 10px 0px;">Asignar usuario</button>
 		<div class="form-group">
 			{!!Form::label('Contraseña:')!!}
 			{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Ingresar Contraseña'])!!}

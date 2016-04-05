@@ -10,7 +10,7 @@ class Documentos extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['titulo','path'];
+    protected $fillable = ['titulo','path','id_site'];
 
     public function setPathAttribute($path){
 		$this->attributes['path'] = 'doc_' . time() . '.' . $path->getClientOriginalName();

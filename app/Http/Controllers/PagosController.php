@@ -57,31 +57,72 @@ class PagosController extends Controller
     {
         if($request->ajax()){
 
+            $id_site = \Session::get('id_site');
             $id_user = $request->id_user;
             $user = User::find($id_user);
             $cuota = Cuotas::find($user->type);
+            $pagos = DB::table('pagos')->where('id_user', $id_user)->where('id_site', $id_site)->get();
+            $newDate = explode("-", $request->date);
+            $flag=true;
 
-            DB::table('pagos')->insert(
-                ['id_user' => $id_user,
-                 'date' => $request->date,
-                 'status' => $request->status,
-                 'amount' => $cuota->amount,
-                 'user_name' => $user->name
-                 ]
-            );
+            foreach($pagos as $value){
+                $date = explode("-", $value->date);
+                if(($date[0]==$newDate[0])&&($date[1]==$newDate[1])){
+                    $flag=false;
+                    break;
+                }
+            }
 
-        $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
+            if($flag){
 
-        Mail::send('emails.msg',$data, function ($msj) use ($data) {
-            $msj->subject($data['subj']);
-            $msj->to($data['user_mail']);
-        });
+                $ultimo = DB::table('pagos')->where('id_user', $id_user)->orderBy('date', 'dsc')->take(1)->value('date');
 
-            return response()->json([
-                    "message" => "creado"
-                ]);
-        }
-    }
+                //get next year and month
+                $ultimo_pago = explode("-", $ultimo);
+                    if(intval($ultimo_pago[1])==12){
+                        $next_m = 1;
+                        $next_y = intval($ultimo_pago[0])+1;
+                    }else{
+                        $next_m = intval($ultimo_pago[1])+1;
+                        $next_y = intval($ultimo_pago[0]);
+                    }
+
+                    if((intval($newDate[0])==$next_y)&&(intval($newDate[1])==$next_m)){
+                        DB::table('pagos')->insert(
+                        [   'id_user' => $id_user,
+                            'date' => $request->date,
+                            'status' => $request->status,
+                            'amount' => $cuota->amount,
+                            'user_name' => $user->name,
+                            'id_site' => $id_site
+                        ]);
+
+                        $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
+
+                        Mail::send('emails.msg',$data, function ($msj) use ($data) {
+                            $msj->subject($data['subj']);
+                            $msj->to($data['user_mail']);
+                        });
+
+                        return response()->json([
+                            "tipo" => 'success'
+                        ]);
+                    }else{
+                        return response()->json([
+                            "tipo" => 'fail',
+                            "message" => 'No estan permitido intervalos sin pagos creados. Se debe crear un pago con fecha inmediata al ultimo creado.'
+                        ]);
+                    }
+
+                }else{
+                    return response()->json([
+                        "tipo" => 'fail',
+                        "message" => 'Ya existe un pago para este mes y usuario.'
+                    ]);
+                }
+                
+        } // end request ajax
+    } //end function
 
     /**
      * Display the specified resource.
@@ -91,9 +132,11 @@ class PagosController extends Controller
      */
     public function show(){
 
+        $id_site = \Session::get('id_site');
         $pagos_show = Pagos::where(function ($query) {
             $query->where('id_user', $id)
                 ->where('status', 0)
+                ->where('id_site', $id_site)
                 ->sortBy('date');
                   })->get();
 
@@ -104,7 +147,8 @@ class PagosController extends Controller
 
     public function detalle($id){
 
-        $pagos = Pagos::where('id_user', $id)->orderBy('date', 'asc')->get();
+        $id_site = \Session::get('id_site');
+        $pagos = Pagos::where('id_user', $id)->where('id_site', $id_site)->orderBy('date', 'asc')->get();
 
         return response()->json(
             $pagos->toArray()

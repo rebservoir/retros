@@ -2,7 +2,6 @@ var id_usuario,id_actual;
 var user_name;
 var id_usuario_actual;
 
-
 function get_id_user_pago(id_user){
     id_usuario = id_user;
     //console.log('la id_user es:' + id_usuario);
@@ -12,6 +11,16 @@ function hide_alert(){
     $("#msj-success").addClass("hide");
     $("#msj-fail").addClass("hide");
     $("#alert-success").addClass("hide");
+}
+
+function hide_btn(){
+    $(".btn_go").addClass("hide");
+    $(".procesando").removeClass("hide");
+}
+
+function hide_btn2(){
+    $(".procesando").addClass("hide");
+    $(".btn_go").removeClass("hide");
 }
 
 $(function() {
@@ -53,6 +62,7 @@ $(function() {
 $("#registrar_pago").click(function(){
 
     hide_alert();
+    hide_btn();
 
     var dato1 = id_usuario;
     var dato2 = $("#datepicker").val();
@@ -69,11 +79,19 @@ $("#registrar_pago").click(function(){
         dataType: 'json',
         data:{id_user: dato1, date: dato2, status: dato3, user_name: dato4},
 
-        success:function(){
-            $("#msj-success").removeClass("hide");
-            $("#msj-success").html("Pago registrado exitosamente.");
-            $("#tablaPagos").load(location.href+" #tablaPagos>*","");
-            $('#pago_create').modal('toggle');
+        success:function(data){
+            if(data.tipo=='success'){
+                    $("#msj-success").removeClass("hide");
+                    $("#msj-success").html("Pago registrado exitosamente.");
+                    $("#tablaPagos").load(location.href+" #tablaPagos>*","");
+                    $('#pago_create').modal('toggle');
+                    hide_btn2();
+            }else if(data.tipo=='fail'){
+                    $("#msj-fail").removeClass( "hide");
+                    $("#msj-fail").html(data.message);
+                    $('#pago_create').modal('toggle');
+                    hide_btn2();
+            } 
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -99,7 +117,6 @@ function Mostrar_pago(btn){
     var route = "/pagos/"+btn.value+"/edit";
 
     $.get(route, function(res){
-        //console.log(res);
         $("#id_pago").val(res.id);
         $("#hidden_id_user").val(res.id_user);
         $("#datepicker_pago").val(res.date);
@@ -113,6 +130,7 @@ function Mostrar_pago(btn){
 $("#actualizar_pago").click(function(){
 
     hide_alert();
+    hide_btn();
  
     var dato1 = $("#hidden_id_user").val();
     var dato2 = $("#datepicker_pago").val();
@@ -141,6 +159,7 @@ $("#actualizar_pago").click(function(){
             $("#msj-success").html("Pago actualizado exitosamente.");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
             $('#pago_edit').modal('toggle');
+            hide_btn2();
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -153,6 +172,7 @@ $("#actualizar_pago").click(function(){
             var res = res.replace(/amount/gi, 'Cantidad');
             $("#msj-fail").html(res);
             $('#pago_edit').modal('toggle');
+            hide_btn2();
         } 
 
     });
@@ -168,6 +188,7 @@ $("#delete_att_pago").click(function(){
 $("#delete_pago").click(function(){
 
     hide_alert();
+    hide_btn();
 
         var value = $("#id_pago").val();
         var route = "/pagos/"+value;
@@ -183,6 +204,7 @@ $("#delete_pago").click(function(){
             $("#msj-success").html("Pago eliminado exitosamente.");
             $("#tablaPagos").load(location.href+" #tablaPagos>*","");
             $('#pago_edit').modal('toggle');
+            hide_btn2();
             },
             error: function (jqXHR, exception) {
                 $("#msj-fail").removeClass( "hide");
@@ -190,13 +212,13 @@ $("#delete_pago").click(function(){
             } 
         });     
 
-        $('#btns_confirm').hide( "fast");
-        $("#btns_delete").show( "fast" );
+        $('#btns_confirm_pago').hide( "fast");
+        $("#btns_delete_pago").show( "fast" );
 });
 
 $("#cancel_pago").click(function(){
-    $('#btns_confirm').hide( "fast", function() {
-        $("#btns_delete").show( "fast" );
+    $('#btns_confirm_pago').hide( "fast", function() {
+        $("#btns_delete_pago").show( "fast" );
     });
 });
 
@@ -205,6 +227,7 @@ $("#cancel_pago").click(function(){
  $("#registrar_egresos").on("submit", function(e){
 
     hide_alert();
+    hide_btn();
 
     e.preventDefault();
     var fd = new FormData(this);
@@ -230,6 +253,7 @@ $("#cancel_pago").click(function(){
             $("#msj-success").html("Egreso registrado exitosamente.");
             $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
             $('#egresos_create').modal('toggle');
+            hide_btn2();
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -241,6 +265,7 @@ $("#cancel_pago").click(function(){
             var res = res.replace(/amount/gi, 'Cantidad');
             $("#msj-fail").html(res);
             $('#egresos_create').modal('toggle');
+            hide_btn2();
         }    
     });
 });
@@ -268,6 +293,7 @@ $("#delete_att_egresos").click(function(){
 $("#delete_egresos").click(function(){
 
     hide_alert();
+    hide_btn();
 
         var value = $("#id_egresos").val();
         var route = "/egresos/"+value;
@@ -283,10 +309,12 @@ $("#delete_egresos").click(function(){
                 $("#msj-success").html("Egreso eliminado exitosamente.");
                 $("#tablaEgresos").load(location.href+" #tablaEgresos>*","");
                 $('#egresos_edit').modal('toggle');
+                hide_btn2();
             },
             error: function (jqXHR, exception) {
                 $("#msj-fail").removeClass("hide");
                 $("#msj-fail").html("Intentar de nuevo.");
+                hide_btn2();
             } 
 
         });
@@ -373,6 +401,7 @@ function mostrar_cuota(btn){
 $("#registrar_cuota").click(function(){
 
     hide_alert();
+    hide_btn();
 
     var dato1 = $("#concept_cuota").val();
     var dato2 = $("#monto_cuota").val();
@@ -391,6 +420,7 @@ $("#registrar_cuota").click(function(){
             $("#msj-success").html("Cuota registrada exitosamente.");
             $("#divCuotas").load(location.href+" #divCuotas>*","");
             $('#cuota_create').modal('toggle');
+            hide_btn2();
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -401,6 +431,7 @@ $("#registrar_cuota").click(function(){
             var res = res.replace(/amount/gi, 'Monto');
             $("#msj-fail").html(res);
             $('#cuota_create').modal('toggle');
+            hide_btn2();
         } 
     });
 });
@@ -409,6 +440,7 @@ $("#registrar_cuota").click(function(){
 $("#actualizar_cuota").click(function(){
 
     hide_alert();
+    hide_btn();
 
     var value = $("#id_cuota1").val();
     var dato1 = $("#concept_cuota1").val();
@@ -429,6 +461,7 @@ $("#actualizar_cuota").click(function(){
             $("#msj-success").html("Cuota actualizada exitosamente.");
             $("#divCuotas").load(location.href+" #divCuotas>*","");
             $('#cuota_edit').modal('toggle');
+            hide_btn2();
         },
          error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -439,6 +472,7 @@ $("#actualizar_cuota").click(function(){
             var res = res.replace(/amount/gi, 'Monto');
             $("#msj-fail").html(res);
             $('#cuota_edit').modal('toggle');
+            hide_btn2();
         } 
 
     });
@@ -453,6 +487,7 @@ $("#delete_att_cuota").click(function(){
 $("#delete_cuota").click(function(){
 
     hide_alert();
+    hide_btn();
 
         var value = $("#id_cuota1").val();
         var route = "/cuotas/"+value;
@@ -464,7 +499,6 @@ $("#delete_cuota").click(function(){
             type: 'DELETE',
             dataType: 'json',
             success:function(data){
-                
                 if(data.tipo=='success'){
                     $("#msj-success").removeClass("hide");
                     $("#msj-success").html("Cuota eliminada exitosamente.");
@@ -474,10 +508,12 @@ $("#delete_cuota").click(function(){
                 }
                 $("#divCuotas").load(location.href+" #divCuotas>*","");
                 $('#cuota_edit').modal('toggle');
+                hide_btn2();
             },
             error: function (jqXHR, exception) {
                 $( "#msj-fail").removeClass( "hide");
                 $("#msj-fail").html("Intentar de nuevo.");
+                hide_btn2();
             }
         });        
 
@@ -549,9 +585,9 @@ function getUsers(sort){
             code+= res[index].name + "</td><td>" + res[index].email + "</td><td>";
 
             if(res[index].status == 0){ 
-                code+="<span class='label label-success'>Ok</span>";
-            }else if(res[index].status == 1){
                 code+="<span class='label label-danger'>Adeudo</span>";
+            }else if(res[index].status == 1){
+                code+="<span class='label label-success'>Ok</span>";
             }
             code+="</td></tr>";
         }
@@ -621,7 +657,6 @@ $("#btn_send").click(function(){
                                     subj:subj
                                 },
                                 success:function(){
-                                    console.log('ok');
                                     $("#msj-success").removeClass( "hide");
                                     $("#msj-success").html('Su mensaje ha sido enviado.');
                                 },
@@ -638,7 +673,7 @@ $("#btn_send").click(function(){
     }else if( tipo == 2){
         console.log('Corte');
             jQuery.each( usrs, function() { 
-                    var route = "/sendEmail/" + usrs[index];
+                    var route = "/sendEmail/" + usrs[index] + "/2";
                     var token = $("#token_send").val();
                     $.ajax({
                         url: route,
@@ -646,8 +681,8 @@ $("#btn_send").click(function(){
                         type: 'GET',
                         dataType: 'json',
                         success:function(){
-                            console.log('ok');
-                            $("#msj-success").removeClass( "hide")
+                            $("#msj-success").removeClass( "hide");
+                            $("#msj-success").html('Su mensaje ha sido enviado.');
                         },
                         error: function (jqXHR, exception) {
                             console.log('nope');
@@ -659,66 +694,31 @@ $("#btn_send").click(function(){
                 }); 
     }else{
         console.log('adeudo');
-    }
- /*          
-    var msg = $("#txt_msg").val();
-    var subj = $("#txt_subj").val();
-
-            jQuery.each( usrs, function() { 
-                var route = "/sendEmailMsg/" + usrs[index];
-                var token = $("#token_send").val();
+         jQuery.each( usrs, function(){ 
+                    var route = "/sendEmail/" + usrs[index] + "/3";
+                    var token = $("#token_send").val();
                     $.ajax({
                         url: route,
                         headers: {'X-CSRF-TOKEN': token},
                         type: 'GET',
                         dataType: 'json',
-                        data:{
-                            msg:msg,
-                            subj:subj
-                        },
                         success:function(){
-                            console.log('ok');
-                            $("#msj-success-email").removeClass( "hide");
+                            $("#msj-success").removeClass( "hide");
+                            $("#msj-success").html('Su mensaje ha sido enviado.');
                         },
                         error: function (jqXHR, exception) {
                             console.log('nope');
-                            $("#msj-fail-email").removeClass( "hide");
+                            $("#msj-fail").removeClass( "hide");
                         }
-                    });
-                        console.log(usrs[index]);
-                        index++;
-                });
-    //}
-
-    /*
-        console.log('corte');
-        jQuery.each( usrs, function() { 
-                var route = "/sendEmail/" + usrs[index];
-                var token = $("#token_send").val();
-                $.ajax({
-                    url: route,
-                    headers: {'X-CSRF-TOKEN': token},
-                    type: 'GET',
-                    dataType: 'json',
-                    success:function(){
-                        console.log('ok');
-                    },
-                    error: function (jqXHR, exception) {
-                        console.log('nope');
-                    }
                 });
                     console.log(usrs[index]);
                     index++;
-            }); 
-    */
-
-    
-
+        }); 
+    }
 });
 
 
 /** Sitio **/
-
 function Mostrar_sitio(btn){
 
     hide_alert();

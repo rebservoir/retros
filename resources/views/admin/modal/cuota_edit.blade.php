@@ -21,7 +21,8 @@
 				</div>
 		
 			</div>
-				<div class="modal-footer">
+			<div class="modal-footer">
+				<div class="btn_go">
 					<div id="btns_delete_cuota">
 						{!!link_to('#', $title='Modificar Cuota', $attributes = ['id'=>'actualizar_cuota', 'class'=>'btn btn-primary'], $secure=null)!!}
 						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_cuota', 'class'=>'btn btn-danger'], $secure=null)!!}
@@ -30,8 +31,12 @@
 						<p>¿Está seguro de eliminar esta cuota?</p>
 				  		<a href="#" id="cancel_cuota" class="btn btn-default cancel">Cancelar</a>
 						<a href="#" id="delete_cuota" class="btn btn-danger">Ok</a>
-					</div>
+					</div>	
 				</div>
+				<div class="procesando hide">
+					<p>Procesando...</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

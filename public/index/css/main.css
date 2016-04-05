@@ -236,6 +236,9 @@ body{
     font-size: 18px;
     color: #666666;
 }
+div#form_msg p{
+    text-align: center;
+}
 
 /** footer **/
 #line_footer{

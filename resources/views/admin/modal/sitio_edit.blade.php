@@ -23,7 +23,12 @@
 					</div>
 			</div>
 				<div class="modal-footer">
+					<div class="btn_go">
 						{!!Form::submit('Modificar datos',['class'=>'btn btn-primary'])!!}
+					</div>
+					<div class="procesando hide">
+						<p>Procesando...</p>
+					</div>
 				</div>
 				{!! Form::close() !!}
 		</div>

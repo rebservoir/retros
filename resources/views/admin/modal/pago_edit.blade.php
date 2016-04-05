@@ -31,17 +31,21 @@
 				</div>
 			</div>
 				<div class="modal-footer">
-					<div id="btns_delete_pago">
-						{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar_pago', 'class'=>'btn btn-primary'], $secure=null)!!}
-						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_pago', 'class'=>'btn btn-danger'], $secure=null)!!}
+					<div class="btn_go">
+						<div id="btns_delete_pago">
+							{!!link_to('#', $title='Actualizar', $attributes = ['id'=>'actualizar_pago', 'class'=>'btn btn-primary'], $secure=null)!!}
+							{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_pago', 'class'=>'btn btn-danger'], $secure=null)!!}
+						</div>
+						<div id="btns_confirm_pago" class="btns_confirm"> 
+							<p>¿Está seguro de eliminar este pago?</p>
+					  		<a href="#" id="cancel_pago" class="btn btn-default cancel">Cancelar</a>
+							<a href="#" id="delete_pago" class="btn btn-danger">Ok</a>
+						</div>
 					</div>
-					<div id="btns_confirm_pago" class="btns_confirm"> 
-						<p>¿Está seguro de eliminar este pago?</p>
-				  		<a href="#" id="cancel_pago" class="btn btn-default cancel">Cancelar</a>
-						<a href="#" id="delete_pago" class="btn btn-danger">Ok</a>
+					<div class="procesando hide">
+						<p>Procesando...</p>
 					</div>
 				</div>
-
 		</div>
 	</div>
 </div>

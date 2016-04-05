@@ -12,7 +12,7 @@
 				<input type="hidden" name="_token_evento1" value="{{ csrf_token() }}" id="token_evento1">
 				<input type="hidden"  value="" id="evento_id">
 
-				<div id="the-basics" class="form-group">
+				<div class="form-group">
 					{!!Form::label('Titulo:')!!}
 					{!!Form::text('title',null,['id'=>'ev_title1','class'=>'input_title','placeholder'=>'Ingresar Titulo'])!!}
 				</div>
@@ -27,16 +27,20 @@
 					{!! Form::text('end', '', ['id' => 'datepicker_end1','placeholder'=>'aaaa-mm-dd'])!!}
 				</div>
 			</div>
-				<div class="modal-footer">
-				<div id="btns_delete">
-					{!!link_to('#', $title='Actualizar Evento', $attributes = ['id'=>'actualizar_evento', 'class'=>'btn btn-primary'], $secure=null)!!}
-					{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att', 'class'=>'btn btn-danger'], $secure=null)!!}
+			<div class="modal-footer">
+				<div class="btn_go">
+					<div id="btns_delete">
+						{!!link_to('#', $title='Actualizar Evento', $attributes = ['id'=>'actualizar_evento', 'class'=>'btn btn-primary'], $secure=null)!!}
+						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att', 'class'=>'btn btn-danger'], $secure=null)!!}
+					</div>
+					<div id="btns_confirm" class="btns_confirm"> 
+						<p>¿Está seguro de eliminar este evento?</p>
+				  		<a href="#" id="cancel" class="btn btn-default">Cancelar</a>
+						<a href="#" id="delete" class="btn btn-danger">Ok</a>
+					</div>	
 				</div>
-				
-				<div id="btns_confirm" class="btns_confirm"> 
-					<p>¿Está seguro de eliminar este evento?</p>
-			  		<a href="#" id="cancel" class="btn btn-default">Cancelar</a>
-					<a href="#" id="delete" class="btn btn-danger">Ok</a>
+				<div class="procesando hide">
+					<p>Procesando...</p>
 				</div>
 			</div>
 		</div>

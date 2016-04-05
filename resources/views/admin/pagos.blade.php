@@ -8,7 +8,7 @@
 <!-- ALERTAS PAGOS END -->
 
 <h3>Pagos</h3>
-<button class='btn btn-primary' onclick="close_modals();" data-toggle="modal" data-target="#pago_create">Registrar Pago Manual</button>
+<button class='btn btn-primary' data-toggle="modal" data-target="#pago_create">Registrar Pago Manual</button>
 
 <br><br>
 

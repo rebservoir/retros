@@ -22,7 +22,12 @@
 			</div>
 
 				<div class="modal-footer">
-					{!!link_to('#', $title='Registrar', $attributes = ['id'=>'registrar_cuota', 'class'=>'btn btn-primary'], $secure=null)!!}
+					<div class="btn_go">
+						{!!link_to('#', $title='Registrar', $attributes = ['id'=>'registrar_cuota', 'class'=>'btn btn-primary'], $secure=null)!!}
+					</div>
+					<div class="procesando hide">
+						<p>Procesando...</p>
+					</div>
 				</div>
 		</div>
 	</div>

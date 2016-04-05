@@ -5,7 +5,9 @@ namespace TuFracc\Http\Controllers;
 use Illuminate\Http\Request;
 use TuFracc\Http\Requests;
 use TuFracc\Http\Controllers\Controller;
+use TuFracc\Http\Requests\SitioUpdateRequest;
 use TuFracc\Sections;
+use TuFracc\Sites;
 use Session;
 use Redirect;
 
@@ -75,11 +77,13 @@ class SectionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SitioUpdateRequest $request)
     { 
-        $section= Sections::find($id);
-        $section->fill($request->all());
-        $section->save();
+
+        $id_site = \Session::get('id_site');
+        $sitio= Sites::find($id_site);
+        $sitio->fill($request->all());
+        $sitio->save();
         
         Session::flash('update','Cambios realizados exitosamente');
 

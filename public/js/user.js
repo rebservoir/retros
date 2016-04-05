@@ -1,9 +1,18 @@
 
-
 function hide_alert(){
     $("#msj-success").addClass("hide");
     $("#msj-fail").addClass("hide");
     $("#alert-success").addClass("hide");
+}
+
+function hide_btn(){
+    $(".btn_go").addClass("hide");
+    $(".procesando").removeClass("hide");
+}
+
+function hide_btn2(){
+    $(".procesando").addClass("hide");
+    $(".btn_go").removeClass("hide");
 }
 
 var id_usuario;
@@ -148,18 +157,25 @@ $( "#email" ).change(function() {
 
         $.get(route, function(response){
             console.log(response.res);
-            if(response.res == '1'){ //load json data from server and output message 
-                $("#email_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Este mail ya esta registrado para un usuario activo.</p></div>');
-            }else if(response.res == '2'){ //load json data from server and output message 
-                $("#email_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Un usuario con este email fue eliminado anteriormente</p></div>');
+            if(response.res == '1'){ 
+                $("#email_msg").html('<div class="alert alert-success" style="padding: 5px;"><p>Email sin registrar.</p></div>');
+            }else if(response.res == '2'){ 
+                $("#email_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Este email ya esta registrado para un usuario de este sitio.</p></div>');
+            }else if(response.res == '3'){
+                $("#email_msg").html('<div class="alert alert-warning" style="padding: 5px;"><p>Existe un usuario registrado con este email para otro sitio en Bill Box, desea asignar este sitio al usuario? Si/No</p></div>');
+                $("#asignar_btn").removeClass('hidden');
+                $("#asignar_btn").val(response.id_user);
+            }else if(response.res == '4'){
+                $("#email_msg").html('<div class="alert alert-warning" style="padding: 5px;"><p>Un usuario con este email existia anteriormente para otro sitio en Bill Box. Desea reactivarlo y asignarlo a este sitio? </p></div>');
                 $("#react_btn").removeClass('hidden');
                 $("#react_btn").val(response.id_user);
-            }else if(response.res == '3'){
-                $("#email_msg").html('<div class="alert alert-success" style="padding: 5px;"><p>Email sin registrar.</p></div>');
+            }else if(response.res == '5'){
+                $("#email_msg").html('<div class="alert alert-warning" style="padding: 5px;"><p>Un usuario con este email existia anteriormente para este sitio. desea reactivarlo? </p></div>');
+                $("#react_btn").removeClass('hidden');
+                $("#react_btn").val(response.id_user);
             }
         });
     }
-
 });
 
 $("#react_btn").click(function(){
@@ -172,6 +188,28 @@ $("#react_btn").click(function(){
             if(response.res == 'ok'){ //load json data from server and output message 
                 $("#msj-success").removeClass("hide");
                 $("#msj-success").html('<p>El usuario se encuentra activo nuevamente.</p>');
+                $("#react_btn").addClass('hidden');
+                $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+                $("#divSitio").load(location.href+" #divSitio>*","");
+                $('#user_create').modal('toggle');
+            }else if(response.res == 'fail'){ //load json data from server and output message
+                $("#msj-fail").removeClass("hide"); 
+                $("#msj-fail").html('<p>Limite alcanzado. No se pueden crear más usuarios.</p>');
+                $("#react_btn").addClass('hidden');
+                $('#user_create').modal('toggle');
+            }
+        });
+});
+
+$("#asignar_btn").click(function(){
+
+    var dato = $(this).val();
+    var route = "asignar/"+dato;
+
+        $.get(route, function(response){
+            if(response.res == 'ok'){ //load json data from server and output message 
+                $("#msj-success").removeClass("hide");
+                $("#msj-success").html('<p>El usuario se encuentra activo para este sitio.</p>');
                 $("#react_btn").addClass('hidden');
                 $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
                 $("#divSitio").load(location.href+" #divSitio>*","");

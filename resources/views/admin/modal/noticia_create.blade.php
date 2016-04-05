@@ -25,9 +25,14 @@
 						{!!Form::file('path', ['id'=>'path'])!!}
 					</div>
 			</div>
-					<div class="modal-footer">
-						{!!Form::submit('Crear Noticia',['id'=>'registrar_noticia', 'class'=>'btn btn-primary'])!!}
-					</div>
+			<div class="modal-footer">
+				<div class="btn_go">
+					{!!Form::submit('Crear Noticia',['id'=>'registrar_noticia', 'class'=>'btn btn-primary'])!!}
+				</div>
+				<div class="procesando hide">
+					<p>Procesando...</p>
+				</div>
+			</div>
 				{!! Form::close() !!}
 		</div>
 	</div>

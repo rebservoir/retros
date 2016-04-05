@@ -24,14 +24,19 @@
 			</div>
 
 				<div class="modal-footer">
-					<div id="btns_delete_documento">
-						{!!Form::submit('Actualizar',['id'=>'actualizar_documento', 'class'=>'btn btn-primary'])!!}
-						{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_documento', 'class'=>'btn btn-danger'], $secure=null)!!}
+					<div class="btn_go">
+						<div id="btns_delete_documento">
+							{!!Form::submit('Actualizar',['id'=>'actualizar_documento', 'class'=>'btn btn-primary'])!!}
+							{!!link_to('#', $title='Eliminar', $attributes = ['id'=>'delete_att_documento', 'class'=>'btn btn-danger'], $secure=null)!!}
+						</div>
+						<div id="btns_confirm_documento" class="btns_confirm"> 
+							<p>¿Está seguro de eliminar este documento?</p>
+					  		<a href="#" id="cancel_documento" class="btn btn-default cancel">Cancelar</a>
+							<a href="#" id="delete_documento" class="btn btn-danger">Ok</a>
+						</div>
 					</div>
-					<div id="btns_confirm_documento" class="btns_confirm"> 
-						<p>¿Está seguro de eliminar este documento?</p>
-				  		<a href="#" id="cancel_documento" class="btn btn-default cancel">Cancelar</a>
-						<a href="#" id="delete_documento" class="btn btn-danger">Ok</a>
+					<div class="procesando hide">
+						<p>Procesando...</p>
 					</div>
 				</div>
 

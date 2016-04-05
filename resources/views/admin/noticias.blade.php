@@ -46,28 +46,24 @@
 	@stop
 
 @section('content')
-			<div id="main_cont">
-				<div class="">
+<div id="main_cont">
+	<div class="">
+		<div class="cont_left col-lg-12 ">
+			<div class="box_header">
+				{!!Html::image('img/noticias.png')!!}
+				<h1>Noticias y Avisos</h1>
 
-					<div class="cont_left col-lg-12 ">
+				@if(Session::has('success'))
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						{{Session::get('success')}}
+					</div>
+				@endif
+			</div>
 
-						<div class="box_header">
-							{!!Html::image('img/noticias.png')!!}
-							<h1>Noticias y Avisos</h1>
-
-							@if(Session::has('success'))
-								<div class="alert alert-success alert-dismissible" role="alert">
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									{{Session::get('success')}}
-								</div>
-							@endif
-						</div>
-
-						@include('admin.noticia.noticias')
-
-					</div> <!-- END cont_left -->
-
-				</div>
-			</div> <!-- END main_cont -->
-
+			@include('admin.noticia.noticias')
+			
+		</div> <!-- END cont_left -->
+	</div>
+</div> <!-- END main_cont -->
 @stop
