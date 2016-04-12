@@ -117,7 +117,23 @@ $(".burger").click(function(){
 });
 
 
+/** FORGOT  **/
 
+$("#submit_forgot").click(function(){
+
+    var email = $("#email").val();
+
+    var route = "/forgot_send/" + email;
+
+        $.get(route, function(response){
+            if(response.res == 'ok'){ 
+                console.log('ok');
+            }else if(response.res == 'fail'){ //load json data from server and output message
+                console.log('fail');
+            }
+        });
+
+});
 
 
         

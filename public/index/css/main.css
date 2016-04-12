@@ -12,6 +12,7 @@ html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    font-family: 'adelle_sanslight', Arial, sans-serif !important;
 }
 
 /*
@@ -114,6 +115,9 @@ body{
 .navbar-nav>.active>a:hover {
     text-decoration: underline !important;
 }
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    text-align: center;
+}
 .logo img{
     width: 200px;
     margin: -15px 0px 0px 0px;
@@ -180,18 +184,97 @@ body{
 .sld_9{background-image: url('../img/slider9.jpg');}
 .sld_10{background-image: url('../img/slider10.jpg');}
 
-/*** tabla_mision ***/
-#tabla_mision th{
-    text-align: center;
-    width: 33.33%;
-    padding: 12px 0px 12px 0px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #246B9C;
+.section{
+    height: auto;
+    padding-top: 150px;
+    text-align: center;  
 }
-#tabla_mision td{
-    padding: 26px;
-    font-size: 16px;
+
+.acerca {
+    background: #fff;
+    font-family: 'adelle_sanslight', Arial, sans-serif !important;
+    padding-top: 25px;
+}
+.acerca p{
+    font-size: 18px;
+    width: 100%;
+    margin: 0 auto;
+    color: #666666;
+    margin-bottom: 30px;
+    text-align: center;
+}
+h1{
+    color: #3A95D4;
+    font-size: 38px;
+    border-bottom: 1px solid;
+    padding: 0px 0px 20px 0px;
+    width: 450px;
+    margin: 0 auto;
+    margin-bottom: 35px;
+    font-family: 'adelle_sanslight', Arial, sans-serif !important;
+}
+.acerca span{
+    font-weight: bolder;
+}
+.line_acerca{
+    border-top: 1px solid rgba(58,149,212,0.5);
+    width: auto;
+    margin: 0px 0px 100px 0px;
+}
+
+.info1 {
+    background: #fff;
+}
+
+.info2 {
+    background: #eee;
+}
+
+.pricing {
+    background: #fff;
+}
+
+
+.contacto {
+    background: #fff;
+}
+
+.modal-content{
+    width: 640px; 
+}
+
+/*** tabla_mision ***/
+#cuadros-mision .cuadro_mision{
+    border-top: 2px solid #3A95D4;
+    border-bottom: 10px solid #3A95D4;
+    border-left: 2px solid #3A95D4;
+    border-right: 10px solid #3A95D4;
+    padding: 15px 0px 10px 0px;
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    margin-top: 40px;
+    height: auto;
+}
+#cuadros-mision .cuadro_mision h1{
+    color: #3A95D4;
+    font-size: 30px;
+    border-bottom: 1px solid;
+    padding: 0px 0px 10px 0px;
+    width: 30%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+#cuadros-mision .cuadro_mision p{
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    margin: 0 auto;
+    color: #666666;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: lighter;
 }
 
 /*** Pricing **/
@@ -207,14 +290,12 @@ body{
     font-family: 'adelle_sanslight', Arial, sans-serif !important;
 }
 #table_pricing td:nth-child(1){
-    font-size: 20px;
-    font-weight: 100;
+    font-size: 18px;
     color: #246B9C;
     padding: 16px;
 }
 #table_pricing td:nth-child(2){
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 20px;
     color: #22B980;
     padding: 12px;
 }
@@ -295,19 +376,16 @@ div#form_msg p{
     color: #fff;
 }
 .btn_reg_def{
-    background-color: #246B9C !important;
-    padding: 12px 50px 12px 50px !important;
+    background-color: #246B9C;
+    padding: 12px 50px 12px 50px;
     color: #fff !important;
     margin-top: 30px;
     font-size: 22px;
     font-family: 'adelle_sanslight', Arial, sans-serif !important;
 }
-
-
-
-
-
-
+.btn_reg_def:hover{
+    background-color: #1E5A84;
+}
 
 
 /* ==========================================================================
@@ -478,3 +556,124 @@ div#form_msg p{
         page-break-after: avoid;
     }
 }
+
+
+
+@media (max-width: 1024px){
+
+
+} /*1024px*/
+@media (max-width: 900px){
+
+
+} /*900px*/
+@media (max-width: 768px){
+
+#info_intro {
+    height: 300px;
+    margin-top: 0px;
+}
+#btnVideo{
+    width: 40%;
+    font-size: 24px;
+    margin-top: 0px;
+}
+.modal-content{
+    width: 100%; 
+}
+#bb_video{
+    width: 100%;
+}
+.nav_btns {
+    float: none;
+}
+
+#cuadros-mision .cuadro_mision {
+    width: 80%;
+}
+
+#form {
+    width: 100%;
+}
+.ul_left {
+    float: none;
+    padding: 0px;
+}
+.ul_right {
+    float: none;
+    padding: 0px;
+}
+
+} /*768px*/
+@media (max-width: 640px){
+
+.btn{
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    padding: 3%;
+}
+#info_intro {
+    height: 300px;
+    margin-top: 50px;
+}
+#info_intro h3{
+    font-size: 18px;
+    line-height: 22px;
+}
+#btnVideo {
+    width: 50%;
+    font-size: 22px;
+    margin-top: 0px;
+}
+#intro {
+    height: 360px;
+}
+#cuadros-mision .cuadro_mision {
+    width: 80%;
+}
+.table-responsive {
+    width: 80%;
+    margin: 0 auto;
+}
+.section {
+    padding-top: 30px;
+}
+
+
+} /*640px*/
+@media (max-width: 530px){
+.table-responsive {
+    width: 100%;
+    margin: 0 auto;
+}
+
+} /*530px*/
+@media (max-width: 480px){
+h1 {
+    width: 100%;
+    font-size: 32px;
+    padding: 0px 0px 12px 0px;
+}
+
+#intro {
+    height: 300px;
+}
+#cuadros-mision .cuadro_mision {
+    width: 100%;
+}
+
+} /*480px*/
+@media (max-width: 360px){
+
+
+} /*360px*/
+@media (max-width: 320px){
+
+
+} /*320px*/
+@media (max-width: 240px){
+
+
+} /*240px*/

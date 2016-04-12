@@ -17,11 +17,15 @@ use Session;
 use Redirect;
 use Excel;
 use DB;
+use Hash;
+use Mail;
 use Illuminate\Routing\Route;
 use Illuminate\Database\Eloquent;
 
 class UsuarioController extends Controller
 {
+
+    protected $auth;
 
     public function __construct(){
         $this->middleware('auth');
@@ -69,24 +73,34 @@ class UsuarioController extends Controller
             //$plan = Plans::where('id', $sitio_plan )->get();
             $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
             $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
+            $password = substr( md5(microtime()), 1, 6);
+            $sitio_this = Sites::findOrFail($id_site);
 
             if( $user_count<$user_limit){
 
                 $new_user = User::create($request->all());
+                $usuario = User::find($new_user->id);
+                $usuario->password = Hash::make($password);
+                $usuario->save();
 
                 DB::table('sites_users')->insert(
                 ['id_user' => $new_user->id,
                  'id_site' => $id_site
                  ]
                 );
-                /*    
-                $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
 
-                Mail::send('emails.msg',$data, function ($msj) use ($data) {
-                    $msj->subject($data['subj']);
-                    $msj->to($data['user_mail']);
-                });
-                */
+            //email invitacion
+            $data = ['username'     => $new_user->name,
+                     'user_email'   => $new_user->email,
+                     'sitio'        => $sitio_this->name,
+                     'admin_email'  => '-',
+                     'password'     => $password
+                ];
+
+            Mail::send('emails.invitacion', $data, function ($msj) use ($data) {
+                $msj->subject('Invitación Bill Box');
+                $msj->to($data['user_email']);
+            });
 
                 return response()->json([
                     "tipo" => 'success',
@@ -159,17 +173,36 @@ class UsuarioController extends Controller
         $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
         $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
         $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
+        $sitio_this = Sites::findOrFail($id_site);
+        //$admin = User::findOrFail($this->auth->user()->id);
+        $user = User::findOrFail($id);
+        //$password = substr( md5(microtime()), 1, 6);
 
         if( $user_count<$user_limit){
             
             DB::table('sites_users')->insert(
-                    ['id_user' => $id,
+                     ['id_user' => $id,
                      'id_site' => $id_site
                      ]
             );
+
+            //email invitacion
+            $data = ['username'     => $user->name,
+                     'user_email'   => $user->email,
+                     'sitio'        => $sitio_this->name,
+                     'admin_email'  => '-',
+                     'password'     => 'Contraseña Actual'
+                ];
+
+            Mail::send('emails.invitacion', $data, function ($msj) use ($data) {
+                $msj->subject('invitación Bill Box');
+                $msj->to($data['user_email']);
+            });
+
             return response()->json([
                 "res" => 'ok'
             ]);
+
         }else{
             return response()->json([
                 "res" => 'fail'
@@ -199,6 +232,9 @@ class UsuarioController extends Controller
             return response()->json([
                 "res" => 'ok'
             ]);
+
+            //email invitacion
+
         }else{
             return response()->json([
                 "res" => 'fail'

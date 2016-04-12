@@ -23,6 +23,25 @@ function hide_btn2(){
     $(".btn_go").removeClass("hide");
 }
 
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '<Ant',
+ nextText: 'Sig>',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'dd/mm/yy',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+
 $(function() {
 
     $( "#datepicker" ).datepicker({
@@ -673,7 +692,7 @@ $("#btn_send").click(function(){
     }else if( tipo == 2){
         console.log('Corte');
             jQuery.each( usrs, function() { 
-                    var route = "/sendEmail/" + usrs[index] + "/2";
+                    var route = "/sendEmail/" + usrs[index] + "/corte";
                     var token = $("#token_send").val();
                     $.ajax({
                         url: route,
@@ -695,7 +714,7 @@ $("#btn_send").click(function(){
     }else{
         console.log('adeudo');
          jQuery.each( usrs, function(){ 
-                    var route = "/sendEmail/" + usrs[index] + "/3";
+                    var route = "/sendEmail/" + usrs[index] + "/adeudo";
                     var token = $("#token_send").val();
                     $.ajax({
                         url: route,
@@ -731,3 +750,58 @@ function Mostrar_sitio(btn){
     });
 }
 
+
+
+/* PAYPAL */
+
+function mostrar_paypal(btn){
+
+    hide_alert();
+    console.log(btn.value);
+
+    var route = "/credenciales/"+btn.value+"/edit";
+
+    $.get(route, function(res){
+        $("#client_id").val(res[0].client_id);
+        $("#secret").val(res[0].secret);
+    });
+}
+
+$("#registrar_paypal").click(function(){
+
+    hide_alert();
+    hide_btn();
+
+    var dato1 = $("#client_id").val();
+    var dato2 = $("#secret").val();
+    var route = "/credenciales";
+    var token = $("#token_paypal").val();
+
+    $.ajax({
+        url: route,
+        headers: {'X-CSRF-TOKEN': token},
+        type: 'POST',
+        dataType: 'json',
+        data:{client_id: dato1, secret: dato2},
+
+        success:function(){
+            $("#msj-success").removeClass("hide");
+            $("#msj-success").html("Datos registrados exitosamente.");
+            $('#paypal_edit').modal('toggle');
+            hide_btn2();
+        },
+         error: function (jqXHR, exception) {
+            var obj = jQuery.parseJSON(jqXHR.responseText);
+            $("#msj-fail").removeClass("hide");
+            var msj = obj.concepto + '<br>' + obj.amount;
+            var res = msj.replace(/undefined/gi, 'Error');
+            var res = res.replace(/client_id/gi, 'Id Cliente');
+            var res = res.replace(/secret/gi, 'Clave Secreta');
+            $("#msj-fail").html(res);
+            $('#paypal_edit').modal('toggle');
+            hide_btn2();
+        } 
+    });
+
+
+});

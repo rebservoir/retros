@@ -7,6 +7,7 @@
 	@include('admin.modal.cuota_create')
 	@include('admin.modal.cuota_edit')
 	@include('admin.modal.sitio_edit')
+	@include('admin.modal.paypal_edit')
 
 	@section('css')
 		{!!Html::style('css/jquery-ui.min.css')!!}
@@ -85,6 +86,7 @@
 					<li id="int_l3">					<p>Registro de Cuotas</p></li>
 					<li id="int_l4">					<p>Envió de Correos</p></li>
 					<li id="int_l5">					<p>Configuración del sitio</p></li>
+					<li id="int_l6">					<p>Configuración de PayPal</p></li>
 				</ul>
 			</div>
 		</div>
@@ -137,6 +139,16 @@
 						
 				<div class="cont_in_r">
 					@include('admin/sitio')
+				</div>
+			</div>
+
+			<div id="int_div6" class="int_div">
+				<div class="box_header">
+					<p>Contenidos > Configuración de PayPal</p>
+				</div>
+						
+				<div class="cont_in_r">
+					@include('admin/paypal')
 				</div>
 			</div>
 		</div> <!-- END cont_right -->

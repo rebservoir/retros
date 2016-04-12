@@ -65,62 +65,89 @@ class PagosController extends Controller
             $newDate = explode("-", $request->date);
             $flag=true;
 
-            foreach($pagos as $value){
-                $date = explode("-", $value->date);
-                if(($date[0]==$newDate[0])&&($date[1]==$newDate[1])){
-                    $flag=false;
-                    break;
-                }
-            }
+            if(empty($pagos)){
 
-            if($flag){
+                 DB::table('pagos')->insert(
+                            [   'id_user' => $id_user,
+                                'date' => $request->date,
+                                'status' => $request->status,
+                                'amount' => $cuota->amount,
+                                'user_name' => $user->name,
+                                'id_site' => $id_site
+                            ]);
 
-                $ultimo = DB::table('pagos')->where('id_user', $id_user)->orderBy('date', 'dsc')->take(1)->value('date');
+                            $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
 
-                //get next year and month
-                $ultimo_pago = explode("-", $ultimo);
-                    if(intval($ultimo_pago[1])==12){
-                        $next_m = 1;
-                        $next_y = intval($ultimo_pago[0])+1;
-                    }else{
-                        $next_m = intval($ultimo_pago[1])+1;
-                        $next_y = intval($ultimo_pago[0]);
+                            Mail::send('emails.msg',$data, function ($msj) use ($data) {
+                                $msj->subject($data['subj']);
+                                $msj->to($data['user_mail']);
+                            });
+
+                            return response()->json([
+                                "tipo" => 'success'
+                            ]);
+
+
+            }else{
+
+                foreach($pagos as $value){
+                    $date = explode("-", $value->date);
+                    if(($date[0]==$newDate[0])&&($date[1]==$newDate[1])){
+                        $flag=false;
+                        break;
                     }
+                }
 
-                    if((intval($newDate[0])==$next_y)&&(intval($newDate[1])==$next_m)){
-                        DB::table('pagos')->insert(
-                        [   'id_user' => $id_user,
-                            'date' => $request->date,
-                            'status' => $request->status,
-                            'amount' => $cuota->amount,
-                            'user_name' => $user->name,
-                            'id_site' => $id_site
-                        ]);
+                if($flag){
 
-                        $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
+                    $ultimo = DB::table('pagos')->where('id_user', $id_user)->where('id_site', $id_site)->orderBy('date', 'dsc')->take(1)->value('date');
 
-                        Mail::send('emails.msg',$data, function ($msj) use ($data) {
-                            $msj->subject($data['subj']);
-                            $msj->to($data['user_mail']);
-                        });
+                    //get next year and month
+                    $ultimo_pago = explode("-", $ultimo);
+                        if(intval($ultimo_pago[1])==12){
+                            $next_m = 1;
+                            $next_y = intval($ultimo_pago[0])+1;
+                        }else{
+                            $next_m = intval($ultimo_pago[1])+1;
+                            $next_y = intval($ultimo_pago[0]);
+                        }
 
-                        return response()->json([
-                            "tipo" => 'success'
-                        ]);
+                        if((intval($newDate[0])==$next_y)&&(intval($newDate[1])==$next_m)){
+                            DB::table('pagos')->insert(
+                            [   'id_user' => $id_user,
+                                'date' => $request->date,
+                                'status' => $request->status,
+                                'amount' => $cuota->amount,
+                                'user_name' => $user->name,
+                                'id_site' => $id_site
+                            ]);
+
+                            $data = [ 'msg'=> 'pago generado', 'subj'=> 'Pago acreditado', 'user_mail' => $user->email];
+
+                            Mail::send('emails.msg',$data, function ($msj) use ($data) {
+                                $msj->subject($data['subj']);
+                                $msj->to($data['user_mail']);
+                            });
+
+                            return response()->json([
+                                "tipo" => 'success'
+                            ]);
+                        }else{
+                            return response()->json([
+                                "tipo" => 'fail',
+                                "message" => 'No estan permitido intervalos sin pagos creados. Se debe crear un pago con fecha inmediata al ultimo creado.'
+                            ]);
+                        }
+
                     }else{
                         return response()->json([
                             "tipo" => 'fail',
-                            "message" => 'No estan permitido intervalos sin pagos creados. Se debe crear un pago con fecha inmediata al ultimo creado.'
+                            "message" => 'Ya existe un pago para este mes y usuario.'
                         ]);
                     }
 
-                }else{
-                    return response()->json([
-                        "tipo" => 'fail',
-                        "message" => 'Ya existe un pago para este mes y usuario.'
-                    ]);
-                }
-                
+            }
+      
         } // end request ajax
     } //end function
 

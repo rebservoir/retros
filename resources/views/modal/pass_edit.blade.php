@@ -11,29 +11,39 @@
 
 
 			<div class="modal-body">
-				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_pass">
-				<input type="hidden" id="id1">
-				
-				<div class="form-group">
-					{!!Form::label('Introduzca contraseña actual:')!!}
-					<br>
-					{!!Form::password('name',null,['id'=>'pass1','class'=>'form-control','placeholder'=>'Contraseña actual'])!!}
-				</div>
-				<div class="form-group">
-					{!!Form::label('Introduzca contraseña nueva:')!!}
-					<br>
-					{!!Form::password('name',null,['id'=>'pass2','class'=>'form-control','placeholder'=>'Contraseña nueva'])!!}
-				</div>
-				<div class="form-group">
-					{!!Form::label('Confirmar contraseña nueva:')!!}
-					<br>
-					{!!Form::password('name',null,['id'=>'pass3','class'=>'form-control','placeholder'=>'Confirmar Contraseña nueva'])!!}
-				</div>
+
+				<p>Ingresa tu dirección de correo para restaurarla. <br> Es posible que tengas que verificar tu carpeta de spam</p>
+
+            <br>
+
+                <form method="POST" action="/pass_recover">
+                    {!! csrf_field() !!}
+
+                    @if (count($errors) > 0)
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <br>
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder = 'Ingresa tu Email'>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">
+                            Enviar Correo
+                        </button>
+                    </div>
+                </form>
+
+            <br>
+
 			</div>
 			
-			<div class="modal-footer">
-				{!!link_to('#', $title='Modificar', $attributes = ['id'=>'modificar_pass', 'class'=>'btn btn-primary'], $secure=null)!!}
-			</div>
 		</div>
 	</div>
 </div>

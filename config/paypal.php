@@ -1,5 +1,11 @@
 <?php
+
+    $client_id = 'AbY2sudkGMJvjkjLpJ041FSnefC-qNAT2YC6gcFczZuIqjIzJPSNrKU_1qgQkriX53PURH0OTrsndXxK';
+    $secret = 'EJCUhai8sQaFsiO6utCJBImMJYZUcNTXdP7J99kIsGV4AI_6pXQp6DlV0zAUhehVQBD_fm_3Ej0G_hwZ';
+
 return array(
+
+
     // set your paypal credential
     'client_id' => 'AbY2sudkGMJvjkjLpJ041FSnefC-qNAT2YC6gcFczZuIqjIzJPSNrKU_1qgQkriX53PURH0OTrsndXxK',
     'secret' => 'EJCUhai8sQaFsiO6utCJBImMJYZUcNTXdP7J99kIsGV4AI_6pXQp6DlV0zAUhehVQBD_fm_3Ej0G_hwZ',

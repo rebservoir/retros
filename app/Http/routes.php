@@ -14,8 +14,26 @@ Route::get('/', function () {
     return redirect('index');
 });
 
+
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+// Registration routes...
+//Route::get('auth/register', 'Auth\AuthController@getRegister');
+//Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+/*Password Reset*/
+// Password reset link request routes...
+Route::get('forgot', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+Route::post('pass_recover', 'Auth\PasswordController@postEmail');
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
 Route::get('login','FrontController@login');
-Route::get('forgot','FrontController@forgot');
+//Route::get('forgot','FrontController@forgot');
 Route::get('sitios','FrontController@checkSites');
 Route::get('setSite/{id_site?}','FrontController@setSite');
 Route::get('home','FrontController@index');
@@ -24,6 +42,7 @@ Route::get('admin/file','FrontController@index');
 Route::get('noticias/{id?}','FrontController@noticias');
 Route::get('contacto','FrontController@contacto');
 Route::get('micuenta','FrontController@cuenta');
+Route::get('forgot_send/{email?}','FrontController@forgot_send');
 
 Route::get('finanzas/{mes_sel?}/{year_sel?}', 'FrontController@finanzas');
 Route::get('calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
@@ -69,11 +88,14 @@ Route::resource('saldos','SaldosController');
 Route::resource('cuotas','CuotasController');
 Route::resource('eventos','CalendarioController');
 Route::resource('documentos','DocumentosController');
+Route::resource('credenciales','PaypalCredentialsController');
 
 Route::get('logout','LogController@logout');
 Route::get('controlador','PruebaController@index');
 Route::get('name/{nombre}','PruebaController@nombre');
 Route::resource('objeto','ObjetoController');  //php artisan make:controller ObjetoController
+
+
 
 Route::get('prueba', function(){
 	return "Hola desde routes.php";

@@ -1,5 +1,11 @@
 
-		<div class="form-group">
+	@if( count($tipos) === 0 )
+
+		<div><p>Crear Cuotas en <a href="/admin/administracion">Administración</a> antes de generar usuarios.</p></div>
+
+	@else
+
+	<div class="form-group">
 			{!!Form::label('Nombre:')!!}
 			{!!Form::text('name',null,['id'=>'name','class'=>'form-control','placeholder'=>'Ingresar nombre de usuario'])!!}
 		</div>
@@ -11,10 +17,6 @@
 			</div>
 			<button type="button" id="react_btn" class="btn btn-primary hidden" value="" style="margin: -10px 0px 10px 0px;">Reactivar usuario</button>
 			<button type="button" id="asignar_btn" class="btn btn-primary hidden" value="" style="margin: -10px 0px 10px 0px;">Asignar usuario</button>
-		<div class="form-group">
-			{!!Form::label('Contraseña:')!!}
-			{!!Form::password('password',['id'=>'password','class'=>'form-control','placeholder'=>'Ingresar Contraseña'])!!}
-		</div>
 		<div class="form-group">
 			{!!Form::label('Dirección:')!!}
 			{!!Form::text('address',null,['id'=>'address','class'=>'form-control','placeholder'=>'Ingresar direccion'])!!}
@@ -35,6 +37,14 @@
 			{!!Form::label('Rol:')!!}
 			{!!Form::select('role', ['Residente', 'Administrador'],null,['id'=>'role'])!!}
 		</div>
+
+
+
+	@endif
+
+
+		
+
 
 
 

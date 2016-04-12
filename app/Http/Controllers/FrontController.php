@@ -20,10 +20,13 @@ use TuFracc\Plans;
 use TuFracc\Calendario;
 use TuFracc\Documentos;
 use DB;
+use Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
 use Session;
 use Redirect;
+use Mail;
 use Illuminate\Database\Eloquent;
 
 class FrontController extends Controller
@@ -91,11 +94,6 @@ class FrontController extends Controller
         return view('login');
     }
 
-    public function forgot()
-    {
-        return view('forgot');
-    }
-
     public function noticias(Request $request)
     {
         $id_site = \Session::get('id_site');
@@ -126,8 +124,15 @@ class FrontController extends Controller
                   })->get();
         $ultimo_p = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 1)->where('id_site', $id_site)->orderBy('date', 'dsc')->get();
         $vencidos = DB::table('pagos')->where('id_user', $this->auth->user()->id)->where('status', 0)->where('id_site', $id_site)->orderBy('date', 'asc')->get();
-        $cuotas = Cuotas::find($this->auth->user()->type);
-        $cuota = $cuotas->amount;
+        $user = User::find($this->auth->user()->id);
+        $cuotas = Cuotas::find($user->type);
+
+        if(empty($cuota)){
+            $cuota = 0;
+        }else{
+            $cuota = $cuotas->amount;  
+        }
+        
         return view('cuenta', ['vencidos' => $vencidos,'pagos' => $pagos, 'cuotas' => $cuotas,
                                 'sitios' => $sitios, 'ultimo_p' => $ultimo_p, 'cuota' => $cuota]);
     }
@@ -240,8 +245,7 @@ class FrontController extends Controller
         }
     }
 
-    public function usuarios()
-    {
+    public function usuarios(){
         if($this->auth->user()->role == 1){
 
                 $id_site = \Session::get('id_site');

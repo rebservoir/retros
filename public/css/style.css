@@ -544,7 +544,7 @@ div#footer{
 
 div#login_box{
     width: 450px;
-    height: 450px;
+    height: auto;
     background-color: #fff;
     border: 1px solid #e2e2e2;
     margin:0px auto; 
@@ -552,6 +552,7 @@ div#login_box{
     margin-top: 180px;
     text-align: center;
     font-size: 18px;
+    padding-bottom: 30px;
 }
 div#login_box img{
     width: 300px;

@@ -23,6 +23,8 @@ use PayPal\Api\Transaction;
 use TuFracc\User;
 use TuFracc\Pagos;
 use TuFracc\Cuotas;
+use TuFracc\Sites;
+use TuFracc\Paypal_credentials;
 
 use TuFracc\Http\Requests;
 use TuFracc\Http\Controllers\Controller;
@@ -31,6 +33,8 @@ use DB;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
 use Session;
+use Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class PaypalController extends BaseController
 {
@@ -39,8 +43,57 @@ class PaypalController extends BaseController
     
 	public function __construct(Guard $auth)
 	{
+
+		$id_site = \Session::get('id_site');
+		//$credentials = Paypal_credentials::where('id_site', $id_site)->get();
+        //$credentials = collect($credentials);
+
+
+        //$client_id = $credentials->get('client_id');
+ 		//$secret = Crypt::decrypt($credentials->get('secret'));
+        //$secret = $credentials->get('secret');
+
+		$client_id = Paypal_credentials::where('id_site', $id_site)->value('client_id');
+		$secret = Paypal_credentials::where('id_site', $id_site)->value('secret');
+
 		// setup PayPal api context
-		$paypal_conf = \Config::get('paypal');
+		//$paypal_conf = \Config::get('paypal');
+        $paypal_conf = array(
+
+    // set your paypal credential
+    'client_id' => $client_id,
+    'secret' => $secret,
+    /**
+     * SDK configuration 
+     */
+    'settings' => array(
+        /**
+         * Available option 'sandbox' or 'live'
+         */
+        'mode' => 'sandbox',
+        /**
+         * Specify the max request time in seconds
+         */
+        'http.ConnectionTimeOut' => 30,
+        /**
+         * Whether want to log to a file
+         */
+        'log.LogEnabled' => true,
+        /**
+         * Specify the file that want to write on
+         */
+        'log.FileName' => storage_path() . '/logs/paypal.log',
+        /**
+         * Available option 'FINE', 'INFO', 'WARN' or 'ERROR'
+         *
+         * Logging is most verbose in the 'FINE' level and decreases as you
+         * proceed towards ERROR
+         */
+        'log.LogLevel' => 'FINE'
+    ),
+);
+
+
 		$this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
 		$this->_api_context->setConfig($paypal_conf['settings']);
 
