@@ -73,7 +73,9 @@
 						<div id="morosos" class="col-xs-12 pull-right">
 								<ul>
 								@foreach($users as $user)
-									<li>{{$user->name}}</li>
+									@if ($user->status == 0)
+										<li>{{$user->name}}</li>
+									@endif
 								@endforeach		
 							</ul>
 						</div>

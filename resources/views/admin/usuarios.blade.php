@@ -97,10 +97,11 @@
 				</div>
 
 				<div style="float: left;">
-					<button value='' OnClick='clearModals()' class='reg_user btn btn-primary' data-toggle="modal" data-target="#user_create">Registrar un Nuevo Usuario</button>
+					<button value='' OnClick='' class='reg_user btn btn-primary' data-toggle="modal" data-target="#user_create">Registrar un Nuevo Usuario</button>
 					<br>
 					<div id="the-basics" class="form-group">
-						<input type="text" id="search-input" class="typeahead form-control" placeholder="Buscar..." >	
+						<input type="text" id="search-input" class="typeahead form-control" placeholder="Buscar..." >
+						<button value='' OnClick='search();' class='btn btn-primary'>Buscar</button>		
 					</div>
 				</div>
 		

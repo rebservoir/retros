@@ -51,11 +51,10 @@ Route::get('noticia_show/{id?}','NoticiaController@show');
 Route::get('edit_info/{id?}','FrontController@edit_info');
 Route::get('pagos_show','FrontController@pagos_show');
 Route::put('update_info_user/{id?}','FrontController@update_info_user');
-Route::get('edit_react/{id?}','UsuarioController@edit_react');
 
 Route::get('admin/checkEmail/{email?}','UsuarioController@checkEmail');
-Route::post('admin/reactivar/{id?}','UsuarioController@reactivar');
-Route::post('admin/asignar/{id?}','UsuarioController@asignar');
+Route::get('admin/reactivar/{id?}','UsuarioController@reactivar');
+Route::get('admin/asignar/{id?}','UsuarioController@asignar');
 Route::get('admin/home','FrontController@admin');
 Route::get('admin/administracion','FrontController@admin_modulo');
 Route::get('admin/calendario/{mes_sel?}/{year_sel?}', 'FrontController@calendario');
@@ -65,7 +64,6 @@ Route::get('admin/contenidos','FrontController@contenidos');
 Route::get('admin/noticia_show/{id?}','NoticiaController@show');
 Route::get('admin/usuarios/','FrontController@usuarios');
 Route::get('admin/usuarios/search/{id?}','UsuarioController@search');
-
 Route::get('admin/usuarios/sort/{sort?}','UsuarioController@sort');
 Route::get('admin/usuarios/sort_usr/{sort?}','UsuarioController@sort_usr');
 Route::get('admin/usuarios/add/{id?}','UsuarioController@add');

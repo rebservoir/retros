@@ -13,7 +13,6 @@ use Redirect;
 use TuFracc\Http\Controllers\Controller;
 use App\Jobs\SendEmail;
 use DB;
-use Illuminate\Contracts\Auth\Guard;
 
 class MailController extends Controller
 {
@@ -186,24 +185,22 @@ class MailController extends Controller
                 $fecha = explode("-", $pago->date); 
                 $debe = $debe . '<strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">'
                 . '•' . $month[intval($fecha[1])] . ' ' . $fecha[0] . '</strong><br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">';
+  
             }
 
-                $data = ['username'   => $user->name,
-                        'user_mail'   => $user->email,
+                $data = ['username'      => $user->name,
+                        'user_mail'     => $user->email,
                         'debe'        => $debe
                 ];
 
-            if($pagos->count() > 0){
-                Mail::send('emails.adeudo', $data, function ($msj) use ($data) {
-                    $msj->subject('Recordatorio de Pago');
-                    $msj->to($data['user_mail']);
-                });
-            }
+            Mail::send('emails.adeudo', $data, function ($msj) use ($data) {
+                $msj->subject('Recordatorio de Pago');
+                $msj->to($data['user_mail']);
+            });
 
             return response()->json([
                 "message"=>'listo'
             ]);
-
         }else if($tipo=='invitacion'){ 
 
             $sitio = Sites::where('id', $id_site)->get();

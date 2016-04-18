@@ -22,27 +22,13 @@
 				<div id="logo" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
 					{!!Html::image('img/logo_tu.jpg')!!}
 				</div>
-				
+
 				<div id="mensaje">
 					<div class="pull-left">
-						@foreach($sitios as $sitio)
-							<p>{{$sitio->name}}</p>
-						@endforeach
-						<p>|</p>
-						<p>{!!Auth::user()->name!!}</p>
+						<p>Bienvenido {!!Auth::user()->name!!}</p>
 					</div>
 					<div class="pull-right">
-						<div class="dropdown">
-							<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-						    	<span class="glyphicon glyphicon-chevron-down"></span>
-							</button>
-						    <ul class="dropdown-menu">
-						    	@if($sites>1)
-									<li><a href="/sitios"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>Cambiar de Sitio</a></li>
-						    	@endif
-								<li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Cerrar Sesión</a></li>
-							</ul>
-						</div>
+						<a href="/logout">Cerrar Sesión</a>
 					</div>
 				</div>
 			</div>			

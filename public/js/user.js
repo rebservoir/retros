@@ -1,27 +1,3 @@
-function clearModals(){
-    $("#name").val('');
-    $("#email").val('');
-    $("#address").val('');
-    $("#phone").val('');
-    $("#cel").val('');
-    $("#id").val('');
-    $("#type").val(null);
-    $("#name1").val('');
-    $("#email1").val('');
-    $("#address1").val('');
-    $("#phone1").val('');
-    $("#cel1").val('');
-    $("#id1").val('');
-    $("#type1").val(null);
-    clearAlerts();
-}
-
-function clearAlerts(){
-    $("#email_msg").html('');
-    $("#react_btn").addClass('hidden');
-    $(".type_msg").html('');
-    $("#asignar_btn").addClass('hidden');
-}
 
 function hide_alert(){
     $("#msj-success").addClass("hide");
@@ -42,7 +18,7 @@ function hide_btn2(){
 var id_usuario;
 function get_id_user_pago(id_user){
     id_usuario = id_user;
-    search();
+    console.log('la id_user es:' + id_usuario);
 }
 
 function Mostrar(btn){
@@ -50,16 +26,15 @@ function Mostrar(btn){
     hide_alert();
 
     var route = "/usuario/"+btn.value+"/edit";
-
     $.get(route, function(res){
-        $("#name1").val(res[0].name);
-        $("#email1").val(res[0].email);
-        $("#address1").val(res[0].address);
-        $("#phone1").val(res[0].phone);
-        $("#cel1").val(res[0].celphone);
-        $("#role1").val(res[0].role);
-        $("#id1").val(res[0].id);
-        $("#type1").val(res[0].type);
+        $("#name1").val(res.name);
+        $("#email1").val(res.email);
+        $("#address1").val(res.address);
+        $("#phone1").val(res.phone);
+        $("#cel1").val(res.celphone);
+        $("#role1").val(res.role);
+        $("#id1").val(res.id);
+        $("#type1").val(res.type);
     });
 }
 
@@ -203,157 +178,35 @@ $( "#email" ).change(function() {
     }
 });
 
-
 $("#react_btn").click(function(){
-    dato = $(this).val();
-    var route = "/edit_react/" + dato;
+    console.log('reactivar');
 
-    $.get(route, function(res){
-        $("#name").val(res.name);
-        $("#email").val(res.email);
-        $("#address").val(res.address);
-        $("#phone").val(res.phone);
-        $("#cel").val(res.celphone);
-        $("#id").val(res.id);
-    });
+    var dato = $(this).val();
+    var route = "reactivar/"+dato;
 
-    $(".btn_go").addClass("hide");
-    $("#react_btn").addClass("hide");
-    $("#email_msg").html('');
-    $(".btn_reactivar_2").removeClass("hide");
-});
-
-$("#reactivar_2").click(function(){
-
-    hide_alert();
-    var dato1 = $("#type").val();
-
-    if(dato1==null || dato1 == ''){
-        $(".type_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Se debe asignar una cuota al usuario.</p></div>');
-    }else{
-
-    $(".btn_reactivar_2").addClass("hide");
-    $(".procesando").removeClass("hide");
-
-    var value = $("#id").val();
-    var dato1 = $("#name").val();
-    var dato2 = $("#email").val();
-    var dato3 = $("#address").val();
-    var dato4 = $("#phone").val();
-    var dato5 = $("#cel").val();
-    var dato6 = $("#role").val();
-    var dato7 = $("#type").val();
-
-    var route = "reactivar/"+ value;
-    var token = $("#token").val();
-
-    $.ajax({
-        url: route,
-        headers: {'X-CSRF-TOKEN': token},
-        type: 'POST',
-        dataType: 'json',
-        data:{
-            name:       dato1, 
-            email:      dato2, 
-            address:    dato3, 
-            phone:      dato4,
-            celphone:   dato5,
-            role:       dato6,
-            type:       dato7
-        },
-        success:function(data){
-            if(data.res=='ok'){
-                    $("#msj-success").removeClass("hide");
-                    $("#msj-success").html('<p>El usuario se encuentra activo nuevamente.</p>');
-                    $("#react_btn").addClass('hidden');
-                    $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
-                    $("#divSitio").load(location.href+" #divSitio>*","");
-                    $('#user_create').modal('toggle');
-                    hide_btn2();
-            }else if(data.res=='fail'){
-                    $("#msj-fail").removeClass("hide"); 
-                    $("#msj-fail").html('<p>Limite alcanzado. No se pueden crear más usuarios.</p>');
-                    $("#react_btn").addClass('hidden');
-                    $('#user_create').modal('toggle');
-                    hide_btn2();
-            } 
-        },
-        error: function (jqXHR, exception) {
-            var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail").removeClass( "hide");
-            var msj = obj.name + '<br>' + obj.email + '<br>' + '<br>' + obj.address + '<br>';
-            var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/name/gi, 'Nombre');
-            var res = res.replace(/address/gi, 'Dirección');
-            var res = res.replace(/email/gi, 'Email');
-            $("#msj-fail").html(res);
-            $('#user_create').modal('toggle');
-        }              
-    });
-}
+        $.get(route, function(response){
+            if(response.res == 'ok'){ //load json data from server and output message 
+                $("#msj-success").removeClass("hide");
+                $("#msj-success").html('<p>El usuario se encuentra activo nuevamente.</p>');
+                $("#react_btn").addClass('hidden');
+                $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
+                $("#divSitio").load(location.href+" #divSitio>*","");
+                $('#user_create').modal('toggle');
+            }else if(response.res == 'fail'){ //load json data from server and output message
+                $("#msj-fail").removeClass("hide"); 
+                $("#msj-fail").html('<p>Limite alcanzado. No se pueden crear más usuarios.</p>');
+                $("#react_btn").addClass('hidden');
+                $('#user_create').modal('toggle');
+            }
+        });
 });
 
 $("#asignar_btn").click(function(){
 
-    dato = $(this).val();
-    var route = "/edit_react/" + dato;
+    var dato = $(this).val();
+    var route = "asignar/"+dato;
 
-    $.get(route, function(res){
-        $("#name").val(res.name);
-        $("#email").val(res.email);
-        $("#address").val(res.address);
-        $("#phone").val(res.phone);
-        $("#cel").val(res.celphone);
-        $("#id").val(res.id);
-    });
-
-    $(".btn_go").addClass("hide");
-    $(".btn_asignar_2").removeClass("hide");
-    $("#email_msg").html('');
-    $("#asignar_btn").addClass("hide");
-
-});
-
-$("#asignar_2").click(function(){
-
-
-    hide_alert();
-    var dato7 = $("#type").val();
-
-    if(dato7==null || dato7 == ''){
-        $(".type_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Se debe asignar una cuota al usuario.</p></div>');
-    }else{
-        $(".type_msg").html('');
-        $("#asignar_2").addClass("hide");
-        $(".procesando").removeClass("hide");
-
-        var dato = $("#id").val();
-        var dato1 = $("#name").val();
-        var dato2 = $("#email").val();
-        var dato3 = $("#address").val();
-        var dato4 = $("#phone").val();
-        var dato5 = $("#cel").val();
-        var dato6 = $("#role").val();
-
-        var route = "asignar/"+dato;
-        var token = $("#token").val();
-
-
-    $.ajax({
-        url: route,
-        headers: {'X-CSRF-TOKEN': token},
-        type: 'POST',
-        dataType: 'json',
-        data:{
-            name:       dato1, 
-            email:      dato2, 
-            address:    dato3, 
-            phone:      dato4,
-            celphone:   dato5,
-            role:       dato6,
-            type:       dato7
-        },
-        success:function(response){
+        $.get(route, function(response){
             if(response.res == 'ok'){ //load json data from server and output message 
                 $("#msj-success").removeClass("hide");
                 $("#msj-success").html('<p>El usuario se encuentra activo para este sitio.</p>');
@@ -361,43 +214,18 @@ $("#asignar_2").click(function(){
                 $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
                 $("#divSitio").load(location.href+" #divSitio>*","");
                 $('#user_create').modal('toggle');
-                hide_btn2();
             }else if(response.res == 'fail'){ //load json data from server and output message
                 $("#msj-fail").removeClass("hide"); 
                 $("#msj-fail").html('<p>Limite alcanzado. No se pueden crear más usuarios.</p>');
                 $("#react_btn").addClass('hidden');
                 $('#user_create').modal('toggle');
-                hide_btn2();
             }
-        },
-        error: function (jqXHR, exception) {
-            var obj = jQuery.parseJSON(jqXHR.responseText);
-            $("#msj-fail").removeClass( "hide");
-            var msj = obj.name + '<br>' + obj.email + '<br>' + obj.password + '<br>' + obj.address + '<br>';
-            var res = msj.replace(/undefined<br>/gi, '');
-            var res = res.replace(/name/gi, 'Nombre');
-            var res = res.replace(/address/gi, 'Dirección');
-            var res = res.replace(/email/gi, 'Email');
-            var res = res.replace(/password/gi, 'Password');
-            $("#msj-fail").html(res);
-            $('#user_create').modal('toggle');
-            hide_btn2();
-        }              
-    });
-    }
-
+        });
 });
 
 $("#registrar").click(function(){
 
     hide_alert();
-    var dato7 = $("#type").val();
-
-    if(dato7==null || dato7 == ''){
-        $(".type_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Se debe asignar una cuota al usuario.</p></div>');
-    }else{
-
-    hide_btn();
 
     var value = $("#id").val();
     var dato1 = $("#name").val();
@@ -406,7 +234,8 @@ $("#registrar").click(function(){
     var dato4 = $("#phone").val();
     var dato5 = $("#cel").val();
     var dato6 = $("#role").val();
-
+    var dato7 = $("#password").val();
+    var dato8 = $("#type").val();
 
     var route = "/usuario";
     var token = $("#token").val();
@@ -423,7 +252,8 @@ $("#registrar").click(function(){
             phone:      dato4,
             celphone:   dato5,
             role:       dato6,
-            type:       dato7
+            password:   dato7,
+            type:       dato8
         },
         success:function(data){
             if(data.tipo=='success'){
@@ -432,12 +262,10 @@ $("#registrar").click(function(){
                     $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
                     $("#divSitio").load(location.href+" #divSitio>*","");
                     $('#user_create').modal('toggle');
-                    hide_btn2();
             }else if(data.tipo=='limite'){
                     $("#msj-fail").removeClass( "hide");
                     $("#msj-fail").html(data.message);
                     $('#user_create').modal('toggle');
-                    hide_btn2();
             } 
         },
         error: function (jqXHR, exception) {
@@ -451,23 +279,13 @@ $("#registrar").click(function(){
             var res = res.replace(/password/gi, 'Password');
             $("#msj-fail").html(res);
             $('#user_create').modal('toggle');
-            hide_btn2();
         }              
     });
-}
 });
 
 $("#actualizar").click(function(){
 
     hide_alert();
-    var dato7 = $("#type1").val();
-
-    if(dato7==null || dato7 == ''){
-        $(".type_msg").html('<div class="alert alert-danger" style="padding: 5px;"><p>Se debe asignar una cuota al usuario.</p></div>');
-    }else{
-     
-    $(".type_msg").html('');
-    hide_btn();
 
     var value = $("#id1").val();
     var dato1 = $("#name1").val();
@@ -476,6 +294,8 @@ $("#actualizar").click(function(){
     var dato4 = $("#phone1").val();
     var dato5 = $("#cel1").val();
     var dato6 = $("#role1").val();
+    var dato7 = $("#type1").val();
+
 
     var route = "/usuario/"+value+"";
     var token = $("#token").val();
@@ -500,7 +320,6 @@ $("#actualizar").click(function(){
             $("#msj-success").html("Usuario actualizado exitosamente.");
             $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
             $('#user_edit').modal('toggle');
-            hide_btn2();
         },
         error: function (jqXHR, exception) {
             var obj = jQuery.parseJSON(jqXHR.responseText);
@@ -512,11 +331,9 @@ $("#actualizar").click(function(){
             var res = res.replace(/email/gi, 'Email');
             $("#msj-fail").html(res);
             $('#user_edit').modal('toggle');
-            hide_btn2();
         }
 
     });
-}
 });
 
 
@@ -530,7 +347,6 @@ $("#delete_att").click(function(){
 $("#delete").click(function(){
 
     hide_alert();
-    hide_btn();
 
         var value = $("#id1").val();
         var route = "/usuario/"+value+"";
@@ -547,13 +363,11 @@ $("#delete").click(function(){
                 $("#tablaUsuarios").load(location.href+" #tablaUsuarios>*","");
                 $("#divSitio").load(location.href+" #divSitio>*","");
                 $('#user_edit').modal('toggle');
-                hide_btn2();
             },
             error: function (jqXHR, exception) {
                 $("#msj-fail").removeClass("hide");
                 $("#msj-fail").html("<p>Intentar de nuevo.</p>");
                 $('#user_edit').modal('toggle');
-                hide_btn2();
             } 
         });
 
