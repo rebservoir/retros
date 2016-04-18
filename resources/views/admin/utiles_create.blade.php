@@ -16,11 +16,18 @@
 			<th>Editar</th>
 		</thead>
 		<tbody id="datos">
-				@foreach($utiles as $util)
-					<tr>
-						<td><p>{{$util->concept}}</p></td>
-						<td><button value='{{$util->id}}' OnClick='Mostrar(this);' class='btn btn-primary' data-toggle="modal" data-target="#util_edit">Editar</button></td>
-				@endforeach
+		@if($utiles->count() === 0)
+			<div class="" style="text-align: center;">
+				<h4>Aquí aparecerán los Útiles creados.</h4>
+			</div>
+		@else
+			@foreach($utiles as $util)
+				<tr>
+					<td><p>{{$util->concept}}</p></td>
+					<td><button value='{{$util->id}}' OnClick='Mostrar(this);' class='btn btn-primary' data-toggle="modal" data-target="#util_edit">Editar</button></td>
+				</tr>
+			@endforeach
+		@endif
 		</tbody>
 	</table>
 </div>

@@ -97,7 +97,7 @@
 <span style="font-size: 14px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
 El administrador del sitio {{$sitio}} ha dado de alta un usuario para ti. 
 <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-Puedes acceder a traves de <a href="billbox.mx/login" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;color: #2BAADF;text-decoration: underline;font-weight: normal;">Billbox Login</a>
+Puedes acceder a traves de <a href="http://www.billbox.mx/login" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;color: #2BAADF;text-decoration: underline;font-weight: normal;">Billbox Login</a>
 <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
 Con los siguientes datos:
 <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
@@ -154,7 +154,7 @@ Administración</span>
                         <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;padding: 0;word-break: break-word;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
                         
                             <div style="text-align: center;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
-                            	<a href="http://billbox.com" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;color: #2BAADF;text-decoration: underline;font-weight: normal;">billbox.mx</a>
+                            	<a href="http://www.billbox.mx/login" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: transparent;color: #2BAADF;text-decoration: underline;font-weight: normal;">billbox.mx</a>
                             </div>
 
                         </td>
