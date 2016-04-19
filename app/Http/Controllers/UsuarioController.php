@@ -21,15 +21,16 @@ use Hash;
 use Mail;
 use Illuminate\Routing\Route;
 use Illuminate\Database\Eloquent;
+use Illuminate\Contracts\Auth\Guard;
 
 class UsuarioController extends Controller
 {
-
     protected $auth;
 
-    public function __construct(){
+    public function __construct(Guard $auth){
         $this->middleware('auth');
         $this->middleware('admin');
+        $this->auth = $auth;
        // $this->beforeFilter('@find', ['only' => ['edit','update','destroy']]);
     }
 
@@ -68,6 +69,7 @@ class UsuarioController extends Controller
         if($request->ajax()){
 
             $id_site = \Session::get('id_site');
+            $admin_email = $this->auth->user()->email;
             $sitio = Sites::where('id', $id_site)->get();
             $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
             //$plan = Plans::where('id', $sitio_plan )->get();
@@ -78,22 +80,30 @@ class UsuarioController extends Controller
 
             if( $user_count<$user_limit){
 
-                $new_user = User::create($request->all());
-                $usuario = User::find($new_user->id);
-                $usuario->password = Hash::make($password);
-                $usuario->save();
+                $new_user = DB::table('users')->insertGetId(
+                    ['name' => $request->name,
+                     'email' => $request->email ,
+                     'address' => $request->address,
+                     'phone' => $request->phone,
+                     'celphone' => $request->celphone,
+                     'password' => Hash::make($password)
+                     ]); 
+
+                $usuario = User::find($new_user);
 
                 DB::table('sites_users')->insert(
-                ['id_user' => $new_user->id,
-                 'id_site' => $id_site
-                 ]
-                );
+                ['id_user' => $new_user,
+                 'id_site' => $id_site,
+                 'type' => $request->type,
+                 'role' => $request->role,
+                 'status' => 1  
+                 ]);
 
             //email invitacion
-            $data = ['username'     => $new_user->name,
-                     'user_email'   => $new_user->email,
+            $data = ['username'     => $usuario->name,
+                     'user_email'   => $usuario->email,
                      'sitio'        => $sitio_this->name,
-                     'admin_email'  => '-',
+                     'admin_email'  => $admin_email,
                      'password'     => $password
                 ];
 
@@ -166,31 +176,32 @@ class UsuarioController extends Controller
         
     } 
 
-    public function asignar($id){
+    public function asignar($id, Request $request){
 
         $id_site = \Session::get('id_site');
+        $admin_email = $this->auth->user()->email;
         $sitio = Sites::where('id', $id_site)->get();
         $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
         $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
         $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
         $sitio_this = Sites::findOrFail($id_site);
-        //$admin = User::findOrFail($this->auth->user()->id);
         $user = User::findOrFail($id);
-        //$password = substr( md5(microtime()), 1, 6);
 
         if( $user_count<$user_limit){
             
             DB::table('sites_users')->insert(
                      ['id_user' => $id,
-                     'id_site' => $id_site
-                     ]
-            );
+                      'id_site' => $id_site,
+                      'type' => $request->type,
+                      'role' => $request->role,
+                      'status' => 1  
+                     ]);
 
             //email invitacion
             $data = ['username'     => $user->name,
                      'user_email'   => $user->email,
                      'sitio'        => $sitio_this->name,
-                     'admin_email'  => '-',
+                     'admin_email'  => $admin_email,
                      'password'     => 'Contraseña Actual'
                 ];
 
@@ -211,29 +222,55 @@ class UsuarioController extends Controller
 
     }
 
-    public function reactivar($id){
+    public function reactivar($id, UserUpdateRequest $request){
 
         $id_site = \Session::get('id_site');
+        $admin_email = $this->auth->user()->email;
         $sitio = Sites::where('id', $id_site)->get();
         $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
         $user_limit = DB::table('plans')->where('id', $id_site )->value('user_limit');
         $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
+        $password = substr( md5(microtime()), 1, 6);
+        $sitio_this = Sites::findOrFail($id_site);
 
         if( $user_count<$user_limit){
 
             $site_user_del = DB::table('sites_users_deleted')->where('id_user',$id)->where('id_site',$id_site);
             $site_user_del->delete();
 
-            DB::table('sites_users')->insert(
+            $usuario = User::find($id);
+            $usuario->name = $request->name;
+            $usuario->email = $request->email;
+            $usuario->address = $request->address;
+            $usuario->phone = $request->phone;
+            $usuario->celphone = $request->celphone;
+            $usuario->password = Hash::make($password);
+            $usuario->save();
+
+            $react_user = DB::table('sites_users')->insert(
                     ['id_user' => $id,
-                     'id_site' => $id_site
-                     ]
-            );
+                     'id_site' => $id_site,
+                     'type' => $request->type,
+                     'role' => $request->role,
+                     'status' => 1  
+                     ]);
+
+            //email invitacion
+            $data = ['username'     => $usuario->name,
+                     'user_email'   => $usuario->email,
+                     'sitio'        => $sitio_this->name,
+                     'admin_email'  => $admin_email,
+                     'password'     => $password
+                    ];
+
+            Mail::send('emails.invitacion', $data, function ($msj) use ($data) {
+                $msj->subject('Invitación Bill Box');
+                $msj->to($data['user_email']);
+            });            
+
             return response()->json([
                 "res" => 'ok'
             ]);
-
-            //email invitacion
 
         }else{
             return response()->json([
@@ -252,19 +289,22 @@ class UsuarioController extends Controller
     public function show()
     {
         $id_site = \Session::get('id_site');
-        $user = DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
+        $user = DB::select('select users.* FROM users JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
         return response()->json($user);
     }
 
     public function search($id)
     {
         $id_site = \Session::get('id_site');
+        $id_user = $this->auth->user()->id;
+        $sitios = Sites::where('id', $id_site)->get();
+        $sites = Sites_users::where('id_user', $id_user)->count();
         $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
         $plan = Plans::where('id', $sitio_plan )->get();
         $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
         $tipos = Cuotas::orderBy('id', 'ASC')->lists('concepto','id');
         $users = User::where('id', $id)->get();
-            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan]);
+            return view('/admin/usuarios', [ 'users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan, 'sitios' => $sitios, 'sites' => $sites ]);
     }
 
     public function add($id)
@@ -278,11 +318,14 @@ class UsuarioController extends Controller
     public function sort($sort)
     {
         $id_site = \Session::get('id_site');
+        $id_user = $this->auth->user()->id;
+        $sitios = Sites::where('id', $id_site)->get();
+        $sites = Sites_users::where('id_user', $id_user)->count();
         $sitio_plan = DB::table('sites')->where('id', $id_site )->value('plan');
         $plan = Plans::where('id', $sitio_plan )->get();
         $user_count = DB::table('sites_users')->where('id_site', $id_site)->count();
         $tipos = Cuotas::orderBy('id', 'ASC')->lists('concepto','id');
-        $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
+        $users = DB::select('select users.*, sites_users.status, sites_users.role, sites_users.type FROM users JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id', ['id' => $id_site]);
         $users = collect($users);
 
         if($sort == 'name'){
@@ -299,8 +342,8 @@ class UsuarioController extends Controller
             $users = $users->where('status', 0);
         }else if($sort == 'corriente'){
             $users = $users->where('status', 1);
-        }
-            return view('/admin/usuarios', ['users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan]);
+        }                
+            return view('/admin/usuarios', ['users' => $users, 'tipos' => $tipos, 'user_count' => $user_count, 'plan'=>$plan, 'sitios' => $sitios, 'sites' => $sites ]);
     }
 
 
@@ -309,12 +352,11 @@ class UsuarioController extends Controller
         $id_site = \Session::get('id_site');
         
         if($sort == 1){ //all
-            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id AND users.role = 0 order by users.name', ['id' => $id_site]);
-            //$users = $users->sortBy('name');
+            $users =DB::select('select users.id, users.name, users.email FROM users LEFT JOIN sites_users ON sites_users.id_user = users.id WHERE sites_users.role = 0 AND sites_users.id_site = :id_site ORDER BY users.name', ['id_site' => $id_site]);
         }else if($sort == 2){ //adeudo
-            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id AND users.role = 0 AND users.status = 0 order by users.name', ['id' => $id_site]);
+            $users =DB::select('select users.id, users.name, users.email FROM users JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id_site AND sites_users.role = 0 AND sites_users.status = 0 order by users.name', ['id_site' => $id_site]);
         }else if($sort == 3){ //corriente
-            $users =DB::select('select users.* FROM users INNER JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id AND users.role = 0 AND users.status = 1 order by users.name', ['id' => $id_site]);
+            $users =DB::select('select users.id, users.name, users.email FROM users JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_site = :id_site AND sites_users.role = 0 AND sites_users.status = 1 order by users.name', ['id_site' => $id_site]);
         }
             $users = collect($users);
             return response()->json(
@@ -330,8 +372,18 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $id_site = \Session::get('id_site');
+        $user =DB::select('select users.*, sites_users.status, sites_users.role, sites_users.type FROM users JOIN sites_users ON sites_users.id_user = users.id AND sites_users.id_user = :id_user AND sites_users.id_site = :id_site', ['id_user' => $id, 'id_site' => $id_site]);
+        $user = collect($user);
+        return response()->json(
+            $user->toArray()
+            );
+    }
 
+    public function edit_react($id)
+    {
+        $user = User::find($id);
+        $user = collect($user);
         return response()->json(
             $user->toArray()
             );
@@ -347,8 +399,16 @@ class UsuarioController extends Controller
     public function update($id, UserUpdateRequest $request)
     {
         $user = User::find($id);
-        $user->fill($request->all());
+        $id_site = \Session::get('id_site');
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->celphone = $request->celphone;
         $user->save();
+        DB::table('sites_users')->where('id_user', $id)->where('id_site', $id_site)
+            ->update(['role' => $request->role, 'type' => $request->type]);
 
         return response()->json([
             "message"=>'listo'

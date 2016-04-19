@@ -37,11 +37,13 @@
 							<td>{{$user->email}}</td>
 							<td>{{$user->address}}</td>
 							<td>
-								@if($user->status==1)
-									<span class="label label-success">Ok</span>
-								@elseif($user->status==0)
-									<span class="label label-danger">Adeudo</span>
-								@else
+								@if($user->role === 0)
+									@if($user->status==1)
+										<span class="label label-success">Ok</span>
+									@elseif($user->status==0)
+										<span class="label label-danger">Adeudo</span>
+									@endif
+								@elseif($user->role === 1)
 									<span class="label label-info">Admin</span>
 								@endif
 							</td>

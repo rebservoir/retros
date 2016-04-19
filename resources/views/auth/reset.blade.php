@@ -45,18 +45,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Contraseña</label><br>
+                        <label>Contraseña nueva</label><br>
                         <input type="password" name="password" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label>Confirmar contraseña</label><br>
+                        <label>Confirmar contraseña nueva</label><br>
                         <input type="password" name="password_confirmation" class="form-control">
                     </div>
 
                     <div>
                         <button type="submit" class="btn btn-primary">
-                            Cambiar Contraseña
+                            Actualizar Contraseña
                         </button>
                     </div>
                 </form>

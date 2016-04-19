@@ -16,6 +16,11 @@
 			<th>Editar</th>
 		</thead>
 		<tbody>
+		@if($documentos->count() === 0)
+			<div class="" style="text-align: center;">
+				<h4>Aquí aparecerán los documentos creados.</h4>
+			</div>
+		@else
 			<input type="hidden" name="_token_doc1" value="{{ csrf_token() }}" id="token_doc1">
 			@foreach($documentos as $doc)
 				<tr>      	
@@ -23,6 +28,7 @@
 					<td><button value='{{$doc->id}}' OnClick='mostrar_doc(this);' class='btn btn-primary' data-toggle="modal" data-target="#documento_edit" data_value="{{$doc->id}}">Editar</button></td>
 				</tr>
 			@endforeach
+		@endif
 		</tbody>
 	</table>
 </div>

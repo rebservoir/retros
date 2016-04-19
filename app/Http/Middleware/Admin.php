@@ -4,6 +4,7 @@ namespace TuFracc\Http\Middleware;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
 use Session;
+use TuFracc\Sites_users;
 
 class Admin
 {
@@ -21,7 +22,11 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if($this->auth->user()->role != 1){
+        $id_site = \Session::get('id_site');
+        $id_user = $this->auth->user()->id;
+        $user_role = Sites_users::where('id_site',$id_site)->where('id_user',$id_user)->value('role');
+
+        if($user_role != 1){
             return redirect()->to('home');
         }
 

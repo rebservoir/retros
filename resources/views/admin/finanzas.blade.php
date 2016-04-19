@@ -159,7 +159,7 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
     </script>
 
     <div id="cont_table">
-		<table class="table cifras table-bordered table-condensed">
+		<table class="table cifras table-condensed">
 			<thead>
 				<th class="egremes">
 					<h4>{{$month[$mes_sel-1]}} {{$year_sel}}</h4>
@@ -187,20 +187,20 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 			<tbody>								
 				<tr>
 					<td class="ingreso">
-						<h4>Ingresos del Mes</h4>
 						<h3>{{'$ '. number_format($total_ingresos,2) }}</h3>
+						<h4>Ingresos del Mes</h4>
 					</td>
 				</tr>
 				<tr>
 					<td class="anterior">
-						<h4>Saldo Mes Anterior</h4>
 						<h3>{{'$ '. number_format($amount_ant,2)}}</h3>
+						<h4>Saldo Mes Anterior</h4>
 					</td>
 				</tr>
 				<tr>
 					<td class="total">
-						<h4>Saldo Total</h4>
 						<h3>{{'$ '. number_format( $total_ingresos - $amount_ant , 2) }}</h3>
+						<h4>Saldo Total</h4>
 					</td>
 				</tr>
 			</tbody>
@@ -212,11 +212,9 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 			<p style="margin-top: 185px;text-align: center;">Cargando grafica...</p>
 		</div>
 
-		<div style="width: 200px;float: right;">
-			<p>Total de Usuarios: {{ $pagos_num }}</p>
-		</div>	
+		
 			
-		<table class="table table-bordered table-striped table-condensed">
+		<table class="table table-striped table-condensed">
 			<thead>
 				<th class="egremes">
 					<h4>Egresos del mes</h4>
@@ -255,18 +253,18 @@ $month = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 
 				<br>
 
-		<table class="table table-bordered table-striped table-condensed">
+		<table class="table saldos table-striped table-condensed">
 			<tbody>
 				<tr> 
 						{{--*/ $money = number_format($total_egresos, 2) /*--}}
 					<td class="cifras2 egresos">
+						<h3>{{'$ '.$money}}</h3>
 						<h4>Total de Egresos en el Mes</h4>
-						<h3>{{'$ '.$money}}</h3>
 					</td>
-							{{--*/ $money = number_format(($total_ingresos - $total_egresos), 2) /*--}}
+						{{--*/ $money = number_format(($total_ingresos - $total_egresos), 2) /*--}}
 					<td class="cifras2 saldo">	
-						<h4>Saldo</h4>
 						<h3>{{'$ '.$money}}</h3>
+						<h4>Saldo</h4>
 					</td>
 				</tr>
 			</tbody>

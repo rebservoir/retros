@@ -30,7 +30,7 @@
 
 	<br><br><br>
 
-	@foreach($sitio as $sitio)
+	@foreach($sitios as $sitio)
 
 		<table class="table table-bordered">
 		    <tbody>

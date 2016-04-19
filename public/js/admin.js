@@ -596,6 +596,7 @@ function getUsers(sort){
     var route = "/admin/usuarios/sort_usr/" + sort + "" ;
 
     $.get(route, function(res){
+        console.log(res);
 
         var code="<table class='table table-striped'><thead><tr><th>Marcar</th><th>Nombre</th><th>Email</th><th>Status</th><tr></thead><tbody>";
 
@@ -613,6 +614,7 @@ function getUsers(sort){
             code+="</tbody></table>";
 
         $('#user_table').html(code);
+
     });
 
 }
@@ -680,10 +682,8 @@ $("#btn_send").click(function(){
                                     $("#msj-success").html('Su mensaje ha sido enviado.');
                                 },
                                 error: function (jqXHR, exception) {
-                                    console.log('nope');
                                     $("#msj-fail").removeClass( "hide");
-                                    var obj = jQuery.parseJSON(jqXHR.responseText);
-                                    console.log(obj);
+                                    $("#msj-success").html('Error al enviar el mensaje. Intentar de nuevo.');
                                 }
                             });
                                 console.log(usrs[index]);
@@ -704,8 +704,8 @@ $("#btn_send").click(function(){
                             $("#msj-success").html('Su mensaje ha sido enviado.');
                         },
                         error: function (jqXHR, exception) {
-                            console.log('nope');
                             $("#msj-fail").removeClass( "hide");
+                            $("#msj-success").html('Error al enviar el mensaje. Intentar de nuevo.');
                         }
                     });
                         console.log(usrs[index]);
@@ -726,8 +726,8 @@ $("#btn_send").click(function(){
                             $("#msj-success").html('Su mensaje ha sido enviado.');
                         },
                         error: function (jqXHR, exception) {
-                            console.log('nope');
                             $("#msj-fail").removeClass( "hide");
+                            $("#msj-success").html('Error al enviar el mensaje. Intentar de nuevo.');
                         }
                 });
                     console.log(usrs[index]);

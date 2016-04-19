@@ -12,6 +12,8 @@
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 				<input type="hidden" id="id">
 				@include('usuario.forms.usr_edit')
+				<div class="requeridos"><p>*Campos requeridos.</p></div>
+				<br>
 			</div>
 			
 			<div class="modal-footer">

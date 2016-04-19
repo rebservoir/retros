@@ -22,8 +22,21 @@ div#mensaje{
     font-size: 16px;
     margin-top: 45px;
 }
-div#mensaje a{
-    margin-left: 15px;
+div#mensaje .pull-left p{
+    display: inline;
+    margin-right: 6px;
+}
+div#mensaje .pull-right .btn{
+    background: #fff;    
+}
+div#mensaje .pull-right .dropdown{
+    margin: -4px 0px 0px 0px;    
+}
+div#mensaje a span{
+    margin-right: 8px;    
+}
+div#mensaje .dropdown ul{
+    margin: 0px -0px 0px -125px;
 }
 .no_pd{
     padding: 0px !important;
@@ -99,6 +112,14 @@ div#navigation a{
 }
 .nav-pills>li {
     margin: 0px 3px 5px 0px;
+}
+
+#sitio_name{
+    background: #246B9C;
+    color: #fff;
+    padding: 5px 14px 0px 14px;
+    border-radius: 12px;
+    height: 32px;
 }
 
 .icon1{ background-image: url('../img/n_1w.png');}
@@ -388,32 +409,99 @@ div#btns_cal{
 
 
 /** FINANZAS **/
+#btn_select_admin{
+    margin: -8px 0px 0px 0px;
+    padding: 4px 8px 5px 8px;
+}
 div#select_date_tr{
-    margin: 0px auto;
     width: 300px;
+    margin-left: 65px;
 }
 div#cont_table{
-    width: 85%;
+    width: 100%;
     margin: 0pt auto;
+    padding: 0 5%;
 }
 .chart{
     width: 400px;
     height: 400px;
-    float: right;
-    margin: -60px 100px 0px 0px;
+    float: left;
+    margin: 0px 0px 0px 0px;
 }
 .tabla{
-    width: 80%;
-    margin: 0pt auto;
-}
-.cifras{
-    width:40% !important;
-    text-align: center; 
+    width: 100%;
+    text-align: center;
     float: left;
 }
+.cifras{
+    width: 100%;
+    text-align: center;
+    float: left;
+}
+.cifras td{
+    background: transparent;   
+    border: none;
+}
+.cifras tbody tr{
+    background: transparent;
+    display: inline;
+    width: 33.33%;
+    float: left;
+}
+.cifras tbody tr td{
+    border: none;
+}
+.saldos tbody tr td{
+    background: transparent;
+    display: inline;
+    width: 50%;
+    float: left;
+}
+.cifras th{
+    background: transparent;
+    color: #222;
+    border: none;
+}
 .cifras h3{
+    font-size: 30px;
+    text-align: left;
+    margin: 5px 0px 8px 8px;
+    font-weight: bold;
+    color: #246B9C;
 }
 .cifras h4{
+    font-size: 18px;
+    text-align: left;
+    margin: 6px 0px 0px 10px;
+}
+
+.saldos tr,td{
+    background: transparent !important;
+}
+.saldos th{
+    background: transparent;
+    color: #222;
+    border: none;
+}
+.saldos h3{
+    font-size: 30px;
+    text-align: left;
+    margin: 5px 0px 8px 8px;
+    font-weight: bold;
+    color: #246B9C;
+}
+.saldos h4{
+    font-size: 18px;
+    text-align: left;
+    margin: 6px 0px 0px 10px;
+}
+
+.saldos td{
+    background: transparent;
+}
+#total_usuarios{
+    width: 200px;
+    float: right;
 }
 .ingreso{
     background: #E4F1FE;
@@ -434,8 +522,8 @@ div#cont_table{
 }
 .egremes{
     font-weight: normal;
-    background: #2574A9;
-    color: white;
+    background: transparent;
+    color: #222;
     margin: 5px;
 }
 .egresos{
@@ -450,6 +538,9 @@ div#cont_table{
 .fade.in {
     display: block !important;
 }
+
+
+
 
 /** btns delete **/
 .cancel{
@@ -657,7 +748,11 @@ div#sites_box label{
     width: 100%;
 }
 
-
+.requeridos{
+    font-weight: bold;
+    color: #AF0000;
+    float: left;
+}
 
 /********************** TYPEHEAD ************************/
 div#the-basics{
